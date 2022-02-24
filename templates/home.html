@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+{% if request.user.is_authenticated %}
+
+
+    <div class="container">
+        <div class="row justify-content-md-center mt-4" style="background-color:white;">
+            <div class="col col-lg">
+                <h2>Acciones pendientes</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row justify-content-md-center mt-4" style="background-color:white;">
+            <div class="col col-lg">
+                <h2>Aplicaciones enviadas</h2>
+            </div>
+        </div>
+    </div>
+
+{% else %}
+
+    <div>
+      <section id="about">
+            <img src="{% static 'images/principal.jpg' %}" alt="logo" width="100%">
+      </section>
+    </div>
+
+{% endif %}
+
+{% endblock %}

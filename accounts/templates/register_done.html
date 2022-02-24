@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="container">
+    <br><br>
+    <div class="row justify-content-center" style="background-color:white;">
+    <h1>Bienvenid@</h1>
+      <p>Tu cuenta se creo con éxito. Ahora puedes <a href="{% url "login" %}">iniciar sesión.</a></p>
+</div>
+</div>
+{% endblock %}

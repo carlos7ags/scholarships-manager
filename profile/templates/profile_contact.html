@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row justify-content-md-center mt-4" style="background-color:white;">
+            <div class="col col-lg">
+                <h2>Datos de Contacto</h2>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div class="row justify-content-md-center" style="background-color:white;">
+            <div class="col col-lg">
+
+                <form method="POST" action="" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% crispy form %}
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
