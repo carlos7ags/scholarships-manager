@@ -155,3 +155,36 @@ class ProfileBankForm(ModelForm):
     class Meta:
         model = Bank
         exclude = ("validated",)
+
+
+class ProfileEmergencyContactForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            Row(
+                Column("name", css_class="form-group col-md-6 mb-1"),
+                css_class="form-row",
+            ),
+            Row(
+                Column("address", css_class="form-group col-md-6 mb-1"),
+                css_class="form-row",
+            ),
+            Row(
+                Column("location", css_class="form-group col-md-3 mb-1"),
+                Column("email", css_class="form-group col-md-3 mb-1"),
+                css_class="form-row",
+            ),
+            Row(
+                Column("phone", css_class="form-group col-md-3 mb-1"),
+                Column("mobile", css_class="form-group col-md-3 mb-1"),
+                css_class="form-row",
+            ),
+            FormActions(
+                Submit("save", "Guardar"),
+            ),
+        )
+
+    class Meta:
+        model = EmergencyContact
+        exclude = ("validated",)

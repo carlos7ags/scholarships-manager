@@ -63,4 +63,19 @@ profile_urlpatterns = [
         login_required(ProfileBankRedirectView.as_view()),
         name="profile-bank-redirect",
     ),
+
+    path("profile/emergencycontact",
+         login_required(ProfileEmergencyContactCreate.as_view()),
+         name="profile-emergency-contact-create"
+         ),
+    path(
+        "profile/<pk>/emergencycontact/update",
+        login_required(ProfileEmergencyContactUpdate.as_view()),
+        name="profile-emergency-contact-update",
+    ),
+    path(
+        "profile/emergencycontact/redirect",
+        login_required(ProfileEmergencyContactRedirectView.as_view()),
+        name="profile-emergency-contact-redirect",
+    ),
 ]

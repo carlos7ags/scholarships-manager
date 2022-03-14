@@ -7,7 +7,7 @@ from .forms import *
 from .models import *
 
 
-class ProfileCreateView(CreateView):
+class ExtendedUserCreateView(CreateView):
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST, request.FILES)
@@ -24,7 +24,7 @@ class ProfileCreateView(CreateView):
         return render(request, self.template_name, {"form": form})
 
 
-class ProfileCreate(ProfileCreateView):
+class ProfileCreate(ExtendedUserCreateView):
     form_class = ProfileForm
     template_name = "profile.html"
     success_url = reverse_lazy("home")
@@ -56,7 +56,7 @@ class ProfileRedirectView(RedirectView):
             return reverse("profile-create")
 
 
-class ProfileAddressCreate(ProfileCreateView):
+class ProfileAddressCreate(ExtendedUserCreateView):
     form_class = ProfileAddressForm
     template_name = "profile_address.html"
     success_url = reverse_lazy("home")
@@ -88,7 +88,7 @@ class ProfileAddressRedirectView(RedirectView):
             return reverse("profile-address-create")
 
 
-class ProfileContactCreate(ProfileCreateView):
+class ProfileContactCreate(ExtendedUserCreateView):
     form_class = ProfileContactForm
     template_name = "profile_contact.html"
     success_url = reverse_lazy("home")
@@ -120,7 +120,7 @@ class ProfileContactRedirectView(RedirectView):
             return reverse("profile-contact-create")
 
 
-class ProfileBankCreate(ProfileCreateView):
+class ProfileBankCreate(ExtendedUserCreateView):
     form_class = ProfileBankForm
     template_name = "profile_bank.html"
     success_url = reverse_lazy("home")
@@ -150,3 +150,35 @@ class ProfileBankRedirectView(RedirectView):
             )
         else:
             return reverse("profile-bank-create")
+
+
+class ProfileEmergencyContactCreate(ExtendedUserCreateView):
+    form_class = ProfileEmergencyContactForm
+    template_name = "profile_emergency_contact.html"
+    success_url = reverse_lazy("home")
+
+
+class ProfileEmergencyContactUpdate(UpdateView):
+    model = EmergencyContact
+    form_class = ProfileEmergencyContactForm
+    template_name = "profile_emergency_contact.html"
+    success_url = reverse_lazy("home")
+
+    def user_passes_test(self, request):
+        self.object = self.get_object()
+        return self.object.username == request.user
+
+    def dispatch(self, request, *args, **kwargs):
+        if not self.user_passes_test(request):
+            return redirect_to_login(request.get_full_path())
+        return super(ProfileEmergencyContactUpdate, self).dispatch(request, *args, **kwargs)
+
+
+class ProfileEmergencyContactRedirectView(RedirectView):
+    def get_redirect_url(self):
+        if EmergencyContact.objects.filter(username=self.request.user.id).exists():
+            return reverse(
+                "profile-emergency-contact-update", kwargs={"pk": self.request.user.id}
+            )
+        else:
+            return reverse("profile-emergency-contact-create")

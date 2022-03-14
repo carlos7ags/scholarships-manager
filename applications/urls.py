@@ -4,7 +4,9 @@ from django.urls import path
 from applications.views import *
 
 applications_urlpatterns = [
-    path("applications",
-         login_required(ApplicationsListView.as_view()),
-         name="applications-list"),
+    path(
+        "program/<id>/application",
+        login_required(create_application),
+        name="create-application",
+    ),
 ]

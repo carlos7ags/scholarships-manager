@@ -207,6 +207,50 @@ class Contact(models.Model):
         return "%s - %s" % (self.username, self.email)
 
 
+class EmergencyContact(models.Model):
+
+    username = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        editable=False,
+        primary_key=True,
+    )
+
+    name = models.CharField("Nombre del contacto", max_length=100)
+    phone = models.CharField(
+        "Teléfono fijo",
+        max_length=10,
+        validators=[
+            RegexValidator(
+                regex=r"([0-9]{10})",
+                message="Ingresa un teléfono válido de 10 dígitos.",
+                code="invalid_phone",
+            )
+        ],
+    )
+
+    mobile = models.CharField(
+        "Celular",
+        max_length=10,
+        validators=[
+            RegexValidator(
+                regex=r"([0-9]{10})",
+                message="Ingresa un teléfono válido de 10 digitos.",
+                code="invalid_phone",
+            )
+        ],
+    )
+    address = models.CharField("Dirección", max_length=100)
+    location = models.CharField("Ciudad y pais", max_length=75)
+
+    email = models.EmailField("Correo electrónico")
+
+    validated = models.BooleanField(default=False)
+
+    def __str__(self):
+        return "%s - %s" % (self.username, self.email)
+
+
 class Bank(models.Model):
     """Datos bancarios"""
 

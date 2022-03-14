@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row justify-content-md-center mt-4" style="background-color:white;">
+            <div class="col col-lg">
+                <h2>Acciones pendientes</h2>
+                {% include "pending_actions.html" %}
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row justify-content-md-center mt-4" style="background-color:white;">
+            <div class="col col-lg">
+                <h2>Aplicaciones pendientes</h2>
+                {% include "pending_applications.html" %}
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row justify-content-md-center mt-4" style="background-color:white;">
+            <div class="col col-lg">
+                <h2>Aplicaciones</h2>
+                {% include "sent_applications.html" %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
