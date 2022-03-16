@@ -50,7 +50,7 @@
                             {% elif completed_basic_forms == False or status == False %}
                                 <a class="btn btn-danger text-white">No disponible</a>
                             {% else %}
-                                <form action={% url 'create-application' id=program.id %} method="post">
+                                <form action={% url 'create-application' program_id=program.id %} method="post">
                                 {% csrf_token %}
                                     <br>
                                   <button type="submit" class="btn btn-primary">Crear aplicación</button>

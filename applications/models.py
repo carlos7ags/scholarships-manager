@@ -25,7 +25,7 @@ class Award(models.Model):
     comments = models.TextField("Comentarios", null=True, blank=True)
     require_deliverable = models.BooleanField("Requiere entregables", default=False)
     deliverable_by = models.DateTimeField("Fecha para entregables", null=True)
-    deliverable = models.FileField("Entregable", null=True)
+    deliverable = models.FileField("Entregable", null=True, blank=True)
     deliverable_validated = models.BooleanField("Entregable validado", default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -86,11 +86,11 @@ class DirectAwardApplicationForm(models.Model):
 
 class Application(models.Model):
     APPLICATION_STAGES = (
-        (0, "Activa"),
+        (0, "Pendiente"),
         (1, "Enviada"),
         (2, "En revisión"),
         (3, "Decisión final"),
-        (9, "Retirada"),
+        (-1, "Retirada"),
     )
 
     username = models.ForeignKey(
@@ -109,13 +109,14 @@ class Application(models.Model):
         choices=APPLICATION_STAGES,
         default=0,
     )
-    application_form = models.JSONField(null=True)
-    score = models.CharField("Puntuación", max_length=50, null=True)
+    application_form = models.JSONField(null=True, blank=True)
+    score = models.CharField("Puntuación", max_length=64, null=True, blank=True)
     decision = models.ForeignKey(
         to=Award,
         on_delete=models.CASCADE,
         verbose_name="Decisión",
         null=True,
+        blank=True,
     )
     validated = models.BooleanField(default=False)
     comments = models.TextField("Comentarios", null=True, blank=True)

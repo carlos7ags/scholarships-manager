@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row justify-content-md-center mt-4" style="background-color:white;">
+            <div class="col col-lg">
+                <h5>Solicitud de beca o apoyo económico</h5>
+
+                <form id="application-form" method="post">
+                    {{ application_form_template|safe }}
+                    <input type="submit" value="Enviar solicitud">
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- JavaScript -->
+    <script>
+        function convertFormToJSON(form) {
+            const array = $(form).serializeArray();
+            const json = {};
+            $.each(array, function () {
+                json[this.name] = this.value || "";
+            });
+            return json;
+        }
+
+        $("#application-form").on("submit", function (e) {
+            e.preventDefault();
+            const form = $(e.target);
+            const json = convertFormToJSON(form);
+            console.log(json);
+            $.ajax({
+                type: "POST",
+                dataType : 'json',
+                url: "{% url 'create-application-form' pk %}",
+                data: JSON.stringify(json),
+                contentType: 'application/json;charset=UTF-8',
+                async: true,
+                beforeSend:function(xhr, settings){
+                    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+                },
+                success: function(data) {
+                    console.log(data);
+                    if(data.status === 'fail') {
+                        alert("error");
+                    } else if (data.status === 'success') {
+                        window.location.href="{% url 'application-detail' pk %}";
+                    }
+                },
+            });
+            return false;
+        });
+    </script>
+
+{% endblock %}

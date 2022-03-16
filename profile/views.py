@@ -36,12 +36,12 @@ class ProfileUpdate(UpdateView):
     template_name = "profile.html"
     success_url = reverse_lazy("home")
 
-    def user_passes_test(self, request):
-        self.object = self.get_object()
-        return self.object.username == request.user
+    def request_user_is_owner(self, request):
+        obj = self.get_object()
+        return obj.username == request.user
 
     def dispatch(self, request, *args, **kwargs):
-        if not self.user_passes_test(request):
+        if not self.request_user_is_owner(request):
             return redirect_to_login(request.get_full_path())
         return super(ProfileUpdate, self).dispatch(request, *args, **kwargs)
 
@@ -68,12 +68,12 @@ class ProfileAddressUpdate(UpdateView):
     template_name = "profile_address.html"
     success_url = reverse_lazy("home")
 
-    def user_passes_test(self, request):
-        self.object = self.get_object()
-        return self.object.username == request.user
+    def request_user_is_owner(self, request):
+        obj = self.get_object()
+        return obj.username == request.user
 
     def dispatch(self, request, *args, **kwargs):
-        if not self.user_passes_test(request):
+        if not self.request_user_is_owner(request):
             return redirect_to_login(request.get_full_path())
         return super(ProfileAddressUpdate, self).dispatch(request, *args, **kwargs)
 
@@ -100,12 +100,12 @@ class ProfileContactUpdate(UpdateView):
     template_name = "profile_contact.html"
     success_url = reverse_lazy("home")
 
-    def user_passes_test(self, request):
-        self.object = self.get_object()
-        return self.object.username == request.user
+    def request_user_is_owner(self, request):
+        obj = self.get_object()
+        return obj.username == request.user
 
     def dispatch(self, request, *args, **kwargs):
-        if not self.user_passes_test(request):
+        if not self.request_user_is_owner(request):
             return redirect_to_login(request.get_full_path())
         return super(ProfileContactUpdate, self).dispatch(request, *args, **kwargs)
 
@@ -132,12 +132,12 @@ class ProfileBankUpdate(UpdateView):
     template_name = "profile_bank.html"
     success_url = reverse_lazy("home")
 
-    def user_passes_test(self, request):
-        self.object = self.get_object()
-        return self.object.username == request.user
+    def request_user_is_owner(self, request):
+        obj = self.get_object()
+        return obj.username == request.user
 
     def dispatch(self, request, *args, **kwargs):
-        if not self.user_passes_test(request):
+        if not self.request_user_is_owner(request):
             return redirect_to_login(request.get_full_path())
         return super(ProfileBankUpdate, self).dispatch(request, *args, **kwargs)
 
@@ -164,12 +164,12 @@ class ProfileEmergencyContactUpdate(UpdateView):
     template_name = "profile_emergency_contact.html"
     success_url = reverse_lazy("home")
 
-    def user_passes_test(self, request):
-        self.object = self.get_object()
-        return self.object.username == request.user
+    def request_user_is_owner(self, request):
+        obj = self.get_object()
+        return obj.username == request.user
 
     def dispatch(self, request, *args, **kwargs):
-        if not self.user_passes_test(request):
+        if not self.request_user_is_owner(request):
             return redirect_to_login(request.get_full_path())
         return super(ProfileEmergencyContactUpdate, self).dispatch(request, *args, **kwargs)
 

@@ -5,8 +5,23 @@ from applications.views import *
 
 applications_urlpatterns = [
     path(
-        "program/<id>/application",
+        "program/<program_id>/application",
         login_required(create_application),
         name="create-application",
+    ),
+    path(
+        "application/<pk>/form",
+        login_required(RenderApplicationFormView.as_view()),
+        name="render-application-form",
+    ),
+    path(
+        "application/<pk>/form/create",
+        login_required(create_application_form),
+        name="create-application-form",
+    ),
+    path(
+        "application/<pk>",
+        login_required(ApplicationDetailView.as_view()),
+        name="application-detail",
     ),
 ]
