@@ -3,6 +3,8 @@ from django.views.generic import CreateView
 
 from django.contrib.auth.forms import UserCreationForm
 
+from actions.utils import auto_assign_tasks_at_user_creation
+
 
 class UserRegistrationView(CreateView):
     form_class = UserCreationForm
@@ -10,6 +12,7 @@ class UserRegistrationView(CreateView):
 
     def form_valid(self, form):
         self.object = form.save()
+        auto_assign_tasks_at_user_creation(self.object)
         return super().form_valid(form)
 
     def get_success_url(self):

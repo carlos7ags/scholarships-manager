@@ -3,8 +3,8 @@ from django.db import models
 from django.conf import settings
 
 
-class TaskType(models.Model):
-    TASK_TYPE = ((0, "Formulario"), (1, "Archivo"))
+class Task(models.Model):
+    TASK_TYPE = ((0, "Formulario"), (1, "Archivo"), (2, "Presencial"),)
 
     name = models.CharField("Nombre", max_length=100)
     message = models.CharField("Mensaje a mostrar", max_length=250)
@@ -13,10 +13,17 @@ class TaskType(models.Model):
         "Tipo de tarea",
         choices=TASK_TYPE,
     )
-    required_to_apply = models.BooleanField("", default=True)
     has_deadline = models.BooleanField("Tiene fecha límite", default=False)
     days_to_complete = models.IntegerField("Días para completar", default=30)
-    redirect_to = models.CharField("Redirigir a", max_length=200)
+    required_to_apply = models.BooleanField("Necesario para aplicar", default=True)
+    auto_create_at_user_init = models.BooleanField("Autoasignar al crear usuario", default=False)
+    has_next_task = models.BooleanField("Tiene siguiente tarea", default=False)
+    next_task = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True)
+    has_redirect_url = models.BooleanField("Tiene url para redirigir", default=False)
+    redirect_url = models.CharField("Url para redirigir", max_length=1000, null=True, blank=True)
+
+    def __str__(self):
+        return "%s - %s" % (self.get_type_display(), self.name)
 
 
 class PendingTasks(models.Model):
@@ -25,14 +32,13 @@ class PendingTasks(models.Model):
         on_delete=models.CASCADE,
         verbose_name="Solicitante",
     )
-    task_type = models.ForeignKey(
-        TaskType,
+    task = models.ForeignKey(
+        Task,
         on_delete=models.CASCADE,
-        verbose_name="Tipo de tarea",
+        verbose_name="Tarea",
     )
-    deadline = models.DateTimeField("Fecha límite")
+    deadline = models.DateTimeField("Fecha límite", blank=True, null=True)
     completed = models.BooleanField("Completada", default=False)
 
-
     def __str__(self):
-        return "%s - %s - %s" % (self.username, self.task_type, self.deadline)
+        return "%s - %s" % (self.username, self.task)

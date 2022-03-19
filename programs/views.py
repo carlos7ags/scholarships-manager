@@ -17,8 +17,7 @@ class ProgramsListView(TemplateView):
         ]
         registered = [False for _ in programs]
         context["programs"] = zip(programs, status, registered)
-        # context["completed_basic_forms"] = self.check_complete_forms()
-        context["completed_basic_forms"] = True
+        context["completed_basic_forms"] = self.check_complete_forms()
         return context
 
     def check_complete_forms(self):

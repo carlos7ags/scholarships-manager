@@ -27,14 +27,14 @@ class ExtendedUserCreateView(CreateView):
 class ProfileCreate(ExtendedUserCreateView):
     form_class = ProfileForm
     template_name = "profile.html"
-    success_url = reverse_lazy("home")
+    success_url = reverse_lazy("applicant-dashboard")
 
 
 class ProfileUpdate(UpdateView):
     model = Profile
     form_class = ProfileForm
     template_name = "profile.html"
-    success_url = reverse_lazy("home")
+    success_url = reverse_lazy("applicant-dashboard")
 
     def request_user_is_owner(self, request):
         obj = self.get_object()
@@ -59,14 +59,14 @@ class ProfileRedirectView(RedirectView):
 class ProfileAddressCreate(ExtendedUserCreateView):
     form_class = ProfileAddressForm
     template_name = "profile_address.html"
-    success_url = reverse_lazy("home")
+    success_url = reverse_lazy("applicant-dashboard")
 
 
 class ProfileAddressUpdate(UpdateView):
     model = Address
     form_class = ProfileAddressForm
     template_name = "profile_address.html"
-    success_url = reverse_lazy("home")
+    success_url = reverse_lazy("applicant-dashboard")
 
     def request_user_is_owner(self, request):
         obj = self.get_object()
@@ -91,14 +91,14 @@ class ProfileAddressRedirectView(RedirectView):
 class ProfileContactCreate(ExtendedUserCreateView):
     form_class = ProfileContactForm
     template_name = "profile_contact.html"
-    success_url = reverse_lazy("home")
+    success_url = reverse_lazy("applicant-dashboard")
 
 
 class ProfileContactUpdate(UpdateView):
     model = Contact
     form_class = ProfileContactForm
     template_name = "profile_contact.html"
-    success_url = reverse_lazy("home")
+    success_url = reverse_lazy("applicant-dashboard")
 
     def request_user_is_owner(self, request):
         obj = self.get_object()
@@ -123,14 +123,14 @@ class ProfileContactRedirectView(RedirectView):
 class ProfileBankCreate(ExtendedUserCreateView):
     form_class = ProfileBankForm
     template_name = "profile_bank.html"
-    success_url = reverse_lazy("home")
+    success_url = reverse_lazy("applicant-dashboard")
 
 
 class ProfileBankUpdate(UpdateView):
     model = Bank
     form_class = ProfileBankForm
     template_name = "profile_bank.html"
-    success_url = reverse_lazy("home")
+    success_url = reverse_lazy("applicant-dashboard")
 
     def request_user_is_owner(self, request):
         obj = self.get_object()
@@ -155,14 +155,14 @@ class ProfileBankRedirectView(RedirectView):
 class ProfileEmergencyContactCreate(ExtendedUserCreateView):
     form_class = ProfileEmergencyContactForm
     template_name = "profile_emergency_contact.html"
-    success_url = reverse_lazy("home")
+    success_url = reverse_lazy("applicant-dashboard")
 
 
 class ProfileEmergencyContactUpdate(UpdateView):
     model = EmergencyContact
     form_class = ProfileEmergencyContactForm
     template_name = "profile_emergency_contact.html"
-    success_url = reverse_lazy("home")
+    success_url = reverse_lazy("applicant-dashboard")
 
     def request_user_is_owner(self, request):
         obj = self.get_object()
