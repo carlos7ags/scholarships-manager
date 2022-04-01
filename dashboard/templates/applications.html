@@ -3,15 +3,15 @@
 {% block content %}
 
     <div class="table-responsive">
-    <table class="table table-hover align-middle">
-        <thead>
+    <table class="table table-hover align-middle" style="text-align:center;background-color: white">
+        <thead style="white-space: nowrap;background-color: #15375c;color: white">
             <th>Folio</th>
             <th>Programa</th>
             <th>Estatus</th>
             <th>Resultado</th>
             <th></th>
         </thead>
-        <tbody>
+        <tbody style="font-size:.875em;">
             {% for application in applications %}
                 <tr>
                     <td>{{ application.folio }}</td>
@@ -31,6 +31,9 @@
             {% endfor %}
         </tbody>
     </table>
+    {% if not applications %}
+        <p>No tienes aplicaciones registradas</p>
+    {% endif %}
     </div>
 
 {% endblock %}

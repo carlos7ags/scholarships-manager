@@ -132,7 +132,7 @@ class Address(models.Model):
 
     exterior_number = models.IntegerField("Número exterior")
 
-    interior_number = models.IntegerField("Número interior", null=True, blank=True)
+    interior_number = models.CharField("Número interior", null=True, blank=True, max_length=10)
 
     suburb = models.CharField("Colonia", max_length=100)
 
@@ -271,7 +271,7 @@ class Bank(models.Model):
         max_length=20,
         validators=[
             RegexValidator(
-                regex=r"[0-9]{18}",
+                regex=r"[0-9]{20}",
                 message="Ingresa un número de cuenta válido de 20 dígitos.",
                 code="invalid_phone",
             )

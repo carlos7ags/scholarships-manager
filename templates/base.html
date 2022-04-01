@@ -58,29 +58,11 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="{% url "home" %}">Inicio</a>
                                 </li>
+                                <li class="nav-item dropdown">
+                                     <a class="nav-link" href="{% url "profile-detail" %}">Perfil</a>
+                                </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{% url "applicant-dashboard" %}">Dashboard</a>
-                                </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="profileNavbarDropdown"
-                                       role="button" data-toggle="dropdown" aria-haspopup="true"
-                                       aria-expanded="false">
-                                        Perfil
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="profileNavbarDropdown">
-                                        <a class="dropdown-item" href="{% url "profile-redirect" %}">Información
-                                            Personal</a>
-                                        <a class="dropdown-item" href="{% url "profile-bank-redirect" %}">Información
-                                            Bancaria</a>
-                                        <a class="dropdown-item"
-                                           href="{% url "profile-address-redirect" %}">Dirección</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="{% url "profile-contact-redirect" %}">Datos
-                                            de Contacto</a>
-                                        <a class="dropdown-item"
-                                           href="{% url "profile-emergency-contact-redirect" %}">Contacto de
-                                            Emergencia</a>
-                                    </div>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{% url "programs-list" %}">Programas</a>
