@@ -4,25 +4,35 @@
 
     <div class="container">
         <div class="row justify-content-md-center mt-4" style="background-color:white;">
-            <div class="col col-lg">
-                <h5>Solicitud de beca o apoyo económico</h5>
-
-                <form id="application-form" method="post">
+            <div class="col col-lg m-4">
+                <h4>Solicitud de beca o apoyo económico</h4>
                     {{ application_form_template|safe }}
-                    <input type="submit" value="Enviar solicitud">
-                </form>
             </div>
         </div>
     </div>
-
 
     <!-- JavaScript -->
     <script>
         function convertFormToJSON(form) {
             const array = $(form).serializeArray();
             const json = {};
+            let tmp = "";
+            let currentValue;
+
             $.each(array, function () {
-                json[this.name] = this.value || "";
+                currentValue = this.value|| "";
+                if (Object.keys(json).includes(this.name)) {
+                    if (Array.isArray(json[this.name])) {
+                        json[this.name].push(currentValue);
+                    } else {
+                        tmp = json[this.name];
+                        json[this.name] = Array();
+                        json[this.name].push(tmp);
+                        json[this.name].push(currentValue);
+                    }
+                } else {
+                    json[this.name] = this.value || "";
+                }
             });
             return json;
         }
@@ -31,7 +41,6 @@
             e.preventDefault();
             const form = $(e.target);
             const json = convertFormToJSON(form);
-            console.log(json);
             $.ajax({
                 type: "POST",
                 dataType : 'json',
@@ -56,3 +65,72 @@
     </script>
 
 {% endblock %}
+
+
+
+(function($){
+    $.fn.serializeObject = function(){
+
+        var self = this,
+            json = {},
+            push_counters = {},
+            patterns = {
+                "validate": /^[a-zA-Z][a-zA-Z0-9_]*(?:\[(?:\d*|[a-zA-Z0-9_]+)\])*$/,
+                "key":      /[a-zA-Z0-9_]+|(?=\[\])/g,
+                "push":     /^$/,
+                "fixed":    /^\d+$/,
+                "named":    /^[a-zA-Z0-9_]+$/
+            };
+
+
+        this.build = function(base, key, value){
+            base[key] = value;
+            return base;
+        };
+
+        this.push_counter = function(key){
+            if(push_counters[key] === undefined){
+                push_counters[key] = 0;
+            }
+            return push_counters[key]++;
+        };
+
+        $.each($(this).serializeArray(), function(){
+
+            // Skip invalid keys
+            if(!patterns.validate.test(this.name)){
+                return;
+            }
+
+            var k,
+                keys = this.name.match(patterns.key),
+                merge = this.value,
+                reverse_key = this.name;
+
+            while((k = keys.pop()) !== undefined){
+
+                // Adjust reverse_key
+                reverse_key = reverse_key.replace(new RegExp("\\[" + k + "\\]$"), '');
+
+                // Push
+                if(k.match(patterns.push)){
+                    merge = self.build([], self.push_counter(reverse_key), merge);
+                }
+
+                // Fixed
+                else if(k.match(patterns.fixed)){
+                    merge = self.build([], k, merge);
+                }
+
+                // Named
+                else if(k.match(patterns.named)){
+                    merge = self.build({}, k, merge);
+                }
+            }
+
+            json = $.extend(true, json, merge);
+        });
+
+        return json;
+    };
+})(jQuery);
