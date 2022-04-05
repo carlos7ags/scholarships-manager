@@ -1,190 +1,168 @@
 <form id="application-form" method="post">
-    <h5>Datos de la solicitud </h5>
+    <h5>Datos de la solicitud</h5>
     <div class="form-group m-4">
-        <label for="studiesStartDate">Fecha de inicio de estudios</label>
+        <label for="studiesStartDate" id="studiesStartDate-label">Fecha de inicio de estudios</label>
         <input type="date" class="form-control" id="studiesStartDate" name="studiesStartDate" required>
     </div>
     <div class="form-group m-4">
-        <label for="studiesStartDate">Fecha de t&eacute;rmino de estudios</label>
+        <label for="studiesEndDate" id="studiesEndDate-label">Fecha de término de estudios</label>
         <input type="date" class="form-control" id="studiesEndDate" name="studiesEndDate" required>
     </div>
-    <h5>Programa e instituci&oacute;n y donde realizar&aacute; sus estudios </h5>
+    <h5>Programa e institución y donde realizará sus estudios</h5>
     <div class="form-group m-4">
-        <label for="program">Nombre del programa de estudios</label>
+        <label for="program" id="program-label">Nombre del programa de estudios</label>
         <input type="text" class="form-control" id="program" name="program" required>
     </div>
     <div class="form-group m-4">
-        <label for="description">Descripción del programa, tema de estudio o actividad acad&eacute;mica que
-            pretende realizar</label>
+        <label for="description" id="description-label">Descripción del programa, tema de estudio o actividad académica que pretende realizar</label>
         <textarea type="text" class="form-control" id="description" name="description" required></textarea>
     </div>
     <div class="form-group m-4">
-        <label for="programObjective ">Objetivo del programa de estudios</label>
-        <textarea type="text " class="form-control " id="programObjective" name="programObjective" rows="3" required></textarea>
+        <label for="programObjective" id="programObjective-label">Objetivo del programa de estudios</label>
+        <textarea type="text" class="form-control" id="programObjective" name="programObjective" rows="3" required></textarea>
     </div>
     <div class="form-group m-4">
-        <label for="subjectCount ">N&uacute;mero de asignaturas y cr&eacute;ditos</label>
-        <input type="number" min="0" max="100" class="form-control " id="subjectCount" name="subjectCount"
-               required>
+        <label for="subjectCount" id="subjectCount-label">Número de asignaturas y créditos</label>
+        <input type="number" min="0" max="100" class="form-control" id="subjectCount" name="subjectCount" required>
     </div>
     <div class="form-group m-4">
-        <label for="programDuration">Duraci&oacute;n del programa (horas)</label>
-        <input type="number" min="0" class=" form-control " id="programDuration" name="programDuration"
-               required>
+        <label for="programDuration" id="programDuration-label">Duración del programa (horas)</label>
+        <input type="number" min="0" class="form-control" id="programDuration" name="programDuration" required>
     </div>
     <div class="form-group m-4">
-        <label for="programLanguage ">Idioma en que se imparte el programa </label>
-        <select class="form-control " id="programLanguage" name="programLanguage" required>
-            <option value="spanish ">Espa&ntilde;ol</option>
-            <option value="english ">Ingl&eacute;s</option>
-            <option value="portuguese ">Portugu&eacute;s</option>
-            <option value="french ">Franc&eacute;s</option>
-            <option value="french ">Otro</option>
+        <label for="programLanguage" id="programLanguage-label">Idioma en que se imparte el programa</label>
+        <select class="form-control" id="programLanguage" name="programLanguage" required>
+            <option value="spanish">Español</option>
+            <option value="english">Inglés</option>
+            <option value="portuguese">Portugués</option>
+            <option value="french">Francés</option>
+            <option value="french">Otro</option>
         </select>
     </div>
     <div class="form-group m-4">
-        <label for="programArea ">&Aacute;rea del programa </label>
-        <input type="text " class=" form-control " id="programArea" name="programArea" required>
+        <label for="programArea" id="programArea-label">Área del programa</label>
+        <input type="text" class=" form-control" id="programArea" name="programArea" required>
     </div>
     <div class="form-group m-4">
-        <label for="programImpact ">Impacto del programa en el estado y beneficios </label>
-        <textarea type="text " class=" form-control " id="programImpact" name="programImpact" rows="5" required></textarea>
+        <label for="programImpact" id="programImpact-label">Impacto del programa en el estado y beneficios</label>
+        <textarea type="text" class=" form-control" id="programImpact" name="programImpact" rows="5" required></textarea>
     </div>
     <div class="form-group m-4">
-        <label for="institution ">Instituci&oacute;n donde se realizar&aacute;n los estudios</label>
-        <input type="text " class="form-control " id="institution" name="institution" required>
+        <label for="institution" id="institution-label">Institución donde se realizarán los estudios</label>
+        <input type="text" class="form-control" id="institution" name="institution" required>
     </div>
     <div class="form-group m-4">
-        <label for="city_country">Ciudad o pa&iacute;s donde se realizar&aacute;n los estudios</label>
-        <input type="text " class="form-control " id="city_country" name="city_country" aria-describedby="city_help" required>
+        <label for="city_country" id="city_country-label">Ciudad o país donde se realizarán los estudios</label>
+        <input type="text" class="form-control" id="city_country" name="city_country" aria-describedby="city_help" required>
     </div>
     <div class="form-group m-4" style="border: 1pt; border-color: gray;">
-        <p>***Solo en caso de estar matriculado y cursando programa de doctorado o maestr&iacute;a*** </p>
+        <p>***Solo en caso de estar matriculado y cursando programa de doctorado o maestría***</p>
         <p>Programa de Estudios</p>
         <table class="table table-light m-4" id="credits_tab" name="credits_tab" aria-describedby="credits_help">
             <thead>
-                <td><label class=" form-text">Matería</label></td>
-                <td><label class="form-text">Número de créditos</label></td>
+                <td><label class="form-text" for="materia" id="materia-label">Materia</label></td>
+                <td><label class="form-text" for="creditos" id="creditos-label">Número de créditos</label></td>
             </thead>
             <tbody>
-            <tr>
-                <td>
-                    <input type="text" class="form-control" name="materia" required>
-                </td>
-                <td>
-                    <input type="number" class="form-control" min="0" name="creditos" required>
-                </td>
-            </tr>
+                <tr>
+                    <td>
+                        <input type="text" class="form-control" id="materia" name="materia" required>
+                    </td>
+                    <td>
+                        <input type="number" class="form-control" min="0" id="creditos" name="creditos" required>
+                    </td>
+                </tr>
             </tbody>
         </table>
-        <button type="button" class="btn btn-primary" onclick="addRow('credits_tab')" style="margin-left:40px">A&ntilde;adir</button>
+        <button type="button" class="btn btn-primary" onclick="addRow('credits_tab')" style="margin-left:40px">Añadir</button>
         <button type="button" class="btn btn-primary" onclick="removeLastRow('credits_tab')" style="margin-left:5px">Eliminar</button>
     </div>
     <div class="form-group m-4">
-        <p>***Solo en caso de estar matriculado y cursando programa de doctorado o maestr&iacute;a*** </p>
-        <label class="form-text" for="documentosSoporte">L&iacute;nea de investigaci&oacute;n </label>
-        <input type="text " class="form-control " id="documentosSoporte" name="documentosSoporte" aria-describedby="city_help" required>
-        <p id="research_help" name="research_help" class="form-text">Enlace o link o nombre del documento donde se pueda verificar la
-            informaci&oacute;n de la estructura curricular y las l&iacute;neas de investigaci&oacute;n. Si la informaci&oacute;n
-            se encuentra en un documento entregado en su expediente,
-            indicar los n&uacute;meros de p&aacute;gina en donde se ubica
-        </p>
-        <textarea class="form-control" id="research" name="research" rows="5" aria-describedby="research_help"
-                  required></textarea>
-        <small id=" research_help " class="form-text text-muted ">Dado caso que entregue anexo al expediente alg&uacute;n
-            documento, lo especificar&iacute;a en este apartado o si est&aacute; disponible en alg&uacute;n sitio de
-            internet agregar link para consulta.</small>
+        <p>***Solo en caso de estar matriculado y cursando programa de doctorado o maestría***</p>
+        <label class="form-text" for="documentosSoporte" id="documentosSoporte-label">Línea de investigación</label>
+        <input type="text" class="form-control" id="documentosSoporte" name="documentosSoporte" aria-describedby="city_help" required>
+        <label for="research" id="research-label" class="form-text">Enlace o link o nombre del documento donde se pueda verificar la información de la estructura curricular y las líneas de investigación. Si la información se encuentra en un documento entregado en su expediente, indicar los números de página en donde se ubica.</label>
+        <textarea class="form-control" id="research" name="research" rows="5" aria-describedby="research_help" required></textarea>
+        <small id=" research_help" class="form-text text-muted">Dado caso que entregue anexo al expediente algún documento, lo especificaría en este apartado o si está disponible en algún sitio de internet agregar link para consulta.</small>
     </div>
     <div class="form-group m-4">
         <h5>Rubros Solicitados</h5>
-        <small id="rubros_help" name="rubros_help" class="form-text text-muted">El monto total del apoyo solicitado no puede exceder
-            $20,000.00 al extranjero y $10,000.00 al interior del pa&iacute;s</small>
+        <small id="rubros_help" name="rubros_help" class="form-text text-muted">El monto total del apoyo solicitado no puede exceder $20,000.00 al extranjero y $10,000.00 al interior del país</small>
         <table class="table table-light m-4" id="rubros" name="rubros" aria-describedby="rubros_help" style="border-collapse: collapse">
-            <tbody>
             <thead>
-                <td><label class=" form-text ">Concepto del apoyo </label></td>
-                <td><label class="form-text ">Costo total de los estudios </label></td>
-                <td><label class="form-text ">Monto solicitado </label></td>
+                <td><label class="form-text" for="help_concept" id="help_concept-label">Concepto del apoyo</label></td>
+                <td><label class="form-text" for="amount" id="amount-label">Costo total de los estudios</label></td>
+                <td><label class="form-text" for="cost" id="cost-label">Monto solicitado</label></td>
             </thead>
-            <tr>
-                <td>
-                    <select class="form-control" id="help_concept" name="help_concept" required>
-                        <option value="movility">Movilidad</option>
-                        <option value="research">Investigaci&oacute;n</option>
-                        <option value="inscription">Inscripci&oacute;n</option>
-                        <option value="viaticos">Vi&aacute;ticos</option>
-                        <option value="others">Otros</option>
-                    </select>
-                </td>
-                <td><input class="form-control " id="amount" name="amount" type="number" min="0" required></td>
-                <td><input class="form-control " id="cost" name="cost" type="number" min="0" required></td>
-            </tr>
+            <tbody>
+                <tr>
+                    <td>
+                        <select class="form-control" id="help_concept" name="help_concept" required>
+                            <option value="movility">Movilidad</option>
+                            <option value="research">Investigación</option>
+                            <option value="inscription">Inscripción</option>
+                            <option value="viaticos">Viáticos</option>
+                            <option value="others">Otros</option>
+                        </select>
+                    </td>
+                    <td><input class="form-control" id="amount" name="amount" type="number" min="0" required></td>
+                    <td><input class="form-control" id="cost" name="cost" type="number" min="0" required></td>
+                </tr>
             </tbody>
         </table>
-        <button type="button" class="btn btn-primary " onclick="addRow( 'rubros')" style="margin-left:40px">A&ntilde;adir</button>
-        <button type="button" class="btn btn-primary " onclick="removeLastRow( 'rubros')" style="margin-left:5px">Eliminar</button>
+        <button type="button" class="btn btn-primary" onclick="addRow('rubros')" style="margin-left:40px">Añadir</button>
+        <button type="button" class="btn btn-primary" onclick="removeLastRow('rubros')" style="margin-left:5px">Eliminar</button>
     </div>
     <h5>Motivos</h5>
     <div class="form-group m-4">
-        <label class="form-text" for="studies_objective">
-            Objetivo personal que lo impuls&oacute; para seguir estudiando:
-        </label>
-        <textarea class="form-control " id="studies_objective" name="studies_objective" rows="5" required></textarea>
+        <label class="form-text" for="studies_objective" id="studies_objective-label">Objetivo personal que lo impulsó para seguir estudiando</label>
+        <textarea class="form-control" id="studies_objective" name="studies_objective" rows="5" required></textarea>
     </div>
     <div class="form-group m-4">
-        <label for="pertinent ">Diga, ¿por qu&eacute; es pertinente el apoyar su formaci&oacute;n en la modalidad
-            pretendida?</label>
-        <textarea class="form-control " id="pertinent" name="pertinent" rows="5" required></textarea>
+        <label class="form-text" for="pertinent" id="pertinent-label">Diga, ¿por qué es pertinente el apoyar su formación en la modalidad pretendida?</label>
+        <textarea class="form-control" id="pertinent" name="pertinent" rows="5" required></textarea>
     </div>
     <div class="form-group m-4">
-        <label for=" plans ">Planes de trabajo despu&eacute;s de terminar sus estudios:</label>
-        <textarea class="form-control " id="plans" name="plans" rows="5" required></textarea>
+        <label class="form-text" for="plans" id="plans-label">Planes de trabajo después de terminar sus estudios:</label>
+        <textarea class="form-control" id="plans" name="plans" rows="5" required></textarea>
     </div>
     <div class="form-group m-4">
-        <label for="advantages ">Fundamente las ventajas de esta instituci&oacute;n y programa sobre la oferta educativa en Aguascalientes.</label>
-        <textarea class="form-control " id="advantages" name="advantages" rows="5"
-                  required></textarea>
+        <label class="form-text" for="advantages" id="advantages-label">Fundamente las ventajas de esta institución y programa sobre la oferta educativa en Aguascalientes.</label>
+        <textarea class="form-control" id="advantages" name="advantages" rows="5" required></textarea>
     </div>
     <div class="form-group m-4">
         <p>Complete el siguiente texto donde exprese los motivos
             personales por los cuales usted está solicitando el apoyo del programa de fomento a talentos en la Modalidad
-            de Apoyos Directos y Est&iacute;mulos correspondiente, considerando los puntos que a continuaci&oacute;n se
-            describen dentro de la redacci&oacute;n general.</p>
-        <label for="letter" id="letter_label" name="letter_label" class="form-text"/></label>
-        <textarea class="form-control " id="letter" name="letter" rows="8" required>
-            Me dirijo a usted de la manera m&aacute;s atenta para solicitarle...
+            de Apoyos Directos y Estímulos correspondiente, considerando los puntos que a continuación se
+            describen dentro de la redacción general.</p><br>
+        <label class="form-text" for="letter" id="letter-label"/>Exposición de motivos</label>
+        <textarea class="form-control" id="letter" name="letter" rows="8" required>
+            Me dirijo a usted de la manera más atenta para solicitarle...
 
             Objetivo...
 
             Motivo de solicitud...
 
-            Beneficios e impacto que tendr&aacute; realizar sus estudios o actividad para la cual requiere el apoyo...
+            Beneficios e impacto que tendrá realizar sus estudios o actividad para la cual requiere el apoyo...
+
         </textarea>
     </div>
     <div class="form-group m-4">
-        <label for="relacionProyecto ">Argumentar la relación del proyecto de estudios que pretende realizar o está realizando
-            con la ciencia aplicada y la tecnolog&iacute;a e innovaci&oacute;n, as&iacute; como el impacto o beneficios
-            para el Estado</label>
-        <textarea class="form-control " id="relacionProyecto" name="relacionProyecto" rows="5 "
-                  required></textarea>
+        <label class="form-text" for="relacionProyecto" id="relacionProyecto-label">Argumentar la relación del proyecto de estudios que pretende realizar o está realizando con la ciencia aplicada y la tecnología e innovación, así como el impacto o beneficios para el Estado</label>
+        <textarea class="form-control" id="relacionProyecto" name="relacionProyecto" rows="5" required></textarea>
     </div>
     <div class="form-group m-4">
-        <label for="relacionProyectoCTI">Argumetación sobre la relación del proyecto o programa de estudios con la ciencia
-            aplicada, la tecnología y la innovación</label>
-        <textarea class="form-control " id="relacionProyectoCTI" name="relacionProyectoCTI" rows="5 "
-                  required></textarea>
+        <label class="form-text" for="relacionProyectoCTI" id="relacionProyectoCTI-label">Argumetación sobre la relación del proyecto o programa de estudios con la ciencia aplicada, la tecnología y la innovación</label>
+        <textarea class="form-control" id="relacionProyectoCTI" name="relacionProyectoCTI" rows="5" required></textarea>
     </div>
     <button class="btn btn-primary" type="submit">Enviar solicitud</button>
 </form>
 
 <script>
     function addRow(id) {
-        if (id == 'credits_tab')
-            var root = document.getElementById(id).getElementsByTagName('tbody')[0];
-        else
-            var root = document.getElementById(id).getElementsByTagName('tbody')[1];
+        var root = document.getElementById(id).getElementsByTagName('tbody')[0];
         var rows = root.getElementsByTagName('tr');
-        var clone = cloneEl(rows[rows.length - 1]);
+        var clone = rows[rows.length - 1].cloneNode(true);
         cleanUpInputs(clone);
         root.appendChild(clone);
     }
@@ -192,21 +170,21 @@
     function removeLastRow(id) {
         var table = document.getElementById(id);
         var rowCount = table.rows.length;
-        if ((id == 'credits_tab' && rowCount > 1) || (id == 'rubros' && rowCount > 2))
-            table.deleteRow(rowCount - 1);
-    }
-
-    function cloneEl(el) {
-        var clo = el.cloneNode(true);
-        return clo;
+        if (rowCount > 2) {table.deleteRow(rowCount - 1);}
     }
 
     function cleanUpInputs(obj) {
-        for (var i = 0; n = obj.childNodes[i]; ++i) {
-            if (n.childNodes && n.tagName != 'INPUT') {
+        for (let i = 0; i < obj.childNodes.length; ++i) {
+            console.log(i);
+            let n = obj.childNodes[i];
+            console.log(n);
+            console.log(n.tagName);
+            if (n.childNodes && n.tagName !== 'INPUT') {
+                console.log("level")
                 cleanUpInputs(n);
-            } else if (n.tagName == 'INPUT')
-                n.value = ''
+            } else if (n.tagName === 'INPUT') {
+                n.value = '';
+            }
         }
     }
 </script>
