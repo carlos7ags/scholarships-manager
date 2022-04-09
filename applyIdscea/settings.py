@@ -65,6 +65,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+MIDDLEWARE += ["csp.middleware.CSPMiddleware"]
+
+# Allow browsers to load normalize.css from cdn.jsdelivr.net
+CSP_STYLE_SRC = ["'self'", "cdn.jsdelivr.net"]
+
 ROOT_URLCONF = 'applyIdscea.urls'
 
 TEMPLATES = [
@@ -168,3 +173,4 @@ SECURE_HSTS_SECONDS = 24*60*60  # Unit is seconds; *USE A SMALL VALUE FOR TESTIN
 SECURE_HSTS_PRELOAD = True
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
