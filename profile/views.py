@@ -197,17 +197,22 @@ class ProfileDetail(TemplateView):
         context["bank"] = Bank.objects.filter(
             username=username
         ).first()
-        context["bank"] = prettyfy_bank(context["bank"])
+        if context["bank"]:
+            context["bank"] = prettyfy_bank(context["bank"])
         context["address"] = Address.objects.filter(
             username=username
         ).first()
+
         context["contact"] = Contact.objects.filter(
             username=username
         ).first()
-        context["contact"] = prettyfy_contact(context["contact"])
+        if context["contact"]:
+            context["contact"] = prettyfy_contact(context["contact"])
+
         context["emergency"] = EmergencyContact.objects.filter(
             username=username
         ).first()
-        context["emergency"] = prettyfy_emergency_contact(context["emergency"])
+        if context["emergency"]:
+            context["emergency"] = prettyfy_emergency_contact(context["emergency"])
 
         return context
