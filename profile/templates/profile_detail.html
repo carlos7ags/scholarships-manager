@@ -34,9 +34,16 @@
                         <div class="col-md-4 mb-3">
                             <div class="card border-0">
                                 <div class="card-body">
-                                    <div class="d-flex flex-column align-items-center text-center"><img
+                                    <div class="d-flex flex-column align-items-center text-center">
+                                        {% if profile.profile_picture.url == None %}
+                                        <img
+                                            src="{% static "images/default.jpg" %}" alt="Student" class="rounded-circle"
+                                            width="150" height="150" />
+                                        {% else %}
+                                        <img
                                             src="{{ profile.profile_picture.url }}" alt="Student" class="rounded-circle"
-                                            width="150" height="150">
+                                            width="150" height="150" />
+                                        {%  endif %}
                                         <div class="mt-3">
                                             <h4>{{ profile.lastname_first|title }} {{ profile.lastname_second|title }}<br>{{ profile.name|title }}
                                             </h4>

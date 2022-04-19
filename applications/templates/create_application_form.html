@@ -1,69 +1,24 @@
 {% extends "base.html" %}
 
+{% load static %}
+
 {% block content %}
 
     <div class="container">
         <div class="row justify-content-md-center mt-4" style="background-color:white;">
             <div class="col col-lg m-4">
                 <h4>Solicitud de beca o apoyo económico</h4>
+                <form id="application-form" method="post" data-url="{% url 'create-application-form' pk %}">
+                    {% csrf_token %}
                     {{ application_form_template|safe }}
+                    <button class="btn btn-primary" type="submit">Enviar solicitud</button>
+                </form>
             </div>
         </div>
     </div>
 
-    <!-- JavaScript -->
-    <script>
-        function convertFormToJSON(form) {
-            const array = $(form).serializeArray();
-            const json = {};
-            let tmp = "";
-            let currentValue;
-
-            $.each(array, function () {
-                currentValue = this.value|| "";
-                if (Object.keys(json).includes(this.name)) {
-                    if (Array.isArray(json[this.name]["value"])) {
-                        json[this.name]["value"].push(currentValue);
-                    } else {
-                        tmp = json[this.name]["value"];
-                        json[this.name]["value"] = Array();
-                        json[this.name]["value"].push(tmp);
-                        json[this.name]["value"].push(currentValue);
-                    }
-                } else {
-                    json[this.name] = {};
-                    console.log(document.getElementsByTagName("label").namedItem(this.name + "-label"))
-                    json[this.name]["label"] = document.getElementsByTagName("label").namedItem(this.name + "-label").innerHTML;
-                    json[this.name]["value"] = this.value || "";
-                }
-            });
-            return json;
-        }
-
-        $("#application-form").on("submit", function (e) {
-            e.preventDefault();
-            const form = $(e.target);
-            const json = convertFormToJSON(form);
-            $.ajax({
-                type: "POST",
-                dataType : 'json',
-                url: "{% url 'create-application-form' pk %}",
-                data: JSON.stringify(json),
-                contentType: 'application/json;charset=UTF-8',
-                async: true,
-                beforeSend:function(xhr, settings){
-                    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
-                },
-                success: function(data) {
-                    if(data.status === 'fail') {
-                        alert("error");
-                    } else if (data.status === 'success') {
-                        window.location.href="{% url 'application-detail' pk %}";
-                    }
-                },
-            });
-            return false;
-        });
-    </script>
+    {% csrf_token %}
+    <script src="{% static 'assets/js/other/formToJSON.js' %}"></script>
+    <script src="{% static 'assets/js/other/addRow.js' %}"></script>
 
 {% endblock %}

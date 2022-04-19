@@ -1,5 +1,4 @@
-<form id="application-form" method="post">
-    <h5>Datos de la solicitud</h5>
+<h5>Datos de la solicitud</h5>
     <div class="form-group m-4">
         <label for="studiesStartDate" id="studiesStartDate-label">Fecha de inicio de estudios</label>
         <input type="date" class="form-control" id="studiesStartDate" name="studiesStartDate" required>
@@ -74,8 +73,8 @@
                 </tr>
             </tbody>
         </table>
-        <button type="button" class="btn btn-primary" onclick="addRow('credits_tab')" style="margin-left:40px">Añadir</button>
-        <button type="button" class="btn btn-primary" onclick="removeLastRow('credits_tab')" style="margin-left:5px">Eliminar</button>
+        <button type="button" class="btn btn-primary btn-multi-rows-add" style="margin-left:40px" target="credits_tab">Añadir</button>
+        <button type="button" class="btn btn-primary btn-multi-rows-remove"  style="margin-left:5px" target="credits_tab">Eliminar</button>
     </div>
     <div class="form-group m-4">
         <p>***Solo en caso de estar matriculado y cursando programa de doctorado o maestría***</p>
@@ -110,8 +109,8 @@
                 </tr>
             </tbody>
         </table>
-        <button type="button" class="btn btn-primary" onclick="addRow('rubros')" style="margin-left:40px">Añadir</button>
-        <button type="button" class="btn btn-primary" onclick="removeLastRow('rubros')" style="margin-left:5px">Eliminar</button>
+        <button type="button" class="btn btn-primary btn-multi-rows-add" style="margin-left:40px" target="rubros">Añadir</button>
+        <button type="button" class="btn btn-primary btn-multi-rows-remove" style="margin-left:5px" target="rubros">Eliminar</button>
     </div>
     <h5>Motivos</h5>
     <div class="form-group m-4">
@@ -155,36 +154,3 @@
         <label class="form-text" for="relacionProyectoCTI" id="relacionProyectoCTI-label">Argumetación sobre la relación del proyecto o programa de estudios con la ciencia aplicada, la tecnología y la innovación</label>
         <textarea class="form-control" id="relacionProyectoCTI" name="relacionProyectoCTI" rows="5" required></textarea>
     </div>
-    <button class="btn btn-primary" type="submit">Enviar solicitud</button>
-</form>
-
-<script>
-    function addRow(id) {
-        var root = document.getElementById(id).getElementsByTagName('tbody')[0];
-        var rows = root.getElementsByTagName('tr');
-        var clone = rows[rows.length - 1].cloneNode(true);
-        cleanUpInputs(clone);
-        root.appendChild(clone);
-    }
-
-    function removeLastRow(id) {
-        var table = document.getElementById(id);
-        var rowCount = table.rows.length;
-        if (rowCount > 2) {table.deleteRow(rowCount - 1);}
-    }
-
-    function cleanUpInputs(obj) {
-        for (let i = 0; i < obj.childNodes.length; ++i) {
-            console.log(i);
-            let n = obj.childNodes[i];
-            console.log(n);
-            console.log(n.tagName);
-            if (n.childNodes && n.tagName !== 'INPUT') {
-                console.log("level")
-                cleanUpInputs(n);
-            } else if (n.tagName === 'INPUT') {
-                n.value = '';
-            }
-        }
-    }
-</script>

@@ -5,7 +5,7 @@ from applications.views import *
 
 applications_urlpatterns = [
     path(
-        "program/<program_id>/application",
+        "program/<program_id>/application/new",
         login_required(create_application),
         name="create-application",
     ),

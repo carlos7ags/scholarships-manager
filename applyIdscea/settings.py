@@ -68,7 +68,7 @@ MIDDLEWARE = [
 MIDDLEWARE += ["csp.middleware.CSPMiddleware"]
 
 # Allow browsers to load normalize.css from cdn.jsdelivr.net
-CSP_STYLE_SRC = ["'self'", "cdn.jsdelivr.net"]
+CSP_STYLE_SRC = ["'self'", "'unsafe-inline'", "'unsafe-eval'"]
 
 ROOT_URLCONF = 'applyIdscea.urls'
 
