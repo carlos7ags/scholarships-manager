@@ -4,14 +4,13 @@
 
 {% block content %}
 
-
-    <div class="container">
-        <div class="row justify-content-md-center my-4" style="background-color:white;">
-            <div class="col col-lg">
-                <h2>Programas</h2>
-            </div>
+<div class="container">
+    <div class="row justify-content-md-center my-4" style="color: #15375CFF;">
+        <div class="col col-sm text-left font-italic" style="font-size: smaller;">
+            <p>Inicio > Programas</p>
         </div>
     </div>
+</div>
 
     <div class="modal fade" style="display:none;" tabindex="-1" role="dialog" id="modal">
         <div class="modal-dialog" role="document">
@@ -36,7 +35,7 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ program.title }}</h5>
                             <p class="card-text">{{ program.description }}</p>
-                                <a type="button" class="btn btn-outline-secondary" href="{% static program.file.url %}">
+                                <a type="button" class="btn btn-outline-secondary" href="{{ program.file.url }}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                          class="bi bi-cloud-download"
                                          viewBox="0 0 16 16">

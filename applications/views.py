@@ -23,7 +23,7 @@ def create_application_form(request, pk):
 def create_application(request, program_id):
     application = Application.objects.filter(username=request.user, program=program_id).first()
     if application:
-        return redirect(reverse("application-detail", args=(application.id,)))
+        return redirect(reverse("applicant-dashboard"))
     else:
         if request.method == "POST":
             form = ApplicationForm(request.POST)
@@ -75,6 +75,11 @@ class ApplicationDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        app_form = context["object"].application_form
+        context["application"] = zip(
+            [app_form[k]["label"] for k in app_form.keys()],
+            [app_form[k]["value"] for k in app_form.keys()],
+        )
         return context
 
     def get_queryset(self):

@@ -271,9 +271,9 @@ class Bank(models.Model):
         max_length=20,
         validators=[
             RegexValidator(
-                regex=r"[0-9]{20}",
+                regex=r"\d+",
                 message="Ingresa un número de cuenta válido de 20 dígitos.",
-                code="invalid_phone",
+                code="invalid_bank_account",
             )
         ],
     )
@@ -285,7 +285,7 @@ class Bank(models.Model):
             RegexValidator(
                 regex=r"[0-9]{18}",
                 message="Ingresa un número CLABE válido de 18 dígitos.",
-                code="invalid_phone",
+                code="invalid_clabe",
             )
         ],
     )
