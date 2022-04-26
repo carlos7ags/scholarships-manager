@@ -89,7 +89,9 @@ class Application(models.Model):
         (0, "Pendiente"),
         (1, "Enviada"),
         (2, "En revisión"),
-        (3, "Decisión final"),
+        (3, "Validada"),
+        (4, "Decisión final"),
+        (5, "Seguimiento"),
         (-1, "Retirada"),
     )
 
