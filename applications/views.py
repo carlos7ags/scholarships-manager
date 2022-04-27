@@ -1,8 +1,8 @@
 from django.contrib.auth.views import redirect_to_login
 from django.http import Http404, HttpResponse
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
-from django.views.generic import TemplateView, DetailView
+from django.views.generic import TemplateView, DetailView, UpdateView
 from .forms import *
 from .models import *
 import time
@@ -18,6 +18,16 @@ def create_application_form(request, pk):
         obj.save()
         return HttpResponse('{"status":"success"}', content_type='application/json')
     return HttpResponse('{"status":"fail"}', content_type='application/json')
+
+
+def withdraw_application(request, pk):
+    if request.method == "POST":
+        obj = Application.objects.filter(id=pk).first()
+        obj.current_stage = -1
+        obj.save()
+        return HttpResponse(status=204, headers={'HX-Trigger': 'refreshMain'})
+    else:
+        return render(request, 'withdraw_application.html')
 
 
 def create_application(request, program_id):

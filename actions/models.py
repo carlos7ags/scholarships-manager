@@ -37,6 +37,7 @@ class PendingTasks(models.Model):
         on_delete=models.CASCADE,
         verbose_name="Tarea",
     )
+    comments = models.TextField("Comentarios", blank=True, null=True)
     deadline = models.DateTimeField("Fecha límite", blank=True, null=True)
     completed = models.BooleanField("Completada", default=False)
 

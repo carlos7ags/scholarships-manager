@@ -24,4 +24,9 @@ applications_urlpatterns = [
         login_required(ApplicationDetailView.as_view()),
         name="application-detail",
     ),
+    path(
+        "application/<pk>/withdraw",
+        login_required(withdraw_application),
+        name="withdraw-application",
+    ),
 ]
