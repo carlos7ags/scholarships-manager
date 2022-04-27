@@ -56,10 +56,10 @@
                                 <a class="btn" href="#" id="profilePicMenu" role="button" data-toggle="dropdown"
                                    aria-haspopup="true"
                                    aria-expanded="true">
-                                    {% if request.user.student.pic.url %}
-                                        <span><img src="{{ request.user.student.pic.url }}" alt=""
+                                    {% if request.user.profile.profile_picture != None %}
+                                        <span><img src="{{ request.user.profile.profile_picture.url }}" alt=""
                                                    class="rounded-circle" width="40"
-                                                   height="40"></span>
+                                                   height="40" style="overflow: hidden"></span>
                                     {% else %}
                                         <span><img src="{% static "images/default.jpg" %}" alt="" class="rounded-circle"
                                                    width="40"
