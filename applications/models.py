@@ -92,6 +92,7 @@ class Application(models.Model):
         (3, "Validada"),
         (4, "Decisión final"),
         (5, "Seguimiento"),
+        (6, "Concluida"),
         (-1, "Retirada"),
     )
 

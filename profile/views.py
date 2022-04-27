@@ -12,10 +12,12 @@ def complete_profile_task(http_referer: str, username: str):
     valid_form_types = ["personal", "address", "contact", "bank", "emergency"]
     pending_tasks = PendingTasks.objects.filter(username=username, completed=False)
     for task in pending_tasks:
-        form_type = task.task.redirect_url.split("/")[1]
-        if form_type in valid_form_types and form_type in http_referer:
-            task.completed = True
-            task.save()
+        if isinstance(task.task.redirect_url, str):
+            path_parts = task.task.redirect_url.split("/")
+            form_type = path_parts[1]
+            if form_type in valid_form_types and form_type in http_referer:
+                task.completed = True
+                task.save()
 
 
 def prettyfy_bank(bank: Bank):
