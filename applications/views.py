@@ -1,8 +1,11 @@
+import os
+from typing import Dict, Any
+
 from django.contrib.auth.views import redirect_to_login
 from django.http import Http404, HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
-from django.views.generic import TemplateView, DetailView, UpdateView
+from django.views.generic import TemplateView, DetailView, UpdateView, View
 
 from profile.models import Profile
 from .forms import *
@@ -11,6 +14,9 @@ import time
 import json
 from django.core.mail import send_mail
 from django.template import loader
+from io import BytesIO
+from django.template.loader import get_template
+from xhtml2pdf import pisa
 
 
 def send_application_sent_mail(curp: str, program_code: str, program_name: str):
@@ -80,14 +86,12 @@ def create_application(request, program_id):
 
 def download_application(request, pk):
     if request.method == "GET":
-        profile = Profile.objects.filter(username=request.user).first()
-        application = Application.objects.filter(id=pk).first()
-
-
-
-
-
-        return HttpResponse(status=204, headers={'HX-Trigger': 'refreshMain'})
+        context_dict = dict()
+        context_dict["request"] = request
+        context_dict["profile"] = Profile.objects.filter(username=request.user).first()
+        context_dict["application"] = Application.objects.filter(id=pk).first()
+        pdf = html_to_pdf("ad-solicitud-pdf.html", context=context_dict)
+        return HttpResponse(pdf, content_type='application/pdf')
     else:
         return Http404
 
@@ -132,3 +136,20 @@ class ApplicationDetailView(DetailView):
 
     def get_queryset(self):
         return Application.objects.filter(username=self.request.user)
+
+
+def html_to_pdf(template_src: str, context=Dict[str, Any]):
+    template = get_template(template_src)
+    html = template.render(context)
+    print(html)
+    result = BytesIO()
+
+    pdf = pisa.pisaDocument(BytesIO(html.encode("utf-8")), result, link_callback=fetch_resources)
+    if not pdf.err:
+        return HttpResponse(result.getvalue(), content_type='application/pdf')
+    return None
+
+
+def fetch_resources(uri, rel):
+    path = os.path.join(settings.MEDIA_ROOT, uri.replace(settings.MEDIA_URL, ""))
+    return path
