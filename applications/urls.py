@@ -25,6 +25,11 @@ applications_urlpatterns = [
         name="application-detail",
     ),
     path(
+        "application/<pk>/download",
+        login_required(download_application),
+        name="application-download",
+    ),
+    path(
         "application/<pk>/withdraw",
         login_required(withdraw_application),
         name="withdraw-application",

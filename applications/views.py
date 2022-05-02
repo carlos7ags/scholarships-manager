@@ -3,10 +3,33 @@ from django.http import Http404, HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
 from django.views.generic import TemplateView, DetailView, UpdateView
+
+from profile.models import Profile
 from .forms import *
 from .models import *
 import time
 import json
+from django.core.mail import send_mail
+from django.template import loader
+
+
+def send_application_sent_mail(curp: str, program_code: str, program_name: str):
+    html_message = loader.render_to_string(
+        "application_sent_mail.html",
+        {
+            "curp": curp,
+            "convocatoria": program_name,
+            "codigo": program_code,
+        },
+    )
+    send_mail(
+        f"Fomento a Talentos - Nueva solicitud - {curp}",
+        "",
+        "contacto.fibeipes@gmail.com",
+        ["cabrera1988reinier@gmail.com"],
+        fail_silently=False,
+        html_message=html_message,
+    )
 
 
 def create_application_form(request, pk):
@@ -15,6 +38,7 @@ def create_application_form(request, pk):
         data = json.loads(request.body.decode('utf-8'))
         obj.application_form = data
         obj.current_stage = 1
+        send_application_sent_mail(curp=request.user.username, program_code=obj.program.application_prefix, program_name=obj.program.title)
         obj.save()
         return HttpResponse('{"status":"success"}', content_type='application/json')
     return HttpResponse('{"status":"fail"}', content_type='application/json')
@@ -52,6 +76,20 @@ def create_application(request, program_id):
                 raise Http404
         else:
             raise Http404
+
+
+def download_application(request, pk):
+    if request.method == "GET":
+        profile = Profile.objects.filter(username=request.user).first()
+        application = Application.objects.filter(id=pk).first()
+
+
+
+
+
+        return HttpResponse(status=204, headers={'HX-Trigger': 'refreshMain'})
+    else:
+        return Http404
 
 
 class RenderApplicationFormView(TemplateView):

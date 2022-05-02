@@ -1,0 +1,810 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+
+    <title>FORMATO A-AD-FT-</title>
+
+</head>
+
+<body lang=ES class=img_back>
+    <div id="header">
+        <table>
+            <tbody>
+                <tr style="height: 100%;">
+                    <td style="width: 30%; height: auto;"></td>
+                    <td style="margin: auto; vertical-align: middle;">
+                        <img class="logo" src="{% static 'images/logo-pdf.jpg' %}" /></td>
+                    <td style="width:30%; height: auto;">
+                        <p id="format">FORMATO A-AD-FT -2022</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="title">
+        <p style='margin: auto;font-size:15px;line-height:150%;'>
+            Solicitud de apoyo para la <strong>modalidad de apoyos directos y est&iacute;mulos</strong> del Programa de Fomento a Talentos del IDSCEA
+        </p>
+    </div>
+    <p><span style="font-size:16px; ">&nbsp;</span></p>
+    <div class="table_container">
+        <table>
+            <tbody>
+                <tr>
+                    <td colspan="10 " class="table_header">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><strong><span style="color:white; ">DATOS DEL SOLICITANTE</span></strong></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td rowspan="4 " style="width:81.65pt;border:solid windowtext 1.0pt;border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:23.0pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'>
+                            <span style="font-size:13px; ">&nbsp;
+                                <img  id="user_photo" style="width: 70.5pt; height: 70.5pt; " alt="photo"
+                                src="{{ profile.profile_picture.url }}">
+                            </span>
+                        </p>
+                    </td>
+                    <td colspan="6 " style="width:273.9pt;border-top:none;border-left: none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:23.0pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">Nombre completo</span></p>
+                    </td>
+                    <td colspan="3 " style="width:154.7pt;border-top:none;border-left: none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:23.0pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">Fecha de nacimiento</span></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="6 " style="width:273.9pt;border-top:none;border-left: none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height: 23.0pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="color:gray; "><span  id="user_name" style="font-size:12px;color:windowtext; "></span></span>
+                        </p>
+                    </td>
+                    <td colspan="3 " style="width:154.7pt;border-top:none;border-left: none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height: 23.0pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="color:gray; "><span id="birth_date" style="font-size:12px;color:windowtext; "></span></span>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="6 " style="width:273.9pt;border-top:none;border-left: none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:23.0pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">Nacionalidad</span></p>
+                    </td>
+                    <td colspan="3 " style="width:154.7pt;border-top:none;border-left: none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:23.0pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">Lugar de nacimiento</span></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="6 " style="width:273.9pt;border-top:none;border-left: none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height: 23.0pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="color:gray; "><span id="nationatily" style="font-size:12px;color:windowtext; "></span></span>
+                        </p>
+                    </td>
+                    <td colspan="3 " style="width:154.7pt;border-top:none;border-left: none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height: 23.0pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="color:gray; "><span id="birth_place" style="font-size:12px;color:windowtext; "></span></span>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2 " style="width:89.2pt;border:solid windowtext 1.0pt;border-top:none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:23.0pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">CURP</span></p>
+                    </td>
+                    <td colspan="2 " style="width:83.95pt;border-top:none;border-left: none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:23.0pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">Edad</span></p>
+                    </td>
+                    <td style="width:84.25pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:23.0pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">Sexo</span></p>
+                    </td>
+                    <td style="width:84.25pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:23.0pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">Estado civil</span></p>
+                    </td>
+                    <td colspan="3 " style="width:84.45pt;border-top:none;border-left: none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:23.0pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">No. de pasaporte</span></p>
+                    </td>
+                    <td style="width:84.15pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:23.0pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">No. de INE</span></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2 " style="width:89.2pt;border:solid windowtext 1.0pt;border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:23.0pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span id="curp" style="font-size:12px; ">&nbsp; &nbsp; &nbsp;</span></p>
+                    </td>
+                    <td colspan="2 " style="width:83.95pt;border-top:none;border-left: none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height:23.0pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span id="age" style="font-size:12px; ">&nbsp;&nbsp;</span></p>
+                    </td>
+                    <td style="width:84.25pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height: 23.0pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span id="gender" style="font-size:12px; "><span style="color:gray; "><span style="color:windowtext; "></span></span>
+                            </span>
+                        </p>
+                    </td>
+                    <td style="width:84.25pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height: 23.0pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:12px; "><span style="color:gray; "><span style="color:windowtext; "></span></span>
+                            </span>
+                        </p>
+                    </td>
+                    <td colspan="3 " style="width:84.45pt;border-top:none;border-left: none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height:23.0pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:12px; ">&nbsp; &nbsp; &nbsp;</span></p>
+                    </td>
+                    <td style="width:84.15pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height:23.0pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:12px; ">&nbsp; &nbsp; &nbsp;</span></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3 " style="width:131.3pt;border:solid windowtext 1.0pt;border-top:none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:23.0pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">Ocupaci&oacute;n</span></p>
+                    </td>
+                    <td colspan="2 " style="width:126.1pt;border-top:none;border-left: none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:23.0pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">Nombre del banco</span></p>
+                    </td>
+                    <td colspan="3 " style="width:126.55pt;border-top:none;border-left: none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:23.0pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">No. de Cuenta</span></p>
+                    </td>
+                    <td colspan="2 " style="width:126.3pt;border-top:none;border-left: none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:23.0pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">CLABE interbancaria</span></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3 " style="width:131.3pt;border:solid windowtext 1.0pt;border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:23.0pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:12px; "><span style="color:gray; "><span style="color:windowtext; "></span></span>
+                            </span>
+                        </p>
+                    </td>
+                    <td colspan="2 " style="width:126.1pt;border-top:none;border-left: none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height: 23.0pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:12px; "><span style="color:gray; "><span style="color:windowtext; "></span></span>
+                            </span>
+                        </p>
+                    </td>
+                    <td colspan="3 " style="width:126.55pt;border-top:none;border-left: none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height: 23.0pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:12px; "><span style="color:gray; "><span style="color:windowtext; "></span></span>
+                            </span>
+                        </p>
+                    </td>
+                    <td colspan="2 " style="width:126.3pt;border-top:none;border-left: none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height: 23.0pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:12px; "><span style="color:gray; "><span style="color:windowtext; "></span></span>
+                            </span>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10 " style="width:510.25pt;border:solid windowtext 1.0pt;border-top:none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:23.0pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:right;'><span style="font-size:12px; ">Los datos bancarios se solicitan para hacer el dep&oacute;sito en caso de llegar a ser beneficiado</span></p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p><span style="font-size:13px; ">&nbsp;</span></p>
+    <div class="table_container">
+        <table>
+            <tbody>
+                <tr>
+                    <td colspan="10" class="table_header">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><strong><span style="color:white; ">DATOS DOMICILIO PARTICULAR</span></strong></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:63.55pt;border:solid windowtext 1.0pt;border-top: none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">Calle</span></p>
+                    </td>
+                    <td colspan="3 " style="width:233.9pt;border-top:none;border-left: none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height: 1.0cm; ">
+                        <p><span style="color:gray; "><span style="font-size:12px;color:windowtext; "></span></span>
+                        </p>
+                    </td>
+                    <td colspan="2 " style="width:49.6pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">No. exterior</span></p>
+                    </td>
+                    <td style="width:2.0cm;border-top:none;border-left:none;border-bottom: solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">&nbsp; &nbsp; &nbsp;</span></p>
+                    </td>
+                    <td colspan="2 " style="width:49.6pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">No. Interior</span></p>
+                    </td>
+                    <td style="width:2.0cm;border-top:none;border-left:none;border-bottom: solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">&nbsp; &nbsp; &nbsp;</span></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:63.55pt;border:solid windowtext 1.0pt;border-top: none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">Colonia</span></p>
+                    </td>
+                    <td style="width:106.45pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height: 1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:12px; "><span style="color:gray; "><span style="color:windowtext; "></span></span>
+                            </span>
+                        </p>
+                    </td>
+                    <td style="width:85.0pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">C&oacute;digo Postal</span></p>
+                    </td>
+                    <td colspan="2 " style="width:85.0pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">&nbsp; &nbsp; &nbsp;</span></p>
+                    </td>
+                    <td colspan="3 " style="width:85.0pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">Municipio o delegaci&oacute;n</span></p>
+                    </td>
+                    <td colspan="2 " style="width:3.0cm;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height: 1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:12px; "><span style="color:gray; "><span style="color:windowtext; "></span></span>
+                            </span>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:63.55pt;border:solid windowtext 1.0pt;border-top: none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">Estado</span></p>
+                    </td>
+                    <td style="width:106.45pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height: 1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:12px; "><span style="color:gray; "><span style="color:windowtext; "></span></span>
+                            </span>
+                        </p>
+                    </td>
+                    <td style="width:85.0pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">Ciudad</span></p>
+                    </td>
+                    <td colspan="2 " style="width:85.0pt;border-top:none;border-left: none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height: 1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:12px; "><span style="color:gray; "><span style="color:windowtext; "></span></span>
+                            </span>
+                        </p>
+                    </td>
+                    <td colspan="3 " style="width:85.0pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">Pa&iacute;s</span></p>
+                    </td>
+                    <td colspan="2 " style="width:3.0cm;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height: 1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:12px; "><span style="color:gray; "><span style="color:windowtext; "></span></span>
+                            </span>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border:none; "><br></td>
+                    <td style="border:none; "><br></td>
+                    <td style="border:none; "><br></td>
+                    <td style="border:none; "><br></td>
+                    <td style="border:none; "><br></td>
+                    <td style="border:none; "><br></td>
+                    <td style="border:none; "><br></td>
+                    <td style="border:none; "><br></td>
+                    <td style="border:none; "><br></td>
+                    <td style="border:none; "><br></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <p><span style="font-size:13px; ">&nbsp;</span></p>
+    <div class="table_container">
+        <table>
+            <tbody>
+                <tr>
+                    <td colspan="5 " class="table_header">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><strong><span style="color:white; ">DATOS DE CONTACTO</span></strong></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2 " style="width:170.05pt;border:solid windowtext 1.0pt;border-top:none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:21.25pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">Tel&eacute;fono particular</span></p>
+                    </td>
+                    <td colspan="2 " style="width:6.0cm;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:21.25pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">Celular</span></p>
+                    </td>
+                    <td style="width:6.0cm;border-top:none;border-left:none;border-bottom: solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:21.25pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">Correo electr&oacute;nico</span></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:42.3pt;border:solid windowtext 1.0pt;border-top: none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">52</span></p>
+                    </td>
+                    <td style="width:127.75pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">&nbsp; &nbsp; &nbsp;</span></p>
+                    </td>
+                    <td style="width:42.35pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">52</span></p>
+                    </td>
+                    <td style="width:127.75pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">&nbsp; &nbsp; &nbsp;</span></p>
+                    </td>
+                    <td style="width: 6cm;border-color: currentcolor windowtext windowtext currentcolor;border-style: none solid solid none;border-width: medium 1pt 1pt medium;background: rgb(242, 242, 242) none repeat scroll 0% 0%;padding: 0cm 5.4pt;height:
+            1cm;vertical-align: top; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">&nbsp;</span></p>
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">&nbsp; &nbsp;&nbsp;</span></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border:none; "><br></td>
+                    <td style="border:none; "><br></td>
+                    <td style="border:none; "><br></td>
+                    <td style="border:none; "><br></td>
+                    <td style="border:none; "><br></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <p><span style="font-size:13px; ">&nbsp;</span></p>
+    <div class="table_container">
+        <table>
+            <tbody>
+                <tr>
+                    <td colspan="4 " class="table_header">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><strong><span style="color:white; ">DATOS DE LA SOLICITUD</span></strong></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:127.55pt;border:solid windowtext 1.0pt;border-top: none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">N&uacute;mero de solicitud</span></p>
+                    </td>
+                    <td style="width:127.55pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">Folio</span></p>
+                    </td>
+                    <td style="width:127.55pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">Fecha de solicitud</span></p>
+                    </td>
+                    <td style="width:127.6pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">Modalidad de beca</span></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:127.55pt;border:solid windowtext 1.0pt;border-top: none;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">&nbsp; &nbsp; &nbsp;</span></p>
+                    </td>
+                    <td style="width:127.55pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">&nbsp; &nbsp; &nbsp;</span></p>
+                    </td>
+                    <td style="width:127.55pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height: 1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:12px; "><span style="color:gray; "><span style="color:windowtext; "></span></span>
+                            </span>
+                        </p>
+                    </td>
+                    <td style="width:127.6pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">&nbsp;</span></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:127.55pt;border:solid windowtext 1.0pt;border-top: none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><strong><span style="font-size:13px; ">Fecha de Inicio</span></strong><span style="font-size:13px; ">&nbsp;de estudios, especialidad, posgrado o actividad acad&eacute;mica para la cu&aacute;l requiere el apoyo.</span></p>
+                    </td>
+                    <td style="width:127.55pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height: 1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:12px; "><span style="color:gray; "><span style="color:windowtext; "></span></span>
+                            </span>
+                        </p>
+                    </td>
+                    <td style="width:127.55pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><strong><span style="font-size:13px; ">Fecha de t&eacute;rmino</span></strong><span style="font-size:13px; ">&nbsp;de estudios, especialidad, Posgrado o actividad acad&eacute;mica para la cu&aacute;l requiere el apoyo.</span></p>
+                    </td>
+                    <td style="width:127.6pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height: 1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="color:gray; "><span style="font-size:12px;color:windowtext; "></span></span>
+                        </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <p><span style="font-size:13px; ">&nbsp;</span></p>
+    <div class="table_container">
+        <table>
+            <tbody>
+                <tr>
+                    <td colspan="2 " class="table_header">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><strong><span style="color:white; ">DATOS DE LA INSTITUCI&Oacute;N Y PROGRAMA DONDE REALIZAR&Aacute; SUS ESTUDIOS O ACTIVIDAD</span></strong></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:155.7pt;border:solid windowtext 1.0pt;border-top: none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p><span style="font-size:13px; ">Nombre de los estudios o actividad que realizar&aacute; y para la cu&aacute;l pide el apoyo.</span></p>
+                    </td>
+                    <td style="width:354.55pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height: 1.0cm; ">
+                        <p><span style="color:gray; "><span style="font-size:12px;color:windowtext; "></span></span>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:155.7pt;border:solid windowtext 1.0pt;border-top: none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p><span style="font-size:13px; ">Objetivo de los estudios o actividad que realizar&aacute; y para la cu&aacute;l pide el apoyo.</span></p>
+                    </td>
+                    <td style="width:354.55pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height: 1.0cm; ">
+                        <p><span style="color:gray; "><span style="font-size:12px;color:windowtext; "></span></span>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:155.7pt;border:solid windowtext 1.0pt;border-top: none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p><span style="font-size:13px; ">&Aacute;rea o perfil de los estudios o actividad que realizar&aacute; y para la cu&aacute;l pide el apoyo.</span></p>
+                    </td>
+                    <td style="width:354.55pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height: 1.0cm; ">
+                        <p><span style="color:gray; "><span style="font-size:12px;color:windowtext; "></span></span>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:155.7pt;border:solid windowtext 1.0pt;border-top: none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p><span style="font-size:13px; ">Instituci&oacute;n donde realizar&aacute; sus estudios o actividad.</span></p>
+                    </td>
+                    <td style="width:354.55pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height: 1.0cm; ">
+                        <p><span style="color:gray; "><span style="font-size:12px;color:windowtext; "></span></span>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:155.7pt;border:solid windowtext 1.0pt;border-top: none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p><span style="font-size:13px; ">Ciudad o pa&iacute;s donde realizar&aacute; sus estudios o actividad.</span></p>
+                    </td>
+                    <td style="width:354.55pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height: 1.0cm; ">
+                        <p><span style="color:gray; "><span style="font-size:12px;color:windowtext; "></span></span>
+                        </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <p><span style="font-size:13px; ">&nbsp;</span></p>
+    <div class="table_container">
+        <table>
+            <tbody>
+                <tr>
+                    <td colspan="2 " class="table_header">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><strong><span style="color:white; ">HISTORIAL ACAD&Eacute;MICO</span></strong></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:155.7pt;border:solid windowtext 1.0pt;border-top: none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p><span style="font-size:13px; ">Instituci&oacute;n o empresa donde estudia o trabaja actualmente.</span></p>
+                    </td>
+                    <td style="width:354.55pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height: 1.0cm; ">
+                        <p><span style="color:gray; "><span style="font-size:12px;color:windowtext; "></span></span>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:155.7pt;border:solid windowtext 1.0pt;border-top: none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p><span style="font-size:13px; ">&Uacute;ltimo grado acad&eacute;mico o m&oacute;dulo cursado.</span></p>
+                    </td>
+                    <td style="width:354.55pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height: 1.0cm; ">
+                        <p><span style="color:gray; "><span style="font-size:12px;color:windowtext; "></span></span>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:155.7pt;border:solid windowtext 1.0pt;border-top: none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p><span style="font-size:13px; ">Promedio &uacute;ltimo obtenido / equivalencia (con documento oficial institucional si es correspondiente al extranjero, <strong>solo aplica para modalidad por convocatoria</strong>)</span></p>
+                    </td>
+                    <td style="width:354.55pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height: 1.0cm; ">
+                        <p><span style="color:gray; "><span style="font-size:12px;color:windowtext; "></span></span>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:155.7pt;border:solid windowtext 1.0pt;border-top: none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p><span style="font-size:13px; ">Otros</span></p>
+                    </td>
+                    <td style="width:354.55pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height: 1.0cm; ">
+                        <p><span style="color:gray; "><span style="font-size:12px;color:windowtext; "></span></span>
+                        </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <p><span style="font-size:13px; ">&nbsp;</span></p>
+    <div class="table_container">
+        <table>
+            <tbody>
+                <tr>
+                    <td colspan="4 " class="table_header">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><strong><span style="color:white; ">RUBROS SOLICITADOS</span></strong></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:127.55pt;border:solid windowtext 1.0pt;border-top: none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">Modalidad de beca</span></p>
+                    </td>
+                    <td style="width:127.55pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">Conceptos de apoyo</span></p>
+                    </td>
+                    <td style="width:127.55pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">Costo total de los estudios</span></p>
+                    </td>
+                    <td style="width:127.6pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">Monto solicitado con un m&aacute;ximo de $20,000.00 al extranjero y $10,000.00 al interior del pa&iacute;s.</span></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td rowspan="5 " style="width:127.55pt;border:solid windowtext 1.0pt;border-top:none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:30.5pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">Modalidad de Apoyos Directos</span></p>
+                    </td>
+                    <td style="width:127.55pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:30.5pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">Movilidad</span></p>
+                    </td>
+                    <td style="width:127.55pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height:30.5pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">$0.00</span></p>
+                    </td>
+                    <td style="width:127.6pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height:30.5pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">$0.00</span></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:127.55pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:30.5pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">Investigaci&oacute;n</span></p>
+                    </td>
+                    <td style="width:127.55pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height:30.5pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">$0.00</span></p>
+                    </td>
+                    <td style="width:127.6pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height:30.5pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">$0.00</span></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:127.55pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:30.5pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">Inscripci&oacute;n</span></p>
+                    </td>
+                    <td style="width:127.55pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height:30.5pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">$0.00</span></p>
+                    </td>
+                    <td style="width:127.6pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height:30.5pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">$0.00</span></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:127.55pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:30.5pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">vi&aacute;ticos</span></p>
+                    </td>
+                    <td style="width:127.55pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height:30.5pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">$0.00</span></p>
+                    </td>
+                    <td style="width:127.6pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height:30.5pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">$0.00</span></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:127.55pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:30.5pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">Otros</span></p>
+                    </td>
+                    <td style="width:127.55pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height:30.5pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">$0.00</span></p>
+                    </td>
+                    <td style="width:127.6pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height:30.5pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">$0.00</span></p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <p><span style="font-size:13px; ">&nbsp;</span></p>
+    <div class="table_container">
+        <table>
+            <tbody>
+                <tr>
+                    <td colspan="7 " class="table_header">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><strong><span style="color:white; ">CONTACTOS DE EMERGENCIA</span></strong></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2 " style="width:155.7pt;border:solid windowtext 1.0pt;border-top:none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p><span style="font-size:13px; ">Nombre del contacto</span></p>
+                    </td>
+                    <td colspan="5 " style="width:354.55pt;border-top:none;border-left: none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height: 1.0cm; ">
+                        <p><span style="font-size:12px; "><span style="color:gray; "></span></span>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:85.0pt;border:solid windowtext 1.0pt;border-top: none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">Parentesco</span></p>
+                    </td>
+                    <td colspan="2 " style="width:3.0cm;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">Tel&eacute;fono</span></p>
+                    </td>
+                    <td style="width:3.0cm;border-top:none;border-left:none;border-bottom: solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">Celular</span></p>
+                    </td>
+                    <td style="width:3.0cm;border-top:none;border-left:none;border-bottom: solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">Correo electr&oacute;nico</span></p>
+                    </td>
+                    <td style="width:3.0cm;border-top:none;border-left:none;border-bottom: solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">Pa&iacute;s</span></p>
+                    </td>
+                    <td style="width:3.0cm;border-top:none;border-left:none;border-bottom: solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">Ciudad o estado</span></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:85.0pt;border:solid windowtext 1.0pt;border-top: none;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="color:gray; "><span style="font-size:12px;color:windowtext; "></span></span>
+                        </p>
+                    </td>
+                    <td colspan="2 " style="width:3.0cm;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">&nbsp; &nbsp; &nbsp;</span></p>
+                    </td>
+                    <td style="width:3.0cm;border-top:none;border-left:none;border-bottom: solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">&nbsp; &nbsp; &nbsp;</span></p>
+                    </td>
+                    <td style="width:3.0cm;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height: 1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:12px; "><span style="color:gray; "><span style="color:windowtext; "></span></span>
+                            </span>
+                        </p>
+                    </td>
+                    <td style="width:3.0cm;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height: 1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:12px; "><span style="color:gray; "><span style="color:windowtext; "></span></span>
+                            </span>
+                        </p>
+                    </td>
+                    <td style="width:3.0cm;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height: 1.0cm; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:12px; "><span style="color:gray; "><span style="color:windowtext; "></span></span>
+                            </span>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border:none; "><br></td>
+                    <td style="border:none; "><br></td>
+                    <td style="border:none; "><br></td>
+                    <td style="border:none; "><br></td>
+                    <td style="border:none; "><br></td>
+                    <td style="border:none; "><br></td>
+                    <td style="border:none; "><br></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <p><span style="font-size:13px; ">&nbsp;</span></p>
+    <div class="table_container">
+        <table>
+            <tbody>
+                <tr>
+                    <td class="table_header">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><strong><span style="font-size:16px;color:white; ">MOTIVOS</span></strong></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:510.25pt;border:solid windowtext 1.0pt;border-top: none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:21.25pt; ">
+                        <p><span style="font-size:13px; ">Objetivo personal que lo impuls&oacute; para seguir estudiando:</span></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:510.25pt;border:solid windowtext 1.0pt;border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p><span style="color:gray; "><span style="font-size:12px;color:windowtext; "></span></span>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:510.25pt;border:solid windowtext 1.0pt;border-top: none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:21.25pt; ">
+                        <p><span style="font-size:13px; ">Diga, &iquest;por qu&eacute; es pertinente el apoyar su formaci&oacute;n en la modalidad pretendida?</span></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:510.25pt;border:solid windowtext 1.0pt;border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p><span style="font-size:12px; "><span style="color:gray; "><span style="color:windowtext; "></span></span>
+                            </span>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:510.25pt;border:solid windowtext 1.0pt;border-top: none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:21.25pt; ">
+                        <p><span style="font-size:13px; ">Planes de trabajo despu&eacute;s de terminar sus estudios</span></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:510.25pt;border:solid windowtext 1.0pt;border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p><span style="font-size:12px; "><span style="color:gray; "><span style="color:windowtext; "></span></span>
+                            </span>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:510.25pt;border:solid windowtext 1.0pt;border-top: none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:21.25pt; ">
+                        <p><span style="font-size:13px; ">Fundamente las ventajas de esta instituci&oacute;n y programa sobre la oferta educativa en Aguascalientes</span></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:510.25pt;border:solid windowtext 1.0pt;border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm; ">
+                        <p><span style="font-size:12px; "><span style="color:gray; "><span style="color:windowtext; "></span></span>
+                            </span>
+                        </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <p><span style="font-size:13px; ">&nbsp;</span></p>
+    <div class="table_container">
+        <table>
+            <tbody>
+                <tr>
+                    <td class="table_header">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><strong><span style="font-size:16px;color:white; ">MANIFIESTO DEL SOLICITANTE</span></strong></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:510.25pt;border:solid windowtext 1.0pt;border-top:none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:21.25pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:right;'><span style="font-size:12px; "><span style="color:gray; "></span></span>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:510.25pt;border:solid windowtext 1.0pt;border-top: none;padding:0cm 5.4pt 0cm 5.4pt;height:21.25pt; ">
+                        <p><span style="font-size:12px; ">&nbsp;</span></p>
+                        <p><strong><span style="font-size:12px; ">INSTITUTO PARA EL DESARROLLO DE LA SOCIEDAD DEL CONOCIMIENTO DEL ESTADO DE AGUASCALIENTES</span></strong><span style="font-size:12px; ">.</span></p>
+                        <p><strong><span style="font-size:12px; ">PRESENTE</span></strong></p>
+                        <p><span style="font-size:12px; ">&nbsp;</span></p>
+                        <p><span style="font-size:12px; ">Con relaci&oacute;n a mi solicitud de apoyo para el Programa de Fomento a talentos 2022,<strong>&nbsp;emitida por el IDSCEA.</strong></span></p>
+                        <p><span style="font-size:12px; ">&nbsp;</span></p>
+                        <p><span style="font-size:12px; ">Mi obligaci&oacute;n y apego a las bases y condiciones de las reglas de operaci&oacute;n del Programa de Fomento a Talentos del <strong>IDSCEA 2022, en la modalidad de Apoyos Directos.</strong></span></p>
+                        <p><span style='font-size:12px;font-family:"Times New Roman ","serif ";'>&nbsp;</span></p>
+                        <p><span style="font-size:12px; ">&nbsp;</span></p>
+                        <p><span style="font-size:12px; ">1.Si se encuentra falsedad en la informaci&oacute;n que manifiesto en mi solicitud, &eacute;sta podr&aacute; ser <strong>CANCELADA INMEDIATAMENTE POR EL COMIT&Eacute; DEL PROGRAMA DE FOMENTO A TALENTOS</strong> y quedar&eacute; inhabilitado(a) para participar en convocatorias&nbsp;futuras.</span></p>
+                        <p><span style="font-size:12px;color:black; ">2.Con la entrega de mi documentaci&oacute;n, participo en un concurso, donde el fallo ser&aacute; inapelable.</span></p>
+                        <p><span style="font-size:12px;color:black; ">3.Concursar &uacute;nicamente por los programa(s) solicitado(s) referentes a la Ciencia Tecnolog&iacute;a e innovaci&oacute;n.&nbsp;</span></p>
+                        <p><span style="font-size:12px; ">4.En su caso, si obtengo en <strong>beneficio DEBO REALIZAR UN CONVENIO DE ASIGNACI&Oacute;N CON IDSCEA, PARA EFECTO DE QUE REALICE EL PAGO CORRESPONDIENTE A MI BECA; EN CASO CONTRARIO, DE NO ACUDIR A LAS OFICINAS DE BECAS DESPUES DE CONOCER LOS RESULTADOS Y AGENDAR CITA, SE CANCELAR&Aacute; A UN DETERMINADO TIEMPO</strong>.</span></p>
+                        <p><span style="font-size:12px; ">5.El ingreso de mi expediente se considera propiedad de IDSCEA, de manera tal que dicho organismo no se encuentra obligado a devolverlo o conservarlo para futuras convocatorias.</span></p>
+                        <p style="text-align:justify; "><span style="font-size:12px;color:black; ">6.Al culminar mis estudios o actividad debo dar los entregables que se establecen en las reglas de operaci&oacute;n., titulo y/o constancia de participaci&oacute;n o conclusi&oacute;n, asimismo el informe en el formato denominado &ldquo;Formato FT-ENTREGABLES&rdquo; para que conforme a lo establecido se cumplan las obligaciones del beneficiado y evitar solicitar el reintegro del recurso.</span></p>
+                        <p><span style="font-size:13px; ">&nbsp;</span></p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <p><span style="font-size:13px; ">&nbsp;</span></p>
+    <div class="table_container">
+        <table>
+            <tbody>
+                <tr>
+                    <td style="width:255.1pt;" class="table_header">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'>
+                            <strong>
+                            <span style="font-size:13px; color: white; ">NOMBRE Y FIRMA DEL SOLICITANTE</span>
+                        </strong>
+                        </p>
+                    </td>
+                    <td style="width:255.1pt;" class="table_header">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><strong><span style="font-size:13px; color: white; ">FIRMA DEL DEPARTAMENTO DE BECAS</span></strong></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:255.1pt;border:solid windowtext 1.0pt;border-top: none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:74.55pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">&nbsp;</span></p>
+                    </td>
+                    <td style="width:255.1pt;border-top:none;border-left:none;border-bottom: solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:74.55pt; ">
+                        <p><span style="font-size:13px; ">&nbsp;</span></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:255.1pt;border:solid windowtext 1.0pt;border-top: none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:21.25pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:12px; "><span style="color:gray; "><span style="color:windowtext; ">Nombre del solicitante</span></span>
+                            </span>
+                        </p>
+                    </td>
+                    <td style="width:255.1pt;border-top:none;border-left:none;border-bottom: solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:21.25pt; ">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;text-align:center;'><span style="font-size:13px; ">IDSCEA</span></p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    </div>
+    <p><strong><span style="font-size:13px; ">&nbsp;</span></strong></p>
+    <div id="footer">
+        <div id="info">
+            <p><strong><u><span style="font-size:11px; ">SOLAMENTE SER&Aacute;N ACEPTADAS LAS SOLICITUDES DEBIDAMENTE LLENADAS EN COMPUTADORA Y FIRMADAS EN TINTA AZUL (EN CASO DE SER MENOR EL PADRE O TUTOR TAMBI&Eacute;N DEBER&Aacute; FIRMAR).</span></u></strong></p>
+            <p class="footer_text"><strong><span style="font-size:13px; ">&nbsp;</span></strong></p>
+            <p class="footer_text"><strong><span style="font-size:13px; ">&nbsp;</span></strong></p>
+            <p class="footer_text"><strong><span style="font-size:13px; ">INFORMES Y AYUDA CON PREVIA CITA EN:</span></strong></p>
+            <p class="footer_text"><span style="font-size:12px; ">Av. San Miguel s/n, Esq. Av. Aguascalientes (Museo Descubre)</span></p>
+            <p class="footer_text"><span style="font-size:12px; ">Fracc. Jardines del Parque / C.P. 20270 / Aguascalientes, Ags</span></p>
+            <p class="footer_text"><strong><u><span style="font-size:12px; ">Dra. Vanessa Campos Ibarra</span></u></strong></p>
+            <p class="footer_text"><span style="font-size:12px; ">Tel: 449-978-0338, ext. 7109, 7117 y 7137</span></p>
+            <p><strong><span style="font-size:13px; ">&nbsp;</span></strong></p>
+            <p><strong><span style="font-size:13px; ">&nbsp;</span></strong></p>
+            <p><strong><span style="font-size:13px; ">&nbsp;</span></strong></p>
+            <p><strong><span style="font-size:13px; ">&nbsp;</span></strong></p>
+            <p><strong><span style="font-size:13px; ">&nbsp;</span></strong></p>
+        </div>
+    </div>
+
+    <script>
+        var c = new Date().getFullYear();
+        document.title += c;
+        document.getElementById("format").innerHTML = document.title;
+    </script>
+
+</body>
+
+</html>
