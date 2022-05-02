@@ -1,7 +1,7 @@
 from django.urls import reverse
 from django.views.generic import CreateView
 
-from django.contrib.auth.forms import UserCreationForm
+from accounts.forms import UserCreationForm
 
 from actions.utils import auto_assign_tasks_at_user_creation
 

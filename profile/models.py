@@ -45,24 +45,13 @@ class Profile(models.Model):
 
     birthday = models.DateField("Fecha de nacimiento")
 
+    # ToDo: Agregar opciones de estados
     birth_place = models.CharField(
         "Lugar de nacimiento",
         max_length=30,
     )
 
     nationality = models.CharField("Nacionalidad", max_length=15)
-
-    curp = models.CharField(
-        "CURP",
-        max_length=18,
-        validators=[
-            RegexValidator(
-                regex=r"([A-z]{4}[0-9]{6}[HMhm]{1}[A-z]{5}[0-z]{1}[0-9]{1})",
-                message="Ingresa una CURP válida.",
-                code="invalid_curp",
-            ),
-        ], null=True, blank=True,
-    )
 
     ine = models.CharField(
         "INE",
@@ -96,11 +85,11 @@ class Profile(models.Model):
     occupation = models.CharField("Ocupación", max_length=25)
 
     validated = models.BooleanField(default=False)
+    # ToDo: No aparece el link al cargar imagen
+    # ToDo: Imagen de perfil aparece distorsionada
     profile_picture = models.ImageField(
         "Foto de perfil",
         upload_to=path_and_rename,
-        null=False,
-        blank=False,
         help_text="Esta fotografía se integrará a la solicitud y expendiente. Se requiere fotografía tipo pasaporte.",
     )
 
@@ -153,7 +142,7 @@ class Address(models.Model):
         "Municipio o delegación",
         max_length=30,
     )
-
+    # ToDo: Agregar opciones de estados
     state = models.CharField(
         "Estado",
         max_length=30,

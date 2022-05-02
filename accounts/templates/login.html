@@ -11,22 +11,22 @@
     </div>
 
     <div class="container">
-        <div class="row justify-content-center mt-4" style="background-color:white;">
+          <div class="row justify-content-center mt-4" style="background-color:white;">
 
             <form action="" method="post">
                 {% csrf_token %}
                 {{ form|crispy }}
 
-                <p class="text-muted">Recuerda que tu nombre de usuario es tu CURP (utiliza sólo letras mayúsculas).</p>
+              <p class="text-muted">Recuerda que tu nombre de usuario es tu CURP (utiliza sólo letras mayúsculas).</p>
 
-                <input type="hidden" name="next" value="{{ next }}"/>
+                <input type="hidden" name="next" value="{{ next }}" />
                 <button type="submit" class="btn btn-primary mb-4">Iniciar sesión</button>
                 <span><p>
             <a href="{% url "password_reset" %}">¿Olvidaste tu contraseña?</a> &nbsp
             <a href="{% url "user_registration" %}">Crear cuenta</a>
-              </p></span>
+              </p>  </span>
             </form>
-        </div>
+          </div>
     </div>
 
 {% endblock %}
