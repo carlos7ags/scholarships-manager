@@ -22,4 +22,5 @@ class ApplicationsListView(AdminStaffRequiredMixin, FilterView):
     paginate_by = 25
     ordering = [
         "username",
+        "-current_stage",
     ]

@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "crispy_forms",
     "import_export",
     "django_filters",
+    'widget_tweaks',
     "encrypted_model_fields",
     "dashboard",
     "accounts",
@@ -53,6 +54,7 @@ INSTALLED_APPS = [
     "programs",
     "applications",
     "actions",
+    "reviews",
 ]
 
 MIDDLEWARE = [

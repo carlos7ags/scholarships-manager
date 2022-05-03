@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load crispy_forms_filters %}
 
 {% load crispy_forms_tags %}
 {% load widget_tweaks %}
@@ -8,9 +9,9 @@
 {% block content %}
 
     <div class="container">
-        <div class="row justify-content-md-center my-4" style="background-color:white;">
-            <div class="col col-lg">
-                <h2>Aplicaciones</h2>
+        <div class="row justify-content-md-center my-4">
+            <div class="col col-sm text-left font-italic" style="font-size: smaller;">
+                <p>Inicio > Staff > Aplicaciones </p>
             </div>
         </div>
     </div>
@@ -25,13 +26,22 @@
                             {{ filter.form.program|add_class:"form-control form-control-sm"|as_crispy_field }}
                         </div>
                         <div class="form-group col-sm-2.5 mb-0">
-                            {{ filter.form.username__username__icontains|add_class:"form-control form-control-sm"|as_crispy_field }}
-                        </div>
-                        <div class="form-group col-sm-2.5 mb-0">
                             {{ filter.form.folio__icontains|add_class:"form-control form-control-sm"|as_crispy_field }}
                         </div>
+                        <div class="form-group col-sm-2.5 mb-0">
+                            {{ filter.form.username__username__icontains|add_class:"form-control form-control-sm"|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-sm-2 mb-0">
+                            {{ filter.form.current_stage|add_class:"form-control form-control-sm"|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-sm-2 mb-0">
+                            {{ filter.form.decision__decision|add_class:"form-control form-control-sm"|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-sm-1 mb-0">
+                            {{ filter.form.validated|add_class:"form-control form-control-sm"|as_crispy_field }}
+                        </div>
                         <div class="form-group col-sm-0.5 align-self-center text-right mb-0">
-                            <button type="submit" class="btn btn-primary">Filtrar</button>
+                            <button type="submit" class="btn btn-primary btn-sm">Filtrar</button>
                         </div>
                     </div>
                 </form>
@@ -50,30 +60,28 @@
                     <div class="table-responsive">
                         <table class="table align-middle table-striped small" style="text-align:center">
                             <tr>
-                                <th>Folio</th>
                                 <th>Programa</th>
+                                <th>Folio</th>
                                 <th>CURP</th>
                                 <th>Estatus</th>
                                 <th>Puntuación</th>
                                 <th>Decisión</th>
                                 <th>Validado</th>
-                                <th>Fecha de creación</th>
                                 <th>Detalle</th>
                             </tr>
                             {% for application in object_list %}
                                 <tr>
-                                    <td>{{ application.folio|upper }}</td>
                                     <td>{{ application.program.title|title }}</td>
+                                    <td>{{ application.folio|upper }}</td>
                                     <td>{{ application.username|upper }}</td>
                                     <td>{{ application.get_current_stage_display }}</td>
                                     <td>{{ application.score|default:"" }}</td>
-                                    <td>{{ application.get_decision_display }}</td>
+                                    <td>{{ application.decision.get_decision_display }}</td>
                                     {% if application.validated == True %}
                                         <td>Validado</td>
                                     {% else %}
                                         <td>No validado</td>
                                     {% endif %}
-                                    <td>{{ application.created_at|date }}</td>
                                     <td>
                                         <a type="button" class="btn btn-outline-primary btn-sm"
                                            href="{% url 'staff-application-review' application.id %}">
