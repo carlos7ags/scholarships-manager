@@ -135,11 +135,11 @@ class ApplicationDetailView(DetailView):
         return context
 
     def get_queryset(self):
-        if self.request.user.is_staff or self.request.user.is_superuser:
-            return super().get_queryset()
-        else:
-            return Application.objects.filter(username=self.request.user)
-
+        qs = super().get_queryset()
+        if self.request.user.is_superuser or self.request.user.is_staff:
+            return qs
+        return qs.filter(username=self.request.user)
+    
 
 def html_to_pdf(template_src: str, context=Dict[str, Any]):
     template = get_template(template_src)
