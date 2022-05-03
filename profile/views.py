@@ -9,7 +9,7 @@ from .models import *
 
 
 def complete_profile_task(http_referer: str, username: str):
-    valid_form_types = ["personal", "address", "contact", "bank", "emergency"]
+    valid_form_types = ["personal", "address", "contact", "bank", "emergencycontact"]
     pending_tasks = PendingTasks.objects.filter(username=username, completed=False)
     for task in pending_tasks:
         if isinstance(task.task.redirect_url, str):
@@ -211,10 +211,10 @@ class ProfileDetail(TemplateView):
         if context["contact"]:
             context["contact"] = prettyfy_contact(context["contact"])
 
-        context["emergency"] = EmergencyContact.objects.filter(
+        context["emergencycontact"] = EmergencyContact.objects.filter(
             username=username
         ).first()
-        if context["emergency"]:
-            context["emergency"] = prettyfy_emergency_contact(context["emergency"])
+        if context["emergencycontact"]:
+            context["emergencycontact"] = prettyfy_emergency_contact(context["emergencycontact"])
 
         return context
