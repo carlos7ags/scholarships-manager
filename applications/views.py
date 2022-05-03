@@ -136,7 +136,7 @@ class ApplicationDetailView(DetailView):
 
     def get_queryset(self):
         if self.request.user.is_staff or self.request.user.is_superuser:
-            return Application.objects.all()
+            return super().get_queryset()
         else:
             return Application.objects.filter(username=self.request.user)
 
