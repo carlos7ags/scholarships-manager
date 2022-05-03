@@ -86,8 +86,10 @@ def validate_application(request, pk):
 
 def comment_application(request, pk):
     if request.method == "POST":
-        """
         application = Application.objects.filter(id=pk).first()
+        application.current_stage = 2
+        application.save()
+        """
         obj = PendingTasks()
         obj.username = application.username
         obj.comments = request.body.comments
