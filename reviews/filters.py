@@ -14,7 +14,6 @@ class ApplicationsFilter(django_filters.FilterSet):
     decision__decision = django_filters.ChoiceFilter(
         choices=Award.AWARD_STATUS,
     )
-    validated = django_filters.BooleanFilter(field_name="validated")
 
     class Meta:
         model = Application
