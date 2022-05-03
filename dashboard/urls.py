@@ -6,7 +6,7 @@ dashboard_urlpatterns = [
     path("dashboard",
          login_required(ApplicantDashboardView.as_view()),
          name="applicant-dashboard"),
-    path("staff-dashboard",
+    path("staff/dashboard",
          login_required(StaffDashboardView.as_view()),
          name="staff-dashboard"),
 ]
