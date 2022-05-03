@@ -104,7 +104,7 @@ class Profile(models.Model):
             img.save(self.profile_picture.path)
 
     def __str__(self):
-        return "%s - %s" % (self.username, self.curp)
+        return self.username
 
 
 class Address(models.Model):

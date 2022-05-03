@@ -1,9 +1,10 @@
 from django.views.generic import TemplateView
 from applications.models import Application
 from actions.models import PendingTasks
+from reviews.views import AdminStaffRequiredMixin
 
 
-class StaffDashboardView(TemplateView):
+class StaffDashboardView(AdminStaffRequiredMixin, TemplateView):
     template_name = "staff_dashboard.html"
 
 
