@@ -74,7 +74,7 @@
                                     <hr>
                                     <div class="row">
                                         <div class="col-sm-3"><h6 class="mb-0">Pasaporte</h6></div>
-                                        <div class="col-sm-9 text-secondary"> {{ profile.passport|upper }}</div>
+                                        <div class="col-sm-9 text-secondary"> {{ profile.passport|default_if_none:""|upper }}</div>
                                     </div>
                                     <hr>
                                     <div class="row">

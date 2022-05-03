@@ -4,8 +4,8 @@ from typing import Dict, Any
 from django.contrib.auth.views import redirect_to_login
 from django.http import Http404, HttpResponse
 from django.shortcuts import redirect, render
-from django.urls import reverse, reverse_lazy
-from django.views.generic import TemplateView, DetailView, UpdateView, View
+from django.urls import reverse
+from django.views.generic import TemplateView, DetailView
 
 from profile.models import Profile
 from .forms import *
@@ -139,7 +139,7 @@ class ApplicationDetailView(DetailView):
         if self.request.user.is_superuser or self.request.user.is_staff:
             return qs
         return qs.filter(username=self.request.user)
-    
+
 
 def html_to_pdf(template_src: str, context=Dict[str, Any]):
     template = get_template(template_src)
