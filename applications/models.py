@@ -23,6 +23,7 @@ class Award(models.Model):
     )
     awarded = models.IntegerField("Monto autorizado", default=0, null=True, blank=True)
     comments = models.TextField("Comentarios", null=True, blank=True)
+    acta = models.TextField("Número de acta", null=True, blank=True)
     require_deliverable = models.BooleanField("Requiere entregables", default=False)
     deliverable_by = models.DateTimeField("Fecha para entregables", null=True)
     deliverable = models.FileField("Entregable", null=True, blank=True)
@@ -93,7 +94,7 @@ class Application(models.Model):
         (4, "Decisión final"),
         (5, "Seguimiento"),
         (6, "Concluida"),
-        (-1, "Retirada"),
+        (-1, "Cancelada"),
     )
 
     username = models.ForeignKey(
