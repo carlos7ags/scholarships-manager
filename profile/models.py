@@ -187,9 +187,6 @@ class Contact(models.Model):
             )
         ],
     )
-
-    email = models.EmailField("Correo electrónico")
-
     validated = models.BooleanField(default=False)
 
     def __str__(self):

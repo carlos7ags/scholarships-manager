@@ -113,7 +113,6 @@ class Application(models.Model):
         choices=APPLICATION_STAGES,
         default=0,
     )
-    application_form = models.JSONField(null=True, blank=True)
     score = models.CharField("Puntuación", max_length=64, null=True, blank=True)
     decision = models.ForeignKey(
         to=Award,
@@ -136,3 +135,25 @@ class Application(models.Model):
 
     def __str__(self):
         return "%s - %s - %s" % (self.program, self.folio, self.username)
+
+
+class ApplicationContentConvocatoria(models.Model):
+    id = models.OneToOneField(
+        Application,
+        on_delete=models.CASCADE,
+        primary_key=True,
+    )
+    date_start = models.DateField(verbose_name="Fecha de inicio del programa")
+    date_end = models.DateField(verbose_name="Fecha de término del programa")
+    program_description = models.TextField(verbose_name="Descripción del programa, tema de estudio o actividad académica que pretende realizar")
+
+
+class ApplicationContentApoyo(models.Model):
+    id = models.OneToOneField(
+        Application,
+        on_delete=models.CASCADE,
+        primary_key=True,
+    )
+    date_start = models.DateField(verbose_name="Fecha de inicio del programa")
+    date_end = models.DateField(verbose_name="Fecha de término del programa")
+    program_name = models.CharField(verbose_name="Nombre del programa de estudios", max_length=120)

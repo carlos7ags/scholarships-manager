@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row justify-content-md-center my-4" style="color: #083B58FFFF;">
+        <div class="col col-sm text-left font-italic" style="font-size: smaller;">
+            <p>Inicio > Aplicación > Forma</p>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row justify-content-md-center" style="background-color:white;">
+        <div class="col col-lg m-4">
+
+            <form method="POST" action="" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% crispy form %}
+            </form>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

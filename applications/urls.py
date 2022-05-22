@@ -10,19 +10,29 @@ applications_urlpatterns = [
         name="create-application",
     ),
     path(
-        "application/<pk>/form",
-        login_required(RenderApplicationFormView.as_view()),
-        name="render-application-form",
+        "program/<program_id>/application/<application_id>/form/redirect",
+        login_required(ApplicationFormRedirect.as_view()),
+        name="application-form-redirect",
     ),
     path(
-        "application/<pk>/form/create",
-        login_required(create_application_form),
-        name="create-application-form",
+        "application/<pk>/form/apoyo",
+        login_required(ApplicationFormApoyoCreate.as_view()),
+        name="application-form-apoyo-create",
     ),
     path(
-        "application/<pk>",
-        login_required(ApplicationDetailView.as_view()),
-        name="application-detail",
+        "application/<pk>/form/convocatoria",
+        login_required(ApplicationFormConvocatoriaCreate.as_view()),
+        name="application-form-convocatoria-create",
+    ),
+    path(
+        "application/<pk>/form/apoyo/update",
+        login_required(ApplicationFormApoyoUpdate.as_view()),
+        name="application-form-apoyo-update",
+    ),
+    path(
+        "application/<pk>/form/convocatoria/update",
+        login_required(ApplicationFormConvocatoriaUpdate.as_view()),
+        name="application-form-convocatoria-update",
     ),
     path(
         "application/<pk>/download",

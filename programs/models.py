@@ -1,23 +1,19 @@
 from django.db import models
 
 
-class ApplicationFormTemplate(models.Model):
-    title = models.CharField("Nombre", max_length=64)
-    template = models.TextField("Forma de aplicación (HTML)")
-
-    def __str__(self):
-        return self.title
-
-
 class Program(models.Model):
+    FORM_TYPES = (
+        ("convocatoria", "Convocatoria"),
+        ("apoyo", "Apoyo"),
+    )
+
     application_prefix = models.CharField("Código", max_length=8, unique=True)
     title = models.CharField("Nombre", max_length=64)
     description = models.CharField("Descripción", max_length=512)
-    application_form = models.ForeignKey(
-        to=ApplicationFormTemplate,
-        on_delete=models.CASCADE,
-        verbose_name="Formato de aplicación",
-
+    application_form_type = models.CharField(
+        "Tipo de aplicación",
+        choices=FORM_TYPES,
+        max_length=15,
     )
     start_date = models.DateField("Fecha de apertura")
     end_date = models.DateField("Fecha de cierre", null=True, blank=True)
