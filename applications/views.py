@@ -1,14 +1,16 @@
 import os
 from typing import Dict, Any
 
+from django.contrib.auth.models import User
 from django.contrib.auth.views import redirect_to_login
 from django.http import Http404, HttpResponse
 from django.shortcuts import redirect, render
-from django.urls import reverse
-from django.views.generic import TemplateView, DetailView
+from django.urls import reverse, reverse_lazy
+from django.views.generic import TemplateView, DetailView, CreateView, RedirectView, UpdateView
 
+from actions.models import PendingTasks
 from profile.models import Profile
-from .forms import *
+from .forms import ApplicationForm, ApplicationConvocatoriaForm, ApplicationApoyoForm
 from .models import *
 import time
 import json
@@ -38,18 +40,6 @@ def send_application_sent_mail(curp: str, program_code: str, program_name: str):
     )
 
 
-def create_application_form(request, pk):
-    obj = Application.objects.filter(id=pk).first()
-    if request.method == "POST":
-        data = json.loads(request.body.decode('utf-8'))
-        obj.application_form = data
-        obj.current_stage = 1
-        send_application_sent_mail(curp=request.user.username, program_code=obj.program.application_prefix, program_name=obj.program.title)
-        obj.save()
-        return HttpResponse('{"status":"success"}', content_type='application/json')
-    return HttpResponse('{"status":"fail"}', content_type='application/json')
-
-
 def withdraw_application(request, pk):
     if request.method == "POST":
         obj = Application.objects.filter(id=pk).first()
@@ -77,11 +67,100 @@ def create_application(request, program_id):
                     folio = prefix + str(int(time.time()*1000))[3:]
                 obj.folio = folio
                 obj.save()
-                return redirect(reverse("render-application-form", args=(obj.id,)))
+                return redirect(reverse("application-form-redirect", kwargs={"application_id": obj.id, "program_id": program_id}))
             else:
                 raise Http404
         else:
             raise Http404
+
+
+def complete_application_task(username: User, application_id: str):
+    pending_tasks = PendingTasks.objects.filter(username=username, completed=False)
+    for task in pending_tasks:
+        if isinstance(task.redirect_url_overwrite, str):
+            path_parts = task.task.redirect_url.split("/")
+            form_type = path_parts[2]
+            task_application_id = path_parts[3]
+            if "application" in form_type and str(application_id) == task_application_id:
+                task.completed = True
+                task.save()
+
+
+class ExtendedFormCreateView(CreateView):
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST, request.FILES)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            application = Application.objects.filter(id=self.kwargs["pk"]).first()
+            obj.id = application
+            obj.save()
+            application.current_stage = 1
+            application.save()
+            return redirect(self.success_url)
+        else:
+            return render(request, self.template_name, {"form": form})
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        return render(request, self.template_name, {"form": form})
+
+
+class ExtendedFormUpdateView(UpdateView):
+
+    def request_user_is_owner(self, request):
+        obj = self.get_object()
+        return obj.id.username == request.user
+
+    def dispatch(self, request, *args, **kwargs):
+        if not self.request_user_is_owner(request):
+            return redirect_to_login(request.get_full_path())
+        return super(ExtendedFormUpdateView, self).dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        complete_application_task(username=self.request.user, application_id=self.kwargs["pk"])
+        return super().post(request, *args, **kwargs)
+
+
+class ApplicationFormConvocatoriaCreate(ExtendedFormCreateView):
+    form_class = ApplicationConvocatoriaForm
+    template_name = "application_form.html"
+    success_url = reverse_lazy("applicant-dashboard")
+
+
+class ApplicationFormConvocatoriaUpdate(ExtendedFormUpdateView):
+    model = ApplicationContentConvocatoria
+    form_class = ApplicationConvocatoriaForm
+    template_name = "application_form.html"
+    success_url = reverse_lazy("applicant-dashboard")
+
+
+class ApplicationFormApoyoCreate(ExtendedFormCreateView):
+    form_class = ApplicationApoyoForm
+    template_name = "application_form.html"
+    success_url = reverse_lazy("applicant-dashboard")
+
+
+class ApplicationFormApoyoUpdate(ExtendedFormUpdateView):
+    model = ApplicationContentApoyo
+    form_class = ApplicationApoyoForm
+    template_name = "application_form.html"
+    success_url = reverse_lazy("applicant-dashboard")
+
+
+class ApplicationFormRedirect(RedirectView):
+    def get_redirect_url(self, program_id, application_id):
+        program = Program.objects.filter(id=program_id).first()
+        if program.application_form_type == "convocatoria":
+            if ApplicationContentConvocatoria.objects.filter(id=application_id).exists():
+                return reverse("application-form-convocatoria-update", kwargs={"pk": application_id})
+            else:
+                return reverse("application-form-convocatoria-create", kwargs={"pk": application_id})
+        elif program.application_form_type == "apoyo":
+            if ApplicationContentApoyo.objects.filter(id=application_id).exists():
+                return reverse("application-form-apoyo-update", kwargs={"pk": application_id})
+            else:
+                return reverse("application-form-apoyo-create", kwargs={"pk": application_id})
 
 
 def download_application(request, pk):
@@ -94,51 +173,6 @@ def download_application(request, pk):
         return HttpResponse(pdf, content_type='application/pdf')
     else:
         return Http404
-
-
-class RenderApplicationFormView(TemplateView):
-    template_name = "create_application_form.html"
-
-    def setup(self, request, *args, **kwargs):
-        super().setup(request, *args, **kwargs)
-        self.object = Application.objects.filter(id=self.kwargs["pk"]).first()
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["pk"] = self.kwargs["pk"]
-        context["application_form_template"] = self.object.program.application_form.template
-        return context
-
-    def request_user_is_owner(self, request):
-        obj = self.object
-        return obj.username == request.user
-
-    def dispatch(self, request, *args, **kwargs):
-        if not self.request_user_is_owner(request):
-            return redirect_to_login(request.get_full_path())
-        if self.object.application_form:
-            return redirect(reverse("application-detail", args=(self.object.id,)))
-        return super(RenderApplicationFormView, self).dispatch(request, *args, **kwargs)
-
-
-class ApplicationDetailView(DetailView):
-    model = Application
-    template_name = "application_detail.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        app_form = context["object"].application_form
-        context["application"] = zip(
-            [app_form[k]["label"] for k in app_form.keys()],
-            [app_form[k]["value"] for k in app_form.keys()],
-        )
-        return context
-
-    def get_queryset(self):
-        qs = super().get_queryset()
-        if self.request.user.is_superuser or self.request.user.is_staff:
-            return qs
-        return qs.filter(username=self.request.user)
 
 
 def html_to_pdf(template_src: str, context=Dict[str, Any]):

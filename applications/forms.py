@@ -35,7 +35,7 @@ class ApplicationConvocatoriaForm(ModelForm):
 
     class Meta:
         model = ApplicationContentConvocatoria
-        exclude = ("validated",)
+        exclude = ("validated", "id")
         widgets = {
             "date_start": forms.SelectDateWidget(
                 years=range(datetime.now().year + 10, datetime.now().year - 5, -1),
@@ -69,7 +69,7 @@ class ApplicationApoyoForm(ModelForm):
 
     class Meta:
         model = ApplicationContentApoyo
-        exclude = ("validated",)
+        exclude = ("validated", "id")
         widgets = {
             "date_start": forms.SelectDateWidget(
                 years=range(datetime.now().year + 10, datetime.now().year - 5, -1),

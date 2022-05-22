@@ -38,6 +38,7 @@ class PendingTasks(models.Model):
         verbose_name="Tarea",
     )
     comments = models.TextField("Comentarios", blank=True, null=True)
+    redirect_url_overwrite = models.TextField("Url para redirigir (específica)", blank=True, null=True)
     deadline = models.DateTimeField("Fecha límite", blank=True, null=True)
     completed = models.BooleanField("Completada", default=False)
 
