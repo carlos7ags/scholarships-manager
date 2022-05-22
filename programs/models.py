@@ -20,13 +20,25 @@ class Program(models.Model):
     results_date = models.DateField("Publicación de resultados", null=True, blank=True)
     publicity = models.BooleanField("Mostrar a aplicantes")
     no_close_date = models.BooleanField("Programa permanente (sin fecha de cierre)")
-    total_awards = models.IntegerField("Número de becas presupuestadas", null=True, blank=True)
-    allocated_awards = models.IntegerField("Número de becas asignadas", null=True, blank=True)
+    total_awards = models.IntegerField(
+        "Número de becas presupuestadas", null=True, blank=True
+    )
+    allocated_awards = models.IntegerField(
+        "Número de becas asignadas", null=True, blank=True
+    )
     total_budget = models.IntegerField("Presupuesto total", null=True, blank=True)
-    allocated_budget = models.IntegerField("Presupuesto asignado a aplicantes", null=True, blank=True)
-    paid_budget = models.IntegerField("Presupuesto pagado a aplicantes", null=True, blank=True)
-    file = models.FileField("Reglas de operación o convocatoria (pdf)", upload_to="programs/",
-                            null=True, blank=True)
+    allocated_budget = models.IntegerField(
+        "Presupuesto asignado a aplicantes", null=True, blank=True
+    )
+    paid_budget = models.IntegerField(
+        "Presupuesto pagado a aplicantes", null=True, blank=True
+    )
+    file = models.FileField(
+        "Reglas de operación o convocatoria (pdf)",
+        upload_to="programs/",
+        null=True,
+        blank=True,
+    )
 
     def __str__(self):
         return "%s - %s" % (self.application_prefix, self.title)

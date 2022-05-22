@@ -1,24 +1,25 @@
 import os
-from typing import Dict, Any
+import time
+from io import BytesIO
+from profile.models import Profile
+from typing import Any, Dict
 
 from django.contrib.auth.models import User
 from django.contrib.auth.views import redirect_to_login
+from django.core.mail import send_mail
 from django.http import Http404, HttpResponse
 from django.shortcuts import redirect, render
+from django.template import loader
+from django.template.loader import get_template
 from django.urls import reverse, reverse_lazy
-from django.views.generic import TemplateView, DetailView, CreateView, RedirectView, UpdateView
+from django.views.generic import CreateView, RedirectView, UpdateView
+from xhtml2pdf import pisa
 
 from actions.models import PendingTasks
-from profile.models import Profile
-from .forms import ApplicationForm, ApplicationConvocatoriaForm, ApplicationApoyoForm
+
+from .forms import (ApplicationApoyoForm, ApplicationConvocatoriaForm,
+                    ApplicationForm)
 from .models import *
-import time
-import json
-from django.core.mail import send_mail
-from django.template import loader
-from io import BytesIO
-from django.template.loader import get_template
-from xhtml2pdf import pisa
 
 
 def send_application_sent_mail(curp: str, program_code: str, program_name: str):
@@ -45,13 +46,15 @@ def withdraw_application(request, pk):
         obj = Application.objects.filter(id=pk).first()
         obj.current_stage = -1
         obj.save()
-        return HttpResponse(status=204, headers={'HX-Trigger': 'refreshMain'})
+        return HttpResponse(status=204, headers={"HX-Trigger": "refreshMain"})
     else:
-        return render(request, 'withdraw_application.html')
+        return render(request, "withdraw_application.html")
 
 
 def create_application(request, program_id):
-    application = Application.objects.filter(username=request.user, program=program_id).first()
+    application = Application.objects.filter(
+        username=request.user, program=program_id
+    ).first()
     if application:
         return redirect(reverse("applicant-dashboard"))
     else:
@@ -62,12 +65,17 @@ def create_application(request, program_id):
                 obj.username = request.user
                 obj.program = Program.objects.filter(id=program_id).first()
                 prefix = obj.program.application_prefix
-                folio = prefix + str(int(time.time()*10000))[3:]
+                folio = prefix + str(int(time.time() * 10000))[3:]
                 while Application.objects.filter(folio=folio).exists():
-                    folio = prefix + str(int(time.time()*1000))[3:]
+                    folio = prefix + str(int(time.time() * 1000))[3:]
                 obj.folio = folio
                 obj.save()
-                return redirect(reverse("application-form-redirect", kwargs={"application_id": obj.id, "program_id": program_id}))
+                return redirect(
+                    reverse(
+                        "application-form-redirect",
+                        kwargs={"application_id": obj.id, "program_id": program_id},
+                    )
+                )
             else:
                 raise Http404
         else:
@@ -81,13 +89,15 @@ def complete_application_task(username: User, application_id: str):
             path_parts = task.task.redirect_url.split("/")
             form_type = path_parts[2]
             task_application_id = path_parts[3]
-            if "application" in form_type and str(application_id) == task_application_id:
+            if (
+                "application" in form_type
+                and str(application_id) == task_application_id
+            ):
                 task.completed = True
                 task.save()
 
 
 class ExtendedFormCreateView(CreateView):
-
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST, request.FILES)
         if form.is_valid():
@@ -107,7 +117,6 @@ class ExtendedFormCreateView(CreateView):
 
 
 class ExtendedFormUpdateView(UpdateView):
-
     def request_user_is_owner(self, request):
         obj = self.get_object()
         return obj.id.username == request.user
@@ -118,7 +127,9 @@ class ExtendedFormUpdateView(UpdateView):
         return super(ExtendedFormUpdateView, self).dispatch(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        complete_application_task(username=self.request.user, application_id=self.kwargs["pk"])
+        complete_application_task(
+            username=self.request.user, application_id=self.kwargs["pk"]
+        )
         return super().post(request, *args, **kwargs)
 
 
@@ -152,15 +163,27 @@ class ApplicationFormRedirect(RedirectView):
     def get_redirect_url(self, program_id, application_id):
         program = Program.objects.filter(id=program_id).first()
         if program.application_form_type == "convocatoria":
-            if ApplicationContentConvocatoria.objects.filter(id=application_id).exists():
-                return reverse("application-form-convocatoria-update", kwargs={"pk": application_id})
+            if ApplicationContentConvocatoria.objects.filter(
+                id=application_id
+            ).exists():
+                return reverse(
+                    "application-form-convocatoria-update",
+                    kwargs={"pk": application_id},
+                )
             else:
-                return reverse("application-form-convocatoria-create", kwargs={"pk": application_id})
+                return reverse(
+                    "application-form-convocatoria-create",
+                    kwargs={"pk": application_id},
+                )
         elif program.application_form_type == "apoyo":
             if ApplicationContentApoyo.objects.filter(id=application_id).exists():
-                return reverse("application-form-apoyo-update", kwargs={"pk": application_id})
+                return reverse(
+                    "application-form-apoyo-update", kwargs={"pk": application_id}
+                )
             else:
-                return reverse("application-form-apoyo-create", kwargs={"pk": application_id})
+                return reverse(
+                    "application-form-apoyo-create", kwargs={"pk": application_id}
+                )
 
 
 def download_application(request, pk):
@@ -170,7 +193,7 @@ def download_application(request, pk):
         context_dict["profile"] = Profile.objects.filter(username=request.user).first()
         context_dict["application"] = Application.objects.filter(id=pk).first()
         pdf = html_to_pdf("ad-solicitud-pdf.html", context=context_dict)
-        return HttpResponse(pdf, content_type='application/pdf')
+        return HttpResponse(pdf, content_type="application/pdf")
     else:
         return Http404
 
@@ -181,9 +204,11 @@ def html_to_pdf(template_src: str, context=Dict[str, Any]):
     print(html)
     result = BytesIO()
 
-    pdf = pisa.pisaDocument(BytesIO(html.encode("utf-8")), result, link_callback=fetch_resources)
+    pdf = pisa.pisaDocument(
+        BytesIO(html.encode("utf-8")), result, link_callback=fetch_resources
+    )
     if not pdf.err:
-        return HttpResponse(result.getvalue(), content_type='application/pdf')
+        return HttpResponse(result.getvalue(), content_type="application/pdf")
     return None
 
 

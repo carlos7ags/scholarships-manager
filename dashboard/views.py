@@ -1,6 +1,7 @@
 from django.views.generic import TemplateView
-from applications.models import Application
+
 from actions.models import PendingTasks
+from applications.models import Application
 from reviews.views import AdminStaffRequiredMixin
 
 
@@ -13,6 +14,14 @@ class ApplicantDashboardView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["applications"] = Application.objects.filter(username=self.request.user).order_by("-current_stage").all()
-        context["actions"] = PendingTasks.objects.filter(username=self.request.user, completed=False).order_by("deadline").all()
+        context["applications"] = (
+            Application.objects.filter(username=self.request.user)
+            .order_by("-current_stage")
+            .all()
+        )
+        context["actions"] = (
+            PendingTasks.objects.filter(username=self.request.user, completed=False)
+            .order_by("deadline")
+            .all()
+        )
         return context

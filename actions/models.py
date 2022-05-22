@@ -1,10 +1,13 @@
-from django.db import models
-
 from django.conf import settings
+from django.db import models
 
 
 class Task(models.Model):
-    TASK_TYPE = ((0, "Formulario"), (1, "Archivo"), (2, "Presencial"),)
+    TASK_TYPE = (
+        (0, "Formulario"),
+        (1, "Archivo"),
+        (2, "Presencial"),
+    )
 
     name = models.CharField("Nombre", max_length=100)
     message = models.CharField("Mensaje a mostrar", max_length=250)
@@ -16,11 +19,17 @@ class Task(models.Model):
     has_deadline = models.BooleanField("Tiene fecha límite", default=False)
     days_to_complete = models.IntegerField("Días para completar", default=30)
     required_to_apply = models.BooleanField("Necesario para aplicar", default=True)
-    auto_create_at_user_init = models.BooleanField("Autoasignar al crear usuario", default=False)
+    auto_create_at_user_init = models.BooleanField(
+        "Autoasignar al crear usuario", default=False
+    )
     has_next_task = models.BooleanField("Tiene siguiente tarea", default=False)
-    next_task = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True)
+    next_task = models.ForeignKey(
+        "self", on_delete=models.CASCADE, null=True, blank=True
+    )
     has_redirect_url = models.BooleanField("Tiene url para redirigir", default=False)
-    redirect_url = models.CharField("Url para redirigir", max_length=1000, null=True, blank=True)
+    redirect_url = models.CharField(
+        "Url para redirigir", max_length=1000, null=True, blank=True
+    )
 
     def __str__(self):
         return "%s - %s" % (self.get_type_display(), self.name)
@@ -38,7 +47,9 @@ class PendingTasks(models.Model):
         verbose_name="Tarea",
     )
     comments = models.TextField("Comentarios", blank=True, null=True)
-    redirect_url_overwrite = models.TextField("Url para redirigir (específica)", blank=True, null=True)
+    redirect_url_overwrite = models.TextField(
+        "Url para redirigir (específica)", blank=True, null=True
+    )
     deadline = models.DateTimeField("Fecha límite", blank=True, null=True)
     completed = models.BooleanField("Completada", default=False)
 

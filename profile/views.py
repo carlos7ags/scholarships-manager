@@ -1,7 +1,9 @@
 from django.contrib.auth.views import redirect_to_login
-from django.shortcuts import render, redirect
-from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView, UpdateView, RedirectView, TemplateView
+from django.shortcuts import redirect, render
+from django.urls import reverse, reverse_lazy
+from django.views.generic import (CreateView, RedirectView, TemplateView,
+                                  UpdateView)
+
 from actions.models import PendingTasks
 
 from .forms import *
@@ -21,32 +23,39 @@ def complete_profile_task(http_referer: str, username: str):
 
 
 def prettyfy_bank(bank: Bank):
-    bank.clabe = ' '.join([bank.clabe[i:i+4] for i in range(0, len(bank.clabe), 4)])
-    bank.account_number = ' '.join([bank.account_number[i:i+4] for i in range(0, len(bank.account_number), 4)])
+    bank.clabe = " ".join([bank.clabe[i : i + 4] for i in range(0, len(bank.clabe), 4)])
+    bank.account_number = " ".join(
+        [bank.account_number[i : i + 4] for i in range(0, len(bank.account_number), 4)]
+    )
     return bank
 
 
 def prettyfy_emergency_contact(emergency: EmergencyContact):
-    emergency.phone = f"({emergency.phone[:3]}) {emergency.phone[3:6]} {emergency.phone[6:]}"
-    emergency.mobile = f"({emergency.mobile[:3]}) {emergency.mobile[3:6]} {emergency.mobile[6:]}"
+    emergency.phone = (
+        f"({emergency.phone[:3]}) {emergency.phone[3:6]} {emergency.phone[6:]}"
+    )
+    emergency.mobile = (
+        f"({emergency.mobile[:3]}) {emergency.mobile[3:6]} {emergency.mobile[6:]}"
+    )
     return emergency
 
 
 def prettyfy_contact(contact: Contact):
     contact.phone = f"({contact.phone[:3]}) {contact.phone[3:6]} {contact.phone[6:]}"
-    contact.mobile = f"({contact.mobile[:3]}) {contact.mobile[3:6]} {contact.mobile[6:]}"
+    contact.mobile = (
+        f"({contact.mobile[:3]}) {contact.mobile[3:6]} {contact.mobile[6:]}"
+    )
     return contact
 
 
 class ExtendedUserCreateView(CreateView):
-
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST, request.FILES)
         if form.is_valid():
             obj = form.save(commit=False)
             obj.username = self.request.user
             obj.save()
-            complete_profile_task(request.META.get('HTTP_REFERER'), self.request.user)
+            complete_profile_task(request.META.get("HTTP_REFERER"), self.request.user)
             return redirect(self.success_url)
         else:
             return render(request, self.template_name, {"form": form})
@@ -57,7 +66,6 @@ class ExtendedUserCreateView(CreateView):
 
 
 class ExtendedUserUpdateView(UpdateView):
-
     def request_user_is_owner(self, request):
         obj = self.get_object()
         return obj.username == request.user
@@ -68,7 +76,7 @@ class ExtendedUserUpdateView(UpdateView):
         return super(ExtendedUserUpdateView, self).dispatch(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        complete_profile_task(request.META.get('HTTP_REFERER'), self.request.user)
+        complete_profile_task(request.META.get("HTTP_REFERER"), self.request.user)
         return super().post(request, *args, **kwargs)
 
 
@@ -88,9 +96,7 @@ class ProfileUpdate(ExtendedUserUpdateView):
 class ProfileRedirectView(RedirectView):
     def get_redirect_url(self):
         if Profile.objects.filter(username=self.request.user.id).exists():
-            return reverse(
-                "profile-update", kwargs={"pk": self.request.user.id}
-            )
+            return reverse("profile-update", kwargs={"pk": self.request.user.id})
         else:
             return reverse("profile-create")
 
@@ -157,9 +163,7 @@ class ProfileBankUpdate(ExtendedUserUpdateView):
 class ProfileBankRedirectView(RedirectView):
     def get_redirect_url(self):
         if Bank.objects.filter(username=self.request.user.id).exists():
-            return reverse(
-                "profile-bank-update", kwargs={"pk": self.request.user.id}
-            )
+            return reverse("profile-bank-update", kwargs={"pk": self.request.user.id})
         else:
             return reverse("profile-bank-create")
 
@@ -193,21 +197,13 @@ class ProfileDetail(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         username = self.request.user
-        context["profile"] = Profile.objects.filter(
-            username=username
-        ).first()
-        context["bank"] = Bank.objects.filter(
-            username=username
-        ).first()
+        context["profile"] = Profile.objects.filter(username=username).first()
+        context["bank"] = Bank.objects.filter(username=username).first()
         if context["bank"]:
             context["bank"] = prettyfy_bank(context["bank"])
-        context["address"] = Address.objects.filter(
-            username=username
-        ).first()
+        context["address"] = Address.objects.filter(username=username).first()
 
-        context["contact"] = Contact.objects.filter(
-            username=username
-        ).first()
+        context["contact"] = Contact.objects.filter(username=username).first()
         if context["contact"]:
             context["contact"] = prettyfy_contact(context["contact"])
 
@@ -215,6 +211,8 @@ class ProfileDetail(TemplateView):
             username=username
         ).first()
         if context["emergencycontact"]:
-            context["emergencycontact"] = prettyfy_emergency_contact(context["emergencycontact"])
+            context["emergencycontact"] = prettyfy_emergency_contact(
+                context["emergencycontact"]
+            )
 
         return context

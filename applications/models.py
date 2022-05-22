@@ -1,6 +1,7 @@
-from django.db import models
-from programs.models import Program
 from django.conf import settings
+from django.db import models
+
+from programs.models import Program
 
 
 class Award(models.Model):
@@ -145,7 +146,9 @@ class ApplicationContentConvocatoria(models.Model):
     )
     date_start = models.DateField(verbose_name="Fecha de inicio del programa")
     date_end = models.DateField(verbose_name="Fecha de término del programa")
-    program_description = models.TextField(verbose_name="Descripción del programa, tema de estudio o actividad académica que pretende realizar")
+    program_description = models.TextField(
+        verbose_name="Descripción del programa, tema de estudio o actividad académica que pretende realizar"
+    )
 
 
 class ApplicationContentApoyo(models.Model):
@@ -156,4 +159,6 @@ class ApplicationContentApoyo(models.Model):
     )
     date_start = models.DateField(verbose_name="Fecha de inicio del programa")
     date_end = models.DateField(verbose_name="Fecha de término del programa")
-    program_name = models.CharField(verbose_name="Nombre del programa de estudios", max_length=120)
+    program_name = models.CharField(
+        verbose_name="Nombre del programa de estudios", max_length=120
+    )

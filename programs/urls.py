@@ -4,7 +4,5 @@ from django.urls import path
 from programs.views import *
 
 programs_urlpatterns = [
-    path("programs",
-         login_required(ProgramsListView.as_view()),
-         name="programs-list"),
+    path("programs", login_required(ProgramsListView.as_view()), name="programs-list"),
 ]

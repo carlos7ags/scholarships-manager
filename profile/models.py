@@ -4,8 +4,8 @@ from uuid import uuid4
 from django.conf import settings
 from django.core.validators import RegexValidator
 from django.db import models
-from PIL import Image
 from encrypted_model_fields.fields import EncryptedCharField
+from PIL import Image
 
 
 def path_and_rename(instance, filename):
@@ -21,13 +21,13 @@ class Profile(models.Model):
     """Información personal"""
 
     GENDER_CHOICES = (
-        ('masculino', 'Masculino'),
-        ('femenino', 'Femenino'),
+        ("masculino", "Masculino"),
+        ("femenino", "Femenino"),
     )
 
     MARITAL_STATUS_CHOICES = (
-        ('soltero', 'Soltero'),
-        ('casado', 'Casado'),
+        ("soltero", "Soltero"),
+        ("casado", "Casado"),
     )
 
     username = models.OneToOneField(
@@ -68,7 +68,12 @@ class Profile(models.Model):
         ],
     )
 
-    passport = models.CharField("Pasaporte", max_length=15, null=True, blank=True,)
+    passport = models.CharField(
+        "Pasaporte",
+        max_length=15,
+        null=True,
+        blank=True,
+    )
 
     marital_status = models.CharField(
         "Estado civil",
@@ -121,7 +126,9 @@ class Address(models.Model):
 
     exterior_number = models.IntegerField("Número exterior")
 
-    interior_number = models.CharField("Número interior", null=True, blank=True, max_length=10)
+    interior_number = models.CharField(
+        "Número interior", null=True, blank=True, max_length=10
+    )
 
     suburb = models.CharField("Colonia", max_length=100)
 

@@ -2,10 +2,12 @@ from datetime import datetime
 
 from crispy_forms.bootstrap import FormActions
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit, Column, Field, Row, Layout
-from django.forms import ModelForm
-from applications.models import Application, ApplicationContentConvocatoria, ApplicationContentApoyo
+from crispy_forms.layout import Column, Field, Layout, Row, Submit
 from django import forms
+from django.forms import ModelForm
+
+from applications.models import (Application, ApplicationContentApoyo,
+                                 ApplicationContentConvocatoria)
 
 
 class ApplicationForm(ModelForm):
@@ -25,7 +27,9 @@ class ApplicationConvocatoriaForm(ModelForm):
                 css_class="form-row",
             ),
             Row(
-                Column(Field("program_description"), css_class="form-group col-md-8 mb-1"),
+                Column(
+                    Field("program_description"), css_class="form-group col-md-8 mb-1"
+                ),
                 css_class="form-row",
             ),
             FormActions(

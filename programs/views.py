@@ -1,8 +1,9 @@
 from datetime import date
+from profile.models import *
 
 from django.views.generic import TemplateView
+
 from .models import *
-from profile.models import *
 
 
 class ProgramsListView(TemplateView):
@@ -10,9 +11,20 @@ class ProgramsListView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        programs = Program.objects.all().filter(publicity=True).order_by("-no_close_date", "-end_date")
+        programs = (
+            Program.objects.all()
+            .filter(publicity=True)
+            .order_by("-no_close_date", "-end_date")
+        )
         status = [
-            ((program.start_date <= date.today() <= (program.end_date or date.today())) or program.no_close_date)
+            (
+                (
+                    program.start_date
+                    <= date.today()
+                    <= (program.end_date or date.today())
+                )
+                or program.no_close_date
+            )
             for program in programs
         ]
         registered = [False for _ in programs]
@@ -24,6 +36,8 @@ class ProgramsListView(TemplateView):
         profile = Profile.objects.filter(username=self.request.user.id).exists()
         address = Address.objects.filter(username=self.request.user.id).exists()
         contact = Contact.objects.filter(username=self.request.user.id).exists()
-        emergency_contact = EmergencyContact.objects.filter(username=self.request.user.id).exists()
+        emergency_contact = EmergencyContact.objects.filter(
+            username=self.request.user.id
+        ).exists()
         bank = Bank.objects.filter(username=self.request.user.id).exists()
         return all([profile, address, contact, bank, emergency_contact])

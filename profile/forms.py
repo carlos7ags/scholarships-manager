@@ -1,15 +1,11 @@
 from datetime import datetime
+from profile.models import *
 
-from crispy_forms.bootstrap import (
-    Field,
-    FormActions,
-)
+from crispy_forms.bootstrap import Field, FormActions
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import HTML, Column, Layout, Row, Submit
 from django import forms
 from django.forms import ModelForm
-
-from profile.models import *
 
 
 class ProfileForm(ModelForm):
@@ -72,7 +68,9 @@ class ProfileAddressForm(ModelForm):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.layout = Layout(
-            HTML("<p>Deberas proporcionar una dirección valida en el Estado de Aguascalientes.</p>"),
+            HTML(
+                "<p>Deberas proporcionar una dirección valida en el Estado de Aguascalientes.</p>"
+            ),
             Row(
                 Column("street", css_class="form-group col-md-8 mb-1"),
                 css_class="form-row",

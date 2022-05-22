@@ -1,9 +1,8 @@
+import django.contrib.auth.views as auth_views
 from django.urls import path
 from django.views.generic import TemplateView
-import django.contrib.auth.views as auth_views
 
 from .views import UserRegistrationView
-
 
 accounts_urlpatterns = [
     path("new-user/", UserRegistrationView.as_view(), name="user_registration"),
