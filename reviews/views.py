@@ -10,8 +10,9 @@ from django.views.generic import ListView, TemplateView
 from django_filters.views import FilterView
 
 from actions.models import PendingTasks
-from applications.models import Application
+from applications.models import Application, ApplicationContentApoyo, ApplicationContentConvocatoria
 from reviews.filters import ApplicationsFilter
+from reviews.models import ReviewersProgramACL
 
 
 class AdminStaffRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
@@ -21,7 +22,6 @@ class AdminStaffRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
 
 class ApplicationsListView(AdminStaffRequiredMixin, FilterView):
     model = Application
-    queryset = Application.objects.filter().all()
     context_object_name = "staff_applications_list"
     template_name = "applications_list.html"
     filterset_class = ApplicationsFilter
@@ -31,6 +31,10 @@ class ApplicationsListView(AdminStaffRequiredMixin, FilterView):
         "-current_stage",
     ]
 
+    def get_queryset(self):
+        acl_programs = ReviewersProgramACL.objects.filter(username=self.request.user).values_list("program", flat=True)
+        return Application.objects.filter(program__in=acl_programs).all()
+
 
 class ApplicationDetailReview(AdminStaffRequiredMixin, TemplateView):
     template_name = "application_detail_review.html"
@@ -38,11 +42,12 @@ class ApplicationDetailReview(AdminStaffRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         application = Application.objects.filter(id=kwargs["pk"]).first()
-        app_form = application.application_form
-        context["application"] = zip(
-            [app_form[k]["label"] for k in app_form.keys()],
-            [app_form[k]["value"] for k in app_form.keys()],
-        )
+
+        if application.program.application_form_type == "convocatoria":
+            context["application"] = ApplicationContentConvocatoria.objects.filter(id=application).first()
+        elif application.program.application_form_type == "apoyo":
+            context["application"] = ApplicationContentApoyo.objects.filter(id=application).first()
+
         context["folio"] = application.folio
         context["application_id"] = kwargs["pk"]
         context["application_validated"] = application.validated

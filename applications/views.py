@@ -22,7 +22,7 @@ from .forms import (ApplicationApoyoForm, ApplicationConvocatoriaForm,
 from .models import *
 
 
-def send_application_sent_mail(curp: str, program_code: str, program_name: str):
+def send_application_sent_mail(to: str, curp: str, program_code: str, program_name: str):
     html_message = loader.render_to_string(
         "application_sent_mail.html",
         {
@@ -34,8 +34,8 @@ def send_application_sent_mail(curp: str, program_code: str, program_name: str):
     send_mail(
         f"Fomento a Talentos - Nueva solicitud - {curp}",
         "",
-        "contacto.fibeipes@gmail.com",
-        ["cabrera1988reinier@gmail.com"],
+        "apoyoatalentos@gmail.com",
+        [to],
         fail_silently=False,
         html_message=html_message,
     )
@@ -107,6 +107,12 @@ class ExtendedFormCreateView(CreateView):
             obj.save()
             application.current_stage = 1
             application.save()
+            send_application_sent_mail(
+                to="fomentoatalentos@gmail.com",
+                curp=application.username,
+                program_code=application.program.application_prefix,
+                program_name=application.program.title
+            )
             return redirect(self.success_url)
         else:
             return render(request, self.template_name, {"form": form})
