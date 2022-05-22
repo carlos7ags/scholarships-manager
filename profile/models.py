@@ -8,6 +8,42 @@ from encrypted_model_fields.fields import EncryptedCharField
 from PIL import Image
 
 
+STATES = (
+    ("Aguascalientes", "Aguascalientes"),
+    ("Baja California", "Baja California"),
+    ("Baja California Sur", "Baja California Sur"),
+    ("Campeche", "Campeche"),
+    ("Coahuila de Zaragoza", "Coahuila de Zaragoza"),
+    ("Colima", "Colima"),
+    ("Chiapas", "Chiapas"),
+    ("Chihuahua", "Chihuahua"),
+    ("Distrito Federal", "Distrito Federal"),
+    ("Durango", "Durango"),
+    ("Guanajuato", "Guanajuato"),
+    ("Guerrero", "Guerrero"),
+    ("Hidalgo", "Hidalgo"),
+    ("Jalisco", "Jalisco"),
+    ("México", "México"),
+    ("Michoacán de Ocampo", "Michoacán de Ocampo"),
+    ("Morelos", "Morelos"),
+    ("Nayarit", "Nayarit"),
+    ("Nuevo León", "Nuevo León"),
+    ("Oaxaca", "Oaxaca"),
+    ("Querétaro", "Querétaro"),
+    ("Quintana Roo", "Quintana Roo"),
+    ("San Luis Potosí", "San Luis Potosí"),
+    ("Sinaloa", "Sinaloa"),
+    ("Sonora", "Sonora"),
+    ("Tabasco", "Tabasco"),
+    ("Tamaulipas", "Tamaulipas"),
+    ("Tlaxcala", "Tlaxcala"),
+    ("Veracruz de Ignacio de la Llave", "Veracruz de Ignacio de la Llave"),
+    ("Yucatán", "Yucatán"),
+    ("Zacatecas", "Zacatecas"),
+    ("Extranjero (Otro)", "Extranjero (Otro)"),
+)
+
+
 def path_and_rename(instance, filename):
     upload_to = "photos"
     ext = filename.split(".")[-1]
@@ -45,10 +81,10 @@ class Profile(models.Model):
 
     birthday = models.DateField("Fecha de nacimiento")
 
-    # ToDo: Agregar opciones de estados
     birth_place = models.CharField(
         "Lugar de nacimiento",
-        max_length=30,
+        choices=STATES,
+        max_length=100,
     )
 
     nationality = models.CharField("Nacionalidad", max_length=15)
@@ -149,10 +185,10 @@ class Address(models.Model):
         "Municipio o delegación",
         max_length=30,
     )
-    # ToDo: Agregar opciones de estados
     state = models.CharField(
         "Estado",
-        max_length=30,
+        choices=STATES,
+        max_length=100,
     )
 
     validated = models.BooleanField(default=False)
