@@ -233,7 +233,7 @@ class Contact(models.Model):
     validated = models.BooleanField(default=False)
 
     def __str__(self):
-        return "%s - %s" % (self.username, self.email)
+        return self.username
 
 
 class EmergencyContact(models.Model):
