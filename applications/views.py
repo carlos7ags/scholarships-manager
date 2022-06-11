@@ -1,4 +1,5 @@
 import os
+
 import time
 from io import BytesIO
 from profile.models import Profile
@@ -23,22 +24,25 @@ from .models import *
 
 
 def send_application_sent_mail(to: str, curp: str, program_code: str, program_name: str):
-    html_message = loader.render_to_string(
-        "application_sent_mail.html",
-        {
-            "curp": curp,
-            "convocatoria": program_name,
-            "codigo": program_code,
-        },
-    )
-    send_mail(
-        f"Fomento a Talentos - Nueva solicitud - {curp}",
-        "",
-        "apoyoatalentos@gmail.com",
-        [to],
-        fail_silently=False,
-        html_message=html_message,
-    )
+    try:
+        html_message = loader.render_to_string(
+            "application_sent_mail.html",
+            {
+                "curp": curp,
+                "convocatoria": program_name,
+                "codigo": program_code,
+            },
+        )
+        send_mail(
+            f"Fomento a Talentos - Nueva solicitud - {curp}",
+            "",
+            "apoyoatalentos@gmail.com",
+            [to],
+            fail_silently=False,
+            html_message=html_message,
+        )
+    except OSError:
+        pass
 
 
 def withdraw_application(request, pk):
