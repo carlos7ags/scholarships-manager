@@ -134,8 +134,8 @@ class ApplicationContentApoyo(models.Model):
     impact = models.TextField("Impacto y beneficios del programa para el estado")
     institution = models.CharField("Institución donde realizará sus estudios o actividad", max_length=100)
     location = models.CharField("Ciudad o país donde realizará sus estudios o actividad", max_length=100)
-    materias = models.TextField("Lista de materias y número de créditos", help_text="Sólo en caso de estar matriculado y cursando un programa de doctorado o maestría. Inserte una materia por renglon con el número de créditos separado con una coma, por ejemplo:<br/>Matemáticas, 4<br/>Español, 4<br/>Ciencias Naturales, 6")
-    research_topic = models.CharField("Línea de investigación", max_length=400, help_text="Solo en caso de estar matriculado y cursando programa de doctorado o maestría.")
+    materias = models.TextField("Lista de materias y número de créditos", help_text="Sólo en caso de estar matriculado y cursando un programa de doctorado o maestría. Inserte una materia por renglon con el número de créditos separado con una coma, por ejemplo:<br/>Matemáticas, 4<br/>Español, 4<br/>Ciencias Naturales, 6", null=True, blank=True)
+    research_topic = models.CharField("Línea de investigación", max_length=400, help_text="Solo en caso de estar matriculado y cursando programa de doctorado o maestría.", null=True, blank=True)
     program_requirements = models.CharField("Link al programa de estudios", max_length=400, help_text="Enlace o link o nombre del documento donde se pueda verificar la información de la estructura curricular y las líneas de investigación. Si la información se encuentra en un documento entregado en su expediente, indicar los números de página en donde se ubica.")
 
     total_movilidad = models.IntegerField("", default=0)
