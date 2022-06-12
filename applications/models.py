@@ -39,7 +39,7 @@ class Application(models.Model):
     APPLICATION_STAGES = (
         (0, "Pendiente"),
         (1, "Enviada"),
-        (2, "En revisión"),
+        (2, "Resolver observaciones"),
         (3, "Validada"),
         (4, "Decisión final"),
         (5, "Seguimiento"),

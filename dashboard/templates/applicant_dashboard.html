@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
 
@@ -11,7 +12,7 @@
     </div>
 
     <div class="container">
-        <div class="row justify-content-md-center mt-4" >
+        <div class="row justify-content-md-center mt-4">
             <div class="col col-lg" style="text-align:center;">
                 <h5>Tareas pendientes</h5>
                 {% include "pending_actions.html" %}
@@ -27,5 +28,11 @@
             </div>
         </div>
     </div>
+
+    <div id="modal-withdraw" class="modal fade">
+        <div id="withdraw" class="modal-dialog" hx-target="this"></div>
+    </div>
+
+    <script src="{% static 'assets/js/other/modals.js' %}"></script>
 
 {% endblock %}

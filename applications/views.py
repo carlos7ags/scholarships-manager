@@ -55,6 +55,20 @@ def withdraw_application(request, pk):
         return render(request, "withdraw_application.html")
 
 
+def update_application(request, application_id, task_id):
+    if request.method == "POST":
+        application = Application.objects.filter(id=application_id).first()
+        application.current_stage = 1
+        task = PendingTasks.objects.filter(id=task_id).first()
+        task.completed = True
+        application.save()
+        task.save()
+        return HttpResponse(status=204, headers={"HX-Trigger": "refreshMain"})
+    else:
+        task = PendingTasks.objects.filter(id=task_id).first()
+        return render(request, "update_application.html", {"comments": task.comments})
+
+
 def create_application(request, program_id):
     application = Application.objects.filter(
         username=request.user, program=program_id

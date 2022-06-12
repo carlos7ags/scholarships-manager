@@ -5,7 +5,7 @@ from django.db import models
 class Task(models.Model):
     TASK_TYPE = (
         (0, "Formulario"),
-        (1, "Archivo"),
+        (1, "Modal"),
         (2, "Presencial"),
     )
 

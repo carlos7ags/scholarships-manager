@@ -44,4 +44,9 @@ applications_urlpatterns = [
         login_required(withdraw_application),
         name="withdraw-application",
     ),
+    path(
+        "application/<application_id>/task/<task_id>/update",
+        login_required(update_application),
+        name="update-application",
+    ),
 ]
