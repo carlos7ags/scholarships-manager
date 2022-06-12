@@ -327,11 +327,8 @@
 
                         <div class="col col-lg my-4">
                             <div class="container">
-                                <form action="{% url 'staff-application-award-redirect' program_id application_id %}" method="POST">
-                                    {% csrf_token %}
-                                    <input type="submit" value="Crear decisión final" id="submit" name="submit"
-                                           class="btn btn-primary">
-                                </form>
+                            <a href="{% url "staff-application-award-redirect" pk=application_id %}" class="btn btn-primary btn-sm" role="button"
+                               aria-pressed="true">Crear decisión final</a>
                             </div>
                         </div>
                     </div>

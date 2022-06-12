@@ -10,6 +10,11 @@ reviews_urlpatterns = [
         name="staff-applications-list",
     ),
     path(
+        "staff/awards",
+        login_required(AwardsListView.as_view()),
+        name="staff-awards-list",
+    ),
+    path(
         "staff/applications/<pk>",
         login_required(ApplicationDetailReview.as_view()),
         name="staff-application-review",
@@ -25,18 +30,18 @@ reviews_urlpatterns = [
         name="staff-application-review-comment",
     ),
     path(
-        "staff/program/<program_id>/application/<application_id>/award/redirect",
-        login_required(ApplicationAwardRedirect),
+        "staff/application/<pk>/award/redirect",
+        login_required(ApplicationAwardRedirect.as_view()),
         name="staff-application-award-redirect",
     ),
     path(
-        "staff/program/<program_id>/application/<application_id>/award/create",
-        login_required(ApplicationAwardCreate),
+        "staff/application/<pk>/award/create",
+        login_required(ApplicationAwardCreate.as_view()),
         name="staff-application-award-create",
     ),
     path(
-        "staff/program/<program_id>/application/<application_id>/award/<pk>/update",
-        login_required(ApplicationAwardUpdate),
+        "staff/application/<pk>/award/update",
+        login_required(ApplicationAwardUpdate.as_view()),
         name="staff-application-award-update",
     ),
 ]

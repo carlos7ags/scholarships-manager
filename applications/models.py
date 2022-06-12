@@ -75,12 +75,15 @@ class Award(models.Model):
     )
     awarded = models.IntegerField("Monto autorizado", default=0, null=True, blank=True)
     comments = models.TextField("Comentarios", null=True, blank=True)
-    acta = models.TextField("Número de acta", null=True, blank=True)
+    acta = models.CharField("Número de acta", null=True, blank=True, max_length=100)
     require_deliverable = models.BooleanField("Requiere entregables", default=False)
-    deliverable_by = models.DateTimeField("Fecha para entregables", null=True)
+    deliverable_by = models.DateTimeField("Fecha para entregables", null=True, blank=True)
     deliverable = models.FileField("Entregable", null=True, blank=True)
     deliverable_validated = models.BooleanField("Entregable validado", default=False)
+    award_delivered = models.BooleanField("Apoyo entregado", default=False)
+    award_delivered_at = models.DateTimeField("Fecha de entrega de apoyo", null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return "%s - %s" % (self.program, self.username)

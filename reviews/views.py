@@ -2,6 +2,7 @@ from datetime import datetime, timedelta
 from profile.models import Address, Bank, Contact, EmergencyContact, Profile
 from profile.views import (prettyfy_bank, prettyfy_contact,
                            prettyfy_emergency_contact)
+from django.utils import timezone
 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
@@ -9,7 +10,7 @@ from django.core.mail import send_mail
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.template import loader
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views.generic import (CreateView, RedirectView, TemplateView,
                                   UpdateView)
 from django_filters.views import FilterView
@@ -18,13 +19,33 @@ from actions.models import PendingTasks, Task
 from applications.models import (Application, ApplicationContentApoyo,
                                  ApplicationContentConvocatoria, Award)
 from programs.models import Program
-from reviews.filters import ApplicationsFilter
+from reviews.filters import ApplicationsFilter, AwardsFilter
+from reviews.forms import AwardForm
 from reviews.models import ReviewersProgramACL
 
 
 class AdminStaffRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
     def test_func(self):
         return self.request.user.is_superuser or self.request.user.is_staff
+
+
+
+class AwardsListView(AdminStaffRequiredMixin, FilterView):
+    model = Award
+    context_object_name = "staff_awards_list"
+    template_name = "awards_list.html"
+    filterset_class = AwardsFilter
+    paginate_by = 25
+    ordering = [
+        "username",
+        "current_stage",
+    ]
+
+    def get_queryset(self):
+        acl_programs = ReviewersProgramACL.objects.filter(
+            username=self.request.user
+        ).values_list("program", flat=True)
+        return Award.objects.filter(program__in=acl_programs).all()
 
 
 class ApplicationsListView(AdminStaffRequiredMixin, FilterView):
@@ -176,39 +197,62 @@ def send_observations_mail(
 class ApplicationAwardCreate(CreateView):
     model = Award
     template_name = "application_award.html"
+    form_class = AwardForm
+    success_url = reverse_lazy("staff-applications-list")
 
-    def get_success_url(self):
-        return HttpResponseRedirect(self.request.META.get("HTTP_REFERER"))
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        application = Application.objects.filter(
+            id=self.kwargs["pk"]
+        ).first()
+        context["programa"] = application.program.title
+        context["curp"] = application.username
+        context["folio"] = application.folio
+        return context
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            application = Application.objects.filter(
+                id=self.kwargs["pk"]
+            ).first()
+            new_award = form.save(commit=False)
+            new_award.id = application
+            new_award.username = application.username
+            new_award.program = application.program
+            new_award.created_at = timezone.now()
+            new_award.updated_at = timezone.now()
+            new_award.save()
+            application.current_stage = 4
+            application.save()
+            return redirect(self.success_url)
+        else:
+            return render(request, self.template_name, {"form": form})
 
 
 class ApplicationAwardUpdate(UpdateView):
     model = Award
     template_name = "application_award.html"
-
-    def get_success_url(self):
-        return HttpResponseRedirect(self.request.META.get("HTTP_REFERER"))
+    form_class = AwardForm
+    success_url = reverse_lazy("staff-applications-list")
 
 
 class ApplicationAwardRedirect(RedirectView):
-    def get_redirect_url(self, program_id, application_id):
-        program = Program.objects.filter(id=program_id).fisrst()
-        award = Award.objects.filter(
-            username=self.request.user.id, program=program
-        ).first()
-        if award:
+    def get_redirect_url(self, pk):
+        application = Application.objects.filter(id=pk).first()
+        if Award.objects.filter(
+            username=application.username, program=application.program
+        ).exists():
             return reverse(
                 "staff-application-award-update",
                 kwargs={
-                    "program_id": program_id,
-                    "application_id": application_id,
-                    "pk": award.id,
+                    "pk": pk,
                 },
             )
         else:
             return reverse(
                 "staff-application-award-create",
                 kwargs={
-                    "program_id": program_id,
-                    "application_id": application_id,
+                    "pk": pk,
                 },
             )
