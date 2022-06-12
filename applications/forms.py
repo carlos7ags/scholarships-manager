@@ -55,6 +55,16 @@ class ApplicationConvocatoriaForm(ModelForm):
 class ApplicationApoyoForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields['total_movilidad'].label = ''
+        self.fields['requested_movilidad'].label = ''
+        self.fields['total_investigacion'].label = ''
+        self.fields['requested_investigacion'].label = ''
+        self.fields['total_inscripcion'].label = ''
+        self.fields['requested_inscripcion'].label = ''
+        self.fields['total_viaticos'].label = ''
+        self.fields['requested_viaticos'].label = ''
+        self.fields['total_otros'].label = ''
+        self.fields['requested_otros'].label = ''
         self.helper = FormHelper()
         self.helper.layout = Layout(
             HTML("<h5>Información del programa de estudios</h5>"),

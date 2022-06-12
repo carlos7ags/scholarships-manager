@@ -99,15 +99,21 @@ class ApplicationContentConvocatoria(models.Model):
         verbose_name="Descripción del programa, tema de estudio o actividad académica que pretende realizar"
     )
 
+    def get_fields(self):
+        return [(field.name, field.value_to_string(self)) for field in ApplicationContentApoyo._meta.fields]
+
+    def __str__(self):
+        return "%s - %s - %s" % (self.id, self.id.username, self.id.program)
+
 
 class ApplicationContentApoyo(models.Model):
 
     LANGUAGES = (
-        ("spanish", "Español"),
-        ("english", "Inglés"),
-        ("portuguese", "Portugués"),
-        ("french", "Francés"),
-        ("french", "Otro"),
+        ("Español", "Español"),
+        ("Inglés", "Inglés"),
+        ("Portugués", "Portugués"),
+        ("Francés", "Francés"),
+        ("Otro", "Otro"),
     )
 
     id = models.OneToOneField(
@@ -138,16 +144,16 @@ class ApplicationContentApoyo(models.Model):
     research_topic = models.CharField("Línea de investigación", max_length=400, help_text="Solo en caso de estar matriculado y cursando programa de doctorado o maestría.", null=True, blank=True)
     program_requirements = models.CharField("Link al programa de estudios", max_length=400, help_text="Enlace o link o nombre del documento donde se pueda verificar la información de la estructura curricular y las líneas de investigación. Si la información se encuentra en un documento entregado en su expediente, indicar los números de página en donde se ubica.")
 
-    total_movilidad = models.IntegerField("", default=0)
-    requested_movilidad = models.IntegerField("", default=0)
-    total_investigacion = models.IntegerField("", default=0)
-    requested_investigacion = models.IntegerField("", default=0)
-    total_inscripcion = models.IntegerField("", default=0)
-    requested_inscripcion = models.IntegerField("", default=0)
-    total_viaticos = models.IntegerField("", default=0)
-    requested_viaticos = models.IntegerField("", default=0)
-    total_otros = models.IntegerField("", default=0)
-    requested_otros = models.IntegerField("", default=0)
+    total_movilidad = models.IntegerField("Costo total - Movilidad", default=0)
+    requested_movilidad = models.IntegerField("Solicitado - Movilidad", default=0)
+    total_investigacion = models.IntegerField("Costo total - Investigación", default=0)
+    requested_investigacion = models.IntegerField("Solicitado - Investigación", default=0)
+    total_inscripcion = models.IntegerField("Costo total - Inscripción", default=0)
+    requested_inscripcion = models.IntegerField("Solicitado - Inscripción", default=0)
+    total_viaticos = models.IntegerField("Costo total - Viáticos", default=0)
+    requested_viaticos = models.IntegerField("Solicitado - Viáticos", default=0)
+    total_otros = models.IntegerField("Costo total - Otros", default=0)
+    requested_otros = models.IntegerField("Solicitado - Otros", default=0)
 
     personal_statement = models.TextField("Objetivo personal que lo impulsó para seguir estudiando")
     suitability = models.TextField("Explique, ¿por qué es pertinente el apoyar su formación en la modalidad pretendida?")
@@ -159,6 +165,10 @@ class ApplicationContentApoyo(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def get_fields(self):
+        omit = ("id",)
+        return [(field.name, field.verbose_name, field.value_to_string(self)) for field in ApplicationContentApoyo._meta.fields if field.name not in omit]
 
     def __str__(self):
         return "%s - %s - %s" % (self.id, self.id.username, self.id.program)

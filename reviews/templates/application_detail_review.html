@@ -31,7 +31,7 @@
                     </button>
                 </li>
             </ul>
-            <div class="tab-content" id="myTabContent">
+            <div class="tab-content" id="myTabContent" style="min-width: 100%;">
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
 
                     <div class="container">
@@ -276,7 +276,7 @@
                                 <div class="container">
                                     <div class="card mb-3">
                                         <div class="card-body">
-                                            {% for label, value in application %}
+                                            {% for name, label, value in application.get_fields %}
                                                 <div class="row">
                                                     <div class="col-sm-4"><h6 class="mb-0">{{ label }}</h6></div>
                                                     <div class="col-sm-8 text-secondary"> {{ value }}</div>
