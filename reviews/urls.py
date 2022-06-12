@@ -24,4 +24,19 @@ reviews_urlpatterns = [
         login_required(comment_application),
         name="staff-application-review-comment",
     ),
+    path(
+        "staff/program/<program_id>/application/<application_id>/award/redirect",
+        login_required(ApplicationAwardRedirect),
+        name="staff-application-award-redirect",
+    ),
+    path(
+        "staff/program/<program_id>/application/<application_id>/award/create",
+        login_required(ApplicationAwardCreate),
+        name="staff-application-award-create",
+    ),
+    path(
+        "staff/program/<program_id>/application/<application_id>/award/<pk>/update",
+        login_required(ApplicationAwardUpdate),
+        name="staff-application-award-update",
+    ),
 ]

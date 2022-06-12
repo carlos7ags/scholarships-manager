@@ -4,37 +4,6 @@ from django.db import models
 from programs.models import Program
 
 
-class Award(models.Model):
-    AWARD_STATUS = ((0, "Rechazado"), (1, "Aprobado"))
-
-    username = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        verbose_name="Solicitante",
-    )
-    program = models.ForeignKey(
-        to=Program,
-        on_delete=models.CASCADE,
-        verbose_name="Programa",
-    )
-    decision = models.IntegerField(
-        "Decisión",
-        choices=AWARD_STATUS,
-        null=True,
-    )
-    awarded = models.IntegerField("Monto autorizado", default=0, null=True, blank=True)
-    comments = models.TextField("Comentarios", null=True, blank=True)
-    acta = models.TextField("Número de acta", null=True, blank=True)
-    require_deliverable = models.BooleanField("Requiere entregables", default=False)
-    deliverable_by = models.DateTimeField("Fecha para entregables", null=True)
-    deliverable = models.FileField("Entregable", null=True, blank=True)
-    deliverable_validated = models.BooleanField("Entregable validado", default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return "%s - %s" % (self.program, self.username)
-
-
 class Application(models.Model):
     APPLICATION_STAGES = (
         (0, "Pendiente"),
@@ -64,13 +33,6 @@ class Application(models.Model):
         default=0,
     )
     score = models.CharField("Puntuación", max_length=64, null=True, blank=True)
-    decision = models.ForeignKey(
-        to=Award,
-        on_delete=models.CASCADE,
-        verbose_name="Decisión",
-        null=True,
-        blank=True,
-    )
     validated = models.BooleanField(default=False)
     comments = models.TextField("Comentarios", null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -85,6 +47,43 @@ class Application(models.Model):
 
     def __str__(self):
         return "%s - %s - %s" % (self.program, self.folio, self.username)
+
+
+class Award(models.Model):
+    AWARD_STATUS = ((0, "Rechazado"), (1, "Aprobado"))
+
+    id = models.OneToOneField(
+        Application,
+        on_delete=models.CASCADE,
+        primary_key=True,
+    )
+
+    username = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        verbose_name="Solicitante",
+    )
+    program = models.ForeignKey(
+        to=Program,
+        on_delete=models.CASCADE,
+        verbose_name="Programa",
+    )
+    decision = models.IntegerField(
+        "Decisión",
+        choices=AWARD_STATUS,
+        null=True,
+    )
+    awarded = models.IntegerField("Monto autorizado", default=0, null=True, blank=True)
+    comments = models.TextField("Comentarios", null=True, blank=True)
+    acta = models.TextField("Número de acta", null=True, blank=True)
+    require_deliverable = models.BooleanField("Requiere entregables", default=False)
+    deliverable_by = models.DateTimeField("Fecha para entregables", null=True)
+    deliverable = models.FileField("Entregable", null=True, blank=True)
+    deliverable_validated = models.BooleanField("Entregable validado", default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return "%s - %s" % (self.program, self.username)
 
 
 class ApplicationContentConvocatoria(models.Model):
@@ -204,7 +203,6 @@ class ApplicationContentApoyo(models.Model):
     program_relation_state = models.TextField(
         "Argumetación sobre la relación del proyecto o programa de estudios con la ciencia, la tecnología y la innovación"
     )
-
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

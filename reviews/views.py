@@ -6,16 +6,18 @@ from profile.views import (prettyfy_bank, prettyfy_contact,
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.template import loader
 from django.urls import reverse
-from django.views.generic import TemplateView
+from django.views.generic import (CreateView, RedirectView, TemplateView,
+                                  UpdateView)
 from django_filters.views import FilterView
 
 from actions.models import PendingTasks, Task
 from applications.models import (Application, ApplicationContentApoyo,
-                                 ApplicationContentConvocatoria)
+                                 ApplicationContentConvocatoria, Award)
+from programs.models import Program
 from reviews.filters import ApplicationsFilter
 from reviews.models import ReviewersProgramACL
 
@@ -60,6 +62,7 @@ class ApplicationDetailReview(AdminStaffRequiredMixin, TemplateView):
             ).first()
 
         context["folio"] = application.folio
+        context["program_id"] = application.program.id
         context["application_id"] = kwargs["pk"]
         context["application_validated"] = application.validated
         context["application_stage"] = application.current_stage
@@ -165,3 +168,47 @@ def send_observations_mail(
         fail_silently=True,
         html_message=html_message,
     )
+
+
+# ToDo: luego falta cargar el archivo final comprobante y la descarga de la solicitud
+
+
+class ApplicationAwardCreate(CreateView):
+    model = Award
+    template_name = "application_award.html"
+
+    def get_success_url(self):
+        return HttpResponseRedirect(self.request.META.get("HTTP_REFERER"))
+
+
+class ApplicationAwardUpdate(UpdateView):
+    model = Award
+    template_name = "application_award.html"
+
+    def get_success_url(self):
+        return HttpResponseRedirect(self.request.META.get("HTTP_REFERER"))
+
+
+class ApplicationAwardRedirect(RedirectView):
+    def get_redirect_url(self, program_id, application_id):
+        program = Program.objects.filter(id=program_id).fisrst()
+        award = Award.objects.filter(
+            username=self.request.user.id, program=program
+        ).first()
+        if award:
+            return reverse(
+                "staff-application-award-update",
+                kwargs={
+                    "program_id": program_id,
+                    "application_id": application_id,
+                    "pk": award.id,
+                },
+            )
+        else:
+            return reverse(
+                "staff-application-award-create",
+                kwargs={
+                    "program_id": program_id,
+                    "application_id": application_id,
+                },
+            )

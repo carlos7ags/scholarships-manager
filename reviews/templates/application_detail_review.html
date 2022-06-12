@@ -321,6 +321,21 @@
                         </div>
                     </div>
                 </div>
+            {% elif application_stage == 3 %}
+                <div class="container">
+                    <div class="row justify-content-betweencontainer-sm" style="background-color:white;">
+
+                        <div class="col col-lg my-4">
+                            <div class="container">
+                                <form action="{% url 'staff-application-award-redirect' program_id application_id %}" method="POST">
+                                    {% csrf_token %}
+                                    <input type="submit" value="Crear decisión final" id="submit" name="submit"
+                                           class="btn btn-primary">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
         {% endif %}
 
         </div>
