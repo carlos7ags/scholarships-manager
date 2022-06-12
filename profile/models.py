@@ -7,7 +7,6 @@ from django.db import models
 from encrypted_model_fields.fields import EncryptedCharField
 from PIL import Image
 
-
 STATES = (
     ("Aguascalientes", "Aguascalientes"),
     ("Baja California", "Baja California"),

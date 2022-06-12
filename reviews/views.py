@@ -1,21 +1,21 @@
-from django.contrib.auth.models import User
-from django.core.handlers.wsgi import WSGIRequest
-from django.core.mail import send_mail
-
+from datetime import datetime, timedelta
 from profile.models import Address, Bank, Contact, EmergencyContact, Profile
 from profile.views import (prettyfy_bank, prettyfy_contact,
                            prettyfy_emergency_contact)
-from django.template import loader
 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.http import HttpResponse, HttpRequest
+from django.contrib.auth.models import User
+from django.core.mail import send_mail
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
-from django.urls import reverse, reverse_lazy
-from django.views.generic import ListView, TemplateView
+from django.template import loader
+from django.urls import reverse
+from django.views.generic import TemplateView
 from django_filters.views import FilterView
 
 from actions.models import PendingTasks, Task
-from applications.models import Application, ApplicationContentApoyo, ApplicationContentConvocatoria
+from applications.models import (Application, ApplicationContentApoyo,
+                                 ApplicationContentConvocatoria)
 from reviews.filters import ApplicationsFilter
 from reviews.models import ReviewersProgramACL
 
@@ -37,7 +37,9 @@ class ApplicationsListView(AdminStaffRequiredMixin, FilterView):
     ]
 
     def get_queryset(self):
-        acl_programs = ReviewersProgramACL.objects.filter(username=self.request.user).values_list("program", flat=True)
+        acl_programs = ReviewersProgramACL.objects.filter(
+            username=self.request.user
+        ).values_list("program", flat=True)
         return Application.objects.filter(program__in=acl_programs).all()
 
 
@@ -49,9 +51,13 @@ class ApplicationDetailReview(AdminStaffRequiredMixin, TemplateView):
         application = Application.objects.filter(id=kwargs["pk"]).first()
 
         if application.program.application_form_type == "convocatoria":
-            context["application"] = ApplicationContentConvocatoria.objects.filter(id=application).first()
+            context["application"] = ApplicationContentConvocatoria.objects.filter(
+                id=application
+            ).first()
         elif application.program.application_form_type == "apoyo":
-            context["application"] = ApplicationContentApoyo.objects.filter(id=application).first()
+            context["application"] = ApplicationContentApoyo.objects.filter(
+                id=application
+            ).first()
 
         context["folio"] = application.folio
         context["application_id"] = kwargs["pk"]
@@ -80,12 +86,35 @@ class ApplicationDetailReview(AdminStaffRequiredMixin, TemplateView):
         return context
 
 
+def receive_application_documents(request, pk):
+    if request.method == "POST":
+        action_key = "documentacion"
+        application = Application.objects.filter(id=pk).first()
+        task = Task.objects.filter(redirect_url=action_key).first()
+        obj = PendingTasks.objects.filter(application=application, task=task).first()
+        obj.completed = True
+        obj.save()
+        return redirect(reverse("staff-applications-list"))
+
+
 def validate_application(request, pk):
     if request.method == "POST":
-        obj = Application.objects.filter(id=pk).first()
-        obj.current_stage = 3
-        obj.validated = True
-        obj.save()
+        action_key = "documentacion"
+        application = Application.objects.filter(id=pk).first()
+        application.current_stage = 3
+        application.validated = True
+        application.save()
+        task = Task.objects.filter(redirect_url=action_key).first()
+        if task:
+            new_task = PendingTasks()
+            new_task.task = task
+            new_task.username = application.username
+            new_task.application = application
+            if task.has_deadline:
+                new_task.deadline = datetime.now() + timedelta(
+                    days=task.days_to_complete
+                )
+            new_task.save()
         return redirect(reverse("staff-applications-list"))
 
 
@@ -94,23 +123,30 @@ def comment_application(request, pk):
         redirect_url = "application/<application_id>/task/<task_id>/update"
         application = Application.objects.filter(id=pk).first()
         application.current_stage = 2
-        send_observations_mail(username=application.username, request=request, application=application)
+        send_observations_mail(
+            username=application.username, request=request, application=application
+        )
         application.save()
         task = Task.objects.filter(redirect_url=redirect_url).first()
         if task:
             new_task = PendingTasks()
             new_task.task = task
             new_task.username = application.username
+            new_task.application = application
             new_task.comments = request.POST["comment"]
             new_task.save()
-            new_task.redirect_url_overwrite = redirect_url.replace("<application_id>", pk).replace("<task_id>", str(new_task.id))
+            new_task.redirect_url_overwrite = redirect_url.replace(
+                "<application_id>", pk
+            ).replace("<task_id>", str(new_task.id))
             new_task.save()
         return HttpResponse(status=204, headers={"HX-Trigger": "refreshMain"})
     else:
         return render(request, "comment_application.html")
 
 
-def send_observations_mail(username: User, request: HttpRequest, application: Application):
+def send_observations_mail(
+    username: User, request: HttpRequest, application: Application
+):
     html_message = loader.render_to_string(
         "comments_mail.html",
         {

@@ -1,5 +1,4 @@
 import os
-
 import time
 from io import BytesIO
 from profile.models import Profile
@@ -18,12 +17,13 @@ from xhtml2pdf import pisa
 
 from actions.models import PendingTasks
 
-from .forms import (ApplicationApoyoForm, ApplicationConvocatoriaForm,
-                    ApplicationForm)
+from .forms import ApplicationApoyoForm, ApplicationConvocatoriaForm, ApplicationForm
 from .models import *
 
 
-def send_application_sent_mail(to: str, curp: str, program_code: str, program_name: str):
+def send_application_sent_mail(
+    to: str, curp: str, program_code: str, program_name: str
+):
     try:
         html_message = loader.render_to_string(
             "application_sent_mail.html",
@@ -129,7 +129,7 @@ class ExtendedFormCreateView(CreateView):
                 to="fomentoatalentos@gmail.com",
                 curp=application.username,
                 program_code=application.program.application_prefix,
-                program_name=application.program.title
+                program_name=application.program.title,
             )
             return redirect(self.success_url)
         else:

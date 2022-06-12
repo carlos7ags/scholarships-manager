@@ -1,6 +1,5 @@
-from django.db import models
-
 from django.conf import settings
+from django.db import models
 
 from programs.models import Program
 
@@ -16,4 +15,7 @@ class ReviewersProgramACL(models.Model):
     )
 
     def __str__(self):
-        return "Username: %s - Program: %s" % (self.username, self.program.application_prefix)
+        return "Username: %s - Program: %s" % (
+            self.username,
+            self.program.application_prefix,
+        )

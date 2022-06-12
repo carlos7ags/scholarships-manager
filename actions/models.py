@@ -1,6 +1,8 @@
 from django.conf import settings
 from django.db import models
 
+from applications.models import Application
+
 
 class Task(models.Model):
     TASK_TYPE = (
@@ -49,6 +51,13 @@ class PendingTasks(models.Model):
     comments = models.TextField("Comentarios", blank=True, null=True)
     redirect_url_overwrite = models.TextField(
         "Url para redirigir (específica)", blank=True, null=True
+    )
+    application = models.ForeignKey(
+        Application,
+        on_delete=models.CASCADE,
+        verbose_name="Applicacion",
+        null=True,
+        blank=True,
     )
     deadline = models.DateTimeField("Fecha límite", blank=True, null=True)
     completed = models.BooleanField("Completada", default=False)
