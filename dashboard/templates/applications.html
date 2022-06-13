@@ -13,12 +13,12 @@
             <th></th>
             </thead>
             <tbody style="font-size:.875em;">
-            {% for application in applications %}
+            {% for application, decision in applications %}
                 <tr>
                     <td>{{ application.folio }}</td>
                     <td>{{ application.program.title }}</td>
                     <td>{{ application.get_current_stage_display }}</td>
-                    <td>{{ application.decision.get_decision_display }}</td>
+                    <td>{{ decision.get_decision_display }}</td>
 
                     {% if application.current_stage == 0 %}
                         <td style="vertical-align:middle;">

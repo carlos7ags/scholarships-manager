@@ -61,23 +61,43 @@
                                 <th>CURP</th>
                                 <th>Decisión</th>
                                 <th>Monto</th>
+                                <th></th>
+                                <th></th>
                             </tr>
-                            {% for application in object_list %}
+                            {% for award in object_list %}
                                 <tr>
-                                    <td>{{ application.program.title|title }}</td>
-                                    <td>{{ application.folio|upper }}</td>
-                                    <td>{{ application.username|upper }}</td>
-                                    <td>{{ application.get_current_stage_display }}</td>
-                                    <td>{{ application.score|default:"" }}</td>
-                                    <td>{{ application.decision.get_decision_display }}</td>
+                                    <td>{{ award.program.title|title }}</td>
+                                    <td>{{ award.username|upper }}</td>
+                                    <td>{{ award.get_decision_display }}</td>
+                                    <td>{{ award.awarded|intcomma }}</td>
                                     <td>
-                                        <a type="button" class="btn btn-outline-primary btn-sm"
-                                           href="{% url 'staff-application-review' application.id %}">
+                                        <a type="button" class="btn btn-outline-secondary btn-sm"
+                                           href="{% url 'staff-application-review' award.id.id %}">
                                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eyeglasses" viewBox="0 0 16 16">
                                               <path d="M4 6a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm2.625.547a3 3 0 0 0-5.584.953H.5a.5.5 0 0 0 0 1h.541A3 3 0 0 0 7 8a1 1 0 0 1 2 0 3 3 0 0 0 5.959.5h.541a.5.5 0 0 0 0-1h-.541a3 3 0 0 0-5.584-.953A1.993 1.993 0 0 0 8 6c-.532 0-1.016.208-1.375.547zM14 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0z"/>
                                             </svg>
+                                            Ver aplicación
                                         </a>
                                     </td>
+                                    {% if not award.award_delivered %}
+                                    <td>
+                                        <button hx-get="{% url 'staff-deliver-award' award.id.id %}" hx-target="#withdraw" class="btn btn-outline-secondary btn-sm">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                              <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                                            </svg>
+                                            Entregar apoyo
+                                        </button>
+                                    </td>
+                                        {% elif award.require_deliverable and not award.deliverable_validated %}
+                                    <td>
+                                        <button hx-get="{% url 'staff-validate-deliverable' award.id.id %}" hx-target="#withdraw" class="btn btn-outline-secondary btn-sm">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                              <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                                            </svg>
+                                            Validar entregables
+                                        </button>
+                                    </td>
+                                {% endif %}
                                 </tr>
                             {% empty %}
                                 <td>
@@ -110,6 +130,13 @@
             </div>
         </div>
     </div>
+
+    <div id="modal-withdraw" class="modal fade">
+        <div id="withdraw" class="modal-dialog" hx-target="this"></div>
+    </div>
+
+    <script src="{% static 'assets/js/other/modals.js' %}"></script>
+
 
 {% endblock %}
 

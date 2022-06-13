@@ -168,6 +168,37 @@ def comment_application(request, pk):
         return render(request, "comment_application.html")
 
 
+def deliver_award(request, pk):
+    if request.method == "POST":
+        application = Application.objects.filter(id=pk).first()
+        award = Award.objects.filter(id=application).first()
+        application.current_stage = 5
+        award.award_delivered = True
+        award.award_delivered_at = timezone.now()
+        award.updated_at = timezone.now()
+        application.save()
+        award.save()
+        return HttpResponse(status=204, headers={"HX-Trigger": "refreshMain"})
+    else:
+        return render(request, "deliver_award.html")
+
+
+def validate_deliverable(request, pk):
+    if request.method == "POST":
+        application = Application.objects.filter(id=pk).first()
+        award = Award.objects.filter(id=application).first()
+        application.current_stage = 6
+        award.deliverable_validated = True
+        award.updated_at = timezone.now()
+        application.save()
+        award.save()
+        return HttpResponse(status=204, headers={"HX-Trigger": "refreshMain"})
+    else:
+        application = Application.objects.filter(id=pk).first()
+        award = Award.objects.filter(id=application).first()
+        return render(request, "validate_deliverable.html", {"deliverable": award.deliverable})
+
+
 def send_observations_mail(
     username: User, request: HttpRequest, application: Application
 ):

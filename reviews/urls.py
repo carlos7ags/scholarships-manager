@@ -30,6 +30,16 @@ reviews_urlpatterns = [
         name="staff-application-review-comment",
     ),
     path(
+        "staff/awards/<pk>/deliver",
+        login_required(deliver_award),
+        name="staff-deliver-award",
+    ),
+    path(
+        "staff/awards/<pk>/validate",
+        login_required(validate_deliverable),
+        name="staff-validate-deliverable",
+    ),
+    path(
         "staff/application/<pk>/award/redirect",
         login_required(ApplicationAwardRedirect.as_view()),
         name="staff-application-award-redirect",
