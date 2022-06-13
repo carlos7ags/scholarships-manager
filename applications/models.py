@@ -105,14 +105,17 @@ class ApplicationContentConvocatoria(models.Model):
     )
     date_start = models.DateField(verbose_name="Fecha de inicio del programa")
     date_end = models.DateField(verbose_name="Fecha de término del programa")
-    name = models.CharField(
-        verbose_name="Nombre del programa de estudios", max_length=120
+    project_name = models.CharField(
+        verbose_name="Nombre del proyecto de investigación o de estudios", max_length=120
     )
     description = models.TextField(
-        verbose_name="Descripción del programa, tema de estudio o actividad académica que pretende realizar"
+        verbose_name="Descripción del proyecto de investigación o estudios"
+    )
+    program_name = models.CharField(
+        verbose_name="Nombre del programa de estudios", max_length=120
     )
     objective = models.TextField(
-        "Objetivo de los estudios o actividad que realizará y para la cuál pide el apoyo"
+        "Objetivo del programa de estudios"
     )
     credits = models.IntegerField("Número de asignaturas o créditos del programa")
     duration_hours = models.IntegerField("Duración del programa de estudios (horas)")
@@ -121,8 +124,8 @@ class ApplicationContentConvocatoria(models.Model):
         choices=LANGUAGES,
         max_length=50,
     )
-    area = models.CharField("Área del programa", max_length=100)
-    impact = models.TextField("Impacto y beneficios del programa para el estado")
+    area = models.CharField("Área o disciplina en la que se realizarán los estudios", max_length=100)
+    impact = models.TextField("Impacto y beneficios del programa de estudios para el estado")
     institution = models.CharField(
         "Institución donde realizará sus estudios o actividad", max_length=100
     )
