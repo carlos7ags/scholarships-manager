@@ -1,5 +1,6 @@
 import django_filters
 
+from actions.models import PendingTasks
 from applications.models import Application, Award
 from programs.models import Program
 
@@ -34,6 +35,15 @@ class AwardsFilter(django_filters.FilterSet):
 
     class Meta:
         model = Award
+        fields = {
+            "username__username": ["icontains"],
+        }
+
+
+class PendingTasksFilter(django_filters.FilterSet):
+
+    class Meta:
+        model = PendingTasks
         fields = {
             "username__username": ["icontains"],
         }

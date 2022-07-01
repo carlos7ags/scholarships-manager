@@ -7,7 +7,7 @@ from django.utils import timezone
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
-from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.template import loader
 from django.urls import reverse, reverse_lazy
@@ -18,8 +18,7 @@ from django_filters.views import FilterView
 from actions.models import PendingTasks, Task
 from applications.models import (Application, ApplicationContentApoyo,
                                  ApplicationContentConvocatoria, Award)
-from programs.models import Program
-from reviews.filters import ApplicationsFilter, AwardsFilter
+from reviews.filters import ApplicationsFilter, AwardsFilter, PendingTasksFilter
 from reviews.forms import AwardForm
 from reviews.models import ReviewersProgramACL
 
@@ -46,6 +45,24 @@ class AwardsListView(AdminStaffRequiredMixin, FilterView):
             username=self.request.user
         ).values_list("program", flat=True)
         return Award.objects.filter(program__in=acl_programs).all()
+
+
+class PendingTasksListView(AdminStaffRequiredMixin, FilterView):
+    model = PendingTasks
+    context_object_name = "staff_pending_tasks_list"
+    template_name = "pending_tasks_list.html"
+    filterset_class = PendingTasksFilter
+    paginate_by = 25
+    ordering = [
+        "username",
+        "current_stage",
+    ]
+
+    def get_queryset(self):
+        acl_programs = ReviewersProgramACL.objects.filter(
+            username=self.request.user
+        ).values_list("program", flat=True)
+        return PendingTasks.objects.filter(application__program__in=acl_programs, completed=False, task__type=2).all()
 
 
 class ApplicationsListView(AdminStaffRequiredMixin, FilterView):
@@ -287,3 +304,15 @@ class ApplicationAwardRedirect(RedirectView):
                     "pk": pk,
                 },
             )
+
+
+def complete_pending_tasks(request, pk):
+    if request.method == "POST":
+        task = PendingTasks.objects.filter(id=pk).first()
+        task.completed = True
+        task.save()
+        return HttpResponse(status=204, headers={"HX-Trigger": "refreshMain"})
+    else:
+        context = {"task": PendingTasks.objects.filter(id=pk).first()}
+        # ToDo: Implementar el html con el detalle de la tarea
+        return render(request, "pending_tasks_detail.html", context)

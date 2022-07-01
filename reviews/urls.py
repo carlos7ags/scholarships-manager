@@ -15,6 +15,16 @@ reviews_urlpatterns = [
         name="staff-awards-list",
     ),
     path(
+        "staff/pendingtasks",
+        login_required(PendingTasksListView.as_view()),
+        name="staff-pending-tasks-list",
+    ),
+    path(
+        "staff/pendingtasks/<pk>",
+        login_required(complete_pending_tasks),
+        name="staff-pending-tasks-detail",
+    ),
+    path(
         "staff/applications/<pk>",
         login_required(ApplicationDetailReview.as_view()),
         name="staff-application-review",

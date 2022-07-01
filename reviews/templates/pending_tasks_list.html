@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row justify-content-md-center my-4">
+            <div class="col col-sm text-left font-italic" style="font-size: smaller;">
+                <p>Inicio > Staff > Tareas pendientes </p>
+            </div>
+        </div>
+    </div>
+
+
+        <div class="container">
+        <div class="row justify-content-md-center my-4" style="background-color:white;">
+            <div class="col">
+                <form method="get">
+                    <div class="form-row">
+                        <div class="form-group col-sm-2.5 mb-0">
+                            {{ filter.form.username__username__icontains|add_class:"form-control form-control-sm"|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-sm-0.5 align-self-center text-right mb-0">
+                            <button type="submit" class="btn btn-primary btn-sm">Filtrar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row justify-content-betweencontainer-sm my-4" style="background-color:white;">
+            <div class="col col-lg my-4">
+                <table class="table table-light small">
+                    <div class="table-responsive">
+                        <table class="table align-middle table-striped small" style="text-align:center">
+                            <tr>
+                                <th>Programa</th>
+                                <th>CURP</th>
+                                <th>Tarea</th>
+                                <th>Detalle</th>
+                            </tr>
+                            {% for task in object_list %}
+                                <tr>
+                                    <td>{{ task.application.program.title|title }}</td>
+                                    <td>{{ task.username|upper }}</td>
+                                    <td>{{ task.task.name }}</td>
+
+                                    <td>
+                                        <button hx-get="{% url 'staff-pending-tasks-detail' task.id %}" hx-target="#withdraw" class="btn btn-danger">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eyeglasses" viewBox="0 0 16 16">
+                                                <path d="M4 6a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm2.625.547a3 3 0 0 0-5.584.953H.5a.5.5 0 0 0 0 1h.541A3 3 0 0 0 7 8a1 1 0 0 1 2 0 3 3 0 0 0 5.959.5h.541a.5.5 0 0 0 0-1h-.541a3 3 0 0 0-5.584-.953A1.993 1.993 0 0 0 8 6c-.532 0-1.016.208-1.375.547zM14 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0z"/>
+                                            </svg>
+                                            Ver detale
+                                        </button>
+                                    </td>
+                                </tr>
+                            {% empty %}
+                                <td>
+                                    No hay registros.
+                                </td>
+                            {% endfor %}
+                        </table>
+
+                        <div class="pagination justify-content-center" style="border-bottom: #0b2e13">
+                        <span class="step-links">
+                            {% if page_obj.has_previous %}
+                                <a class="previous round" href="?page=1">&laquo;</a>
+                                <a class="previous round" href="?page={{ page_obj.previous_page_number }}">&#8249;</a>
+                            {% endif %}
+
+                            <span class="current">
+                                Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+                            </span>
+
+                            {% if page_obj.has_next %}
+                                <a class="next round" href="?page={{ page_obj.next_page_number }}">&#8250;</a>
+                                <a class="next round" href="?page={{ page_obj.paginator.num_pages }}">&raquo;</a>
+                            {% endif %}
+                        </span>
+                        </div>
+                    </div>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-withdraw" class="modal fade">
+        <div id="withdraw" class="modal-dialog" hx-target="this"></div>
+    </div>
+
+    <script src="{% static 'assets/js/other/modals.js' %}"></script>
+
+{% endblock %}
+

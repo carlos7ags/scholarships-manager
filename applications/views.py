@@ -239,3 +239,14 @@ def html_to_pdf(template_src: str, context=Dict[str, Any]):
 def fetch_resources(uri, rel):
     path = os.path.join(settings.MEDIA_ROOT, uri.replace(settings.MEDIA_URL, ""))
     return path
+
+
+def send_final_proof(request, pk):
+    if request.method == "POST":
+        application = Application.objects.filter(id=pk).first()
+        # ToDo: agregar logica para subir archivo
+        application.current_stage = 6
+        application.save()
+        return HttpResponse(status=204, headers={"HX-Trigger": "refreshMain"})
+    else:
+        return render(request, "send_final_proof.html")

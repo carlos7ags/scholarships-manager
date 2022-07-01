@@ -20,7 +20,7 @@ class ApplicantDashboardView(TemplateView):
             .all()
         )
         decisions = [Award.objects.filter(id=application).first() for application in applications]
-        context["applications"] = zip(applications, decisions)
+        context["applications"] = list(zip(applications, decisions))
         context["actions"] = (
             PendingTasks.objects.filter(username=self.request.user, completed=False)
             .order_by("deadline")

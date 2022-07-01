@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from crispy_forms.bootstrap import FormActions, PrependedAppendedText, PrependedText
+from crispy_forms.bootstrap import FormActions, PrependedText
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import HTML, Column, Div, Field, Layout, Row, Submit
 from django import forms
@@ -278,11 +278,11 @@ class ApplicationApoyoForm(ModelForm):
         exclude = ("validated", "id")
         widgets = {
             "date_start": forms.SelectDateWidget(
-                years=range(datetime.now().year + 10, datetime.now().year - 5, -1),
+                years=range(datetime.now().year -5, datetime.now().year + 5, 1),
                 attrs=({"style": "width: 33%; display: inline-block;"}),
             ),
             "date_end": forms.SelectDateWidget(
-                years=range(datetime.now().year + 10, datetime.now().year - 5, -1),
+                years=range(datetime.now().year - 5, datetime.now().year + 5, 1),
                 attrs=({"style": "width: 33%; display: inline-block;"}),
             ),
         }
