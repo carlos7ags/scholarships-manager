@@ -1,3 +1,6 @@
+import os
+from uuid import uuid4
+
 from django.conf import settings
 from django.db import models
 
@@ -49,6 +52,13 @@ class Application(models.Model):
         return "%s - %s - %s" % (self.program, self.folio, self.username)
 
 
+def path_and_rename(instance, filename):
+    upload_to = "deliverables"
+    ext = filename.split(".")[-1]
+    filename = "{}.{}".format(instance.username.username, ext)
+    return os.path.join(upload_to, filename)
+
+
 class Award(models.Model):
     AWARD_STATUS = ((0, "Rechazado"), (1, "Aprobado"))
 
@@ -78,7 +88,7 @@ class Award(models.Model):
     acta = models.CharField("Número de acta", null=True, blank=True, max_length=100)
     require_deliverable = models.BooleanField("Requiere entregables", default=False)
     deliverable_by = models.DateTimeField("Fecha para entregables", null=True, blank=True)
-    deliverable = models.FileField("Entregable", null=True, blank=True)
+    deliverable = models.FileField("Entregable", null=True, blank=True, upload_to=path_and_rename)
     deliverable_validated = models.BooleanField("Entregable validado", default=False)
     award_delivered = models.BooleanField("Apoyo entregado", default=False)
     award_delivered_at = models.DateTimeField("Fecha de entrega de apoyo", null=True, blank=True)

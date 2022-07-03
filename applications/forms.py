@@ -1,3 +1,4 @@
+import os
 from datetime import datetime
 
 from crispy_forms.bootstrap import FormActions, PrependedText
@@ -9,7 +10,7 @@ from django.forms import ModelForm
 from applications.models import (
     Application,
     ApplicationContentApoyo,
-    ApplicationContentConvocatoria,
+    ApplicationContentConvocatoria, Award,
 )
 
 
@@ -278,7 +279,7 @@ class ApplicationApoyoForm(ModelForm):
         exclude = ("validated", "id")
         widgets = {
             "date_start": forms.SelectDateWidget(
-                years=range(datetime.now().year -5, datetime.now().year + 5, 1),
+                years=range(datetime.now().year - 5, datetime.now().year + 5, 1),
                 attrs=({"style": "width: 33%; display: inline-block;"}),
             ),
             "date_end": forms.SelectDateWidget(
@@ -286,3 +287,11 @@ class ApplicationApoyoForm(ModelForm):
                 attrs=({"style": "width: 33%; display: inline-block;"}),
             ),
         }
+
+
+class AwardDeliverableForm(ModelForm):
+    deliverable = forms.FileField(required=True, widget=forms.FileInput, label="Comprobante / Entregable")
+
+    class Meta:
+        model = Award
+        fields = ["deliverable", ]

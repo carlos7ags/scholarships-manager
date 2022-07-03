@@ -51,7 +51,7 @@ applications_urlpatterns = [
     ),
     path(
         "application/<pk>/completionproof",
-        login_required(send_final_proof),
-        name="send-final-proof",
+        login_required(upload_final_proof),
+        name="upload-final-proof",
     ),
 ]

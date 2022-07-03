@@ -1,6 +1,9 @@
 import os
 import time
 from io import BytesIO
+
+from django.core.exceptions import ValidationError
+
 from profile.models import Profile
 from typing import Any, Dict
 
@@ -17,7 +20,7 @@ from xhtml2pdf import pisa
 
 from actions.models import PendingTasks
 
-from .forms import ApplicationApoyoForm, ApplicationConvocatoriaForm, ApplicationForm
+from .forms import ApplicationApoyoForm, ApplicationConvocatoriaForm, ApplicationForm, AwardDeliverableForm
 from .models import *
 
 
@@ -241,12 +244,16 @@ def fetch_resources(uri, rel):
     return path
 
 
-def send_final_proof(request, pk):
+def upload_final_proof(request, pk):
+    award = Award.objects.get(id=pk)
     if request.method == "POST":
-        application = Application.objects.filter(id=pk).first()
-        # ToDo: agregar logica para subir archivo
-        application.current_stage = 6
-        application.save()
-        return HttpResponse(status=204, headers={"HX-Trigger": "refreshMain"})
+        if not request.FILES:
+            raise ValidationError('No se adjunto el documento.')
+        print(request.FILES)
+        form = AwardDeliverableForm(request.POST, request.FILES, instance=award)
+        if form.is_valid():
+            form.save()
+            return HttpResponse(status=204, headers={"HX-Trigger": "refreshMain"})
     else:
-        return render(request, "send_final_proof.html")
+        form = AwardDeliverableForm(instance=award)
+        return render(request, "upload_final_proof.html", {'form': form})

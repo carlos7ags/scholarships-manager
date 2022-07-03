@@ -61,6 +61,7 @@
                                 <th>CURP</th>
                                 <th>Decisión</th>
                                 <th>Monto</th>
+                                <th>Estatus</th>
                                 <th></th>
                                 <th></th>
                             </tr>
@@ -70,6 +71,7 @@
                                     <td>{{ award.username|upper }}</td>
                                     <td>{{ award.get_decision_display }}</td>
                                     <td>{{ award.awarded|intcomma }}</td>
+                                    <td>{{ award.id.get_current_stage_display }}</td>
                                     <td>
                                         <a type="button" class="btn btn-outline-secondary btn-sm"
                                            href="{% url 'staff-application-review' award.id.id %}">
@@ -88,7 +90,7 @@
                                             Entregar apoyo
                                         </button>
                                     </td>
-                                        {% elif award.require_deliverable and not award.deliverable_validated %}
+                                        {% elif award.require_deliverable and award.deliverable and not award.deliverable_validated %}
                                     <td>
                                         <button hx-get="{% url 'staff-validate-deliverable' award.id.id %}" hx-target="#withdraw" class="btn btn-outline-secondary btn-sm">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">

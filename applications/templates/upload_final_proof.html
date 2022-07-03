@@ -1,19 +1,22 @@
+{% load crispy_forms_filters %}
 {% block content %}
 
-    <form hx-post="{{ request.path }}" class="modal-content">
+    <form hx-post="{{ request.path }}" class="modal-content" hx-encoding="multipart/form-data">
         {% csrf_token %}
         <div class="modal-header">
-            <h5 class="modal-title">Enviar comprobante de estudios</h5>
+            <h5 class="modal-title">Enviar comprobante de conclusión del programa</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
         <div class="modal-body">
-            <input class="file-upload">
+            <p>Despúes de descargar y llenar el formato de conclusión envíalo al IDSCEA para validación. No olvides incluir tu comprobante de conclusión, diploma o certificado en el mismo pdf.</p>
+                {% csrf_token %}
+                {{ form|crispy }}
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal">Cancelar</button>
-            <input type="submit" value="Enviar" id="submit" name="submit"
+            <input type="submit" value="Enviar"
                    class="btn btn-primary btn-sm">
         </div>
     </form>
