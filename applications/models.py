@@ -203,7 +203,7 @@ class ApplicationContentConvocatoria(models.Model):
         omit = ("id",)
         return [
             (field.name, field.verbose_name, field.value_to_string(self))
-            for field in ApplicationContentApoyo._meta.fields
+            for field in ApplicationContentConvocatoria._meta.fields
             if field.name not in omit
         ]
 
