@@ -169,7 +169,12 @@ class ProfileEmergencyContactForm(ModelForm):
                 css_class="form-row",
             ),
             Row(
-                Column("location", css_class="form-group col-md-3 mb-1"),
+                Column("city", css_class="form-group col-md-3 mb-1"),
+                Column("country", css_class="form-group col-md-3 mb-1"),
+                css_class="form-row",
+            ),
+            Row(
+                Column("relationship", css_class="form-group col-md-3 mb-1"),
                 Column("email", css_class="form-group col-md-3 mb-1"),
                 css_class="form-row",
             ),

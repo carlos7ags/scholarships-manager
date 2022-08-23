@@ -5,13 +5,12 @@
     <style type="text/css">@import url('https://themes.googleusercontent.com/fonts/css?kit=wAPX1HepqA24RkYW1AuHYA');
 
     @media print {
-
-    @page {
-        size: letter;
-        margin: 2cm 2.5cm;
-        background-image: url({{ request.scheme }}://{{ request.META.HTTP_HOST }}{% static 'images/back-pdf.jpg' %});
-        background-repeat: no-repeat;
-    }
+        @page {
+            size: letter;
+            margin: 2cm 2.5cm;
+            background-image: url({{ request.scheme }}://{{ request.META.HTTP_HOST }}{% static 'images/back-pdf.png' %});
+            background-repeat: no-repeat;
+        }
     }
 
     body {

@@ -269,7 +269,9 @@ class EmergencyContact(models.Model):
         ],
     )
     address = models.CharField("Dirección", max_length=100)
-    location = models.CharField("Ciudad y pais", max_length=75)
+    city = models.CharField("Ciudad y Estado", max_length=75)
+    country = models.CharField("Pais", max_length=75)
+    relationship = models.CharField("Parentesco", max_length=75)
 
     email = models.EmailField("Correo electrónico")
 

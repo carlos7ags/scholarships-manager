@@ -233,6 +233,27 @@ class ApplicationConvocatoriaForm(ModelForm):
                 ),
                 css_class="form-row",
             ),
+            Row(
+                Column(
+                    Field("current_job"),
+                    css_class="form-group col-md-8 mb-1",
+                ),
+                css_class="form-row",
+            ),
+            Row(
+                Column(
+                    Field("last_academic_grade"),
+                    css_class="form-group col-md-8 mb-1",
+                ),
+                css_class="form-row",
+            ),
+            Row(
+                Column(
+                    Field("last_grade"),
+                    css_class="form-group col-md-8 mb-1",
+                ),
+                css_class="form-row",
+            ),
             FormActions(
                 Submit("save", "Guardar"),
             ),

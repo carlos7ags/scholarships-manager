@@ -36,8 +36,6 @@ class Program(models.Model):
     file = models.FileField(
         "Reglas de operación o convocatoria (pdf)",
         upload_to="programs/",
-        null=True,
-        blank=True,
     )
 
     def __str__(self):

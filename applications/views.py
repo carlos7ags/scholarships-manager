@@ -1,11 +1,14 @@
-import os
+import io
 import time
-from io import BytesIO
+from datetime import date
+import humanize
 
+from django.contrib.staticfiles.finders import find
 from django.core.exceptions import ValidationError
+from django.templatetags.static import static
 
-from profile.models import Profile
-from typing import Any, Dict
+from profile.models import Profile, EmergencyContact, Bank, Address, Contact
+from typing import Dict
 
 from django.contrib.auth.models import User
 from django.contrib.auth.views import redirect_to_login
@@ -13,15 +16,15 @@ from django.core.mail import send_mail
 from django.http import Http404, HttpResponse
 from django.shortcuts import redirect, render
 from django.template import loader
-from django.template.loader import get_template
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, RedirectView, UpdateView
-from xhtml2pdf import pisa
 
 from actions.models import PendingTasks
 
 from .forms import ApplicationApoyoForm, ApplicationConvocatoriaForm, ApplicationForm, AwardDeliverableForm
 from .models import *
+
+from docxtpl import DocxTemplate
 
 
 def send_application_sent_mail(
@@ -218,46 +221,24 @@ def download_application(request, pk):
         context_dict = dict()
         context_dict["request"] = request
         context_dict["profile"] = Profile.objects.filter(username=request.user).first()
-        context_dict["application"] = Application.objects.filter(id=pk).first()
-        pdf = html_to_pdf("ad-solicitud-pdf.html", context=context_dict)
-        return HttpResponse(pdf, content_type="application/pdf")
+        context_dict["contact"] = Contact.objects.filter(username=request.user).first()
+        context_dict["emergency_contact"] = EmergencyContact.objects.filter(username=request.user).first()
+        context_dict["bank"] = Bank.objects.filter(username=request.user).first()
+        context_dict["address"] = Address.objects.filter(username=request.user).first()
+        context_dict["application_base"] = Application.objects.filter(id=pk).first()
+        if context_dict["application_base"].program.application_form_type == "convocatoria":
+            context_dict["application"] = ApplicationContentConvocatoria.objects.filter(id=pk).first()
+            doc = docx_template_generator_convocatoria(context_dict)
+        else:
+            context_dict["application"] = ApplicationContentApoyo.objects.filter(id=pk).first()
+            doc = docx_template_generator_apoyo(context_dict)
+        response = HttpResponse(doc, content_type="application/application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+        response["Content-Disposition"] = 'attachment; filename = "solicitud.docx"'
+        response["Content-Encoding"] = "UTF-8"
+        return response
     else:
         return Http404
 
-
-def html_to_pdf(template_src: str, context=Dict[str, Any]):
-    template = get_template(template_src)
-    html = template.render(context)
-    result = BytesIO()
-    pdf = pisa.pisaDocument(
-        BytesIO(html.encode("utf-8")), result, link_callback=link_callback
-    )
-    if not pdf.err:
-        return HttpResponse(result.getvalue(), content_type="application/pdf")
-    return None
-
-
-def link_callback(uri, rel):
-    # use short variable names
-    sUrl = settings.STATIC_URL      # Typically /static/
-    sRoot = settings.STATIC_ROOT    # Typically /home/userX/project_static/
-    mUrl = settings.MEDIA_URL       # Typically /static/media/
-    mRoot = settings.MEDIA_ROOT     # Typically /home/userX/project_static/media/
-
-    # convert URIs to absolute system paths
-    if uri.startswith(mUrl):
-        path = os.path.join(mRoot, uri.replace(mUrl, ""))
-    elif uri.startswith(sUrl):
-        path = os.path.join(sRoot, uri.replace(sUrl, ""))
-    else:
-        return uri  # handle absolute uri (ie: http://some.tld/foo.png)
-
-    # make sure that file exists
-    if not os.path.isfile(path):
-            raise Exception(
-                'media URI must start with %s or %s' % (sUrl, mUrl)
-            )
-    return path
 
 def upload_final_proof(request, pk):
     award = Award.objects.get(id=pk)
@@ -272,3 +253,188 @@ def upload_final_proof(request, pk):
     else:
         form = AwardDeliverableForm(instance=award)
         return render(request, "upload_final_proof.html", {'form': form})
+
+
+def non_null(text):
+    text = str(text) if text else ""
+    return text
+
+
+def prettify(text):
+    text = str(text) if text else ""
+    text = text.title()
+    return text
+
+
+def prettify_phone(text):
+    text = prettify(text)
+    if text:
+        text = f"{text[:3]}-{text[3:6]}-{text[6:]}"
+    return text
+
+
+def docx_template_generator_convocatoria(data: Dict):
+    humanize.i18n.activate("es_ES")
+
+    path = static("docs/plantilla_solicitud.docx")
+    doc = DocxTemplate(path)
+    context = dict()
+
+    context['curp'] = data["request"].user.username.upper()
+
+    profile = data["profile"]
+    full_name = f"{prettify(profile.lastname_first)} {prettify(profile.lastname_second)} {prettify(profile.name)}"
+    context['full_name'] = full_name.replace("  ", " ")
+    context['birthday'] = humanize.naturaldate(profile.birthday)
+    context['nationality'] = prettify(profile.nationality)
+    context['birth_place'] = prettify(profile.get_birth_place_display())
+    context['age'] = prettify(int((date.today() - profile.birthday).days / 365.2425))
+    context['gender'] = prettify(profile.get_gender_display())
+    context['marital_status'] = prettify(profile.get_marital_status_display())
+    context['passport'] = prettify(profile.passport).upper()
+    context['ine'] = prettify(profile.ine)
+    context['occupation'] = prettify(profile.occupation)
+
+    address = data["address"]
+    context['street'] = prettify(address.street)
+    context['exterior_number'] = prettify(address.exterior_number)
+    context['interior_number'] = prettify(address.interior_number)
+    context['postal_code'] = prettify(address.postal_code)
+    context['municipality'] = prettify(address.municipality)
+    context['locality'] = prettify(address.locality)
+    context['suburb'] = prettify(address.suburb)
+    context['state'] = prettify(address.get_state_display())
+
+    contact = data["contact"]
+    context['phone'] = prettify_phone(contact.phone)
+    context['mobile'] = prettify_phone(contact.mobile)
+    context['email'] = prettify(data["request"].user.email).lower()
+
+    bank = data["bank"]
+    context['bank_name'] = prettify(bank.bank_name)
+    context['account_number'] = prettify(bank.account_number)
+    context['clabe'] = prettify(bank.clabe)
+
+    emergency_contact = data["emergency_contact"]
+    context["emergency_contact_name"] = prettify(emergency_contact.name)
+    context["emergency_contact_relationship"] = prettify(emergency_contact.relationship)
+    context["emergency_contact_phone"] = prettify_phone(emergency_contact.phone)
+    context["emergency_contact_mobile"] = prettify_phone(emergency_contact.mobile)
+    context["emergency_contact_email"] = prettify(emergency_contact.email).lower()
+    context["emergency_contact_country"] = prettify(emergency_contact.country)
+    context["emergency_contact_city"] = prettify(emergency_contact.city)
+
+    application = data["application"]
+    application_base = data["application_base"]
+    context["application_id"] = prettify(application_base.id)
+    context["application_folio"] = prettify(application_base.folio).upper()
+    context["application_updated_at"] = humanize.naturaldate(application.updated_at)
+    context["application_date_start"] = humanize.naturaldate(application.date_start)
+    context["application_date_end"] = humanize.naturaldate(application.date_end)
+    context["application_program_name"] = prettify(application.program_name)
+    context["application_objective"] = prettify(application.objective).capitalize()
+    context["application_area"] = prettify(application.area)
+    context["application_research_topic"] = non_null(application.research_topic)
+    context["application_location"] = prettify(application.location)
+    context["application_institution"] = prettify(application.institution)
+    context["application_duration_hours"] = prettify(application.duration_hours)
+
+    context["application_personal_statement"] = prettify(application.personal_statement)
+    context["application_suitability"] = prettify(application.suitability)
+    context["application_future_plans"] = prettify(application.future_plans)
+    context["application_importance"] = prettify(application.importance)
+
+    context["application_total_movilidad"] = humanize.intcomma(application.total_movilidad)
+    context["application_requested_movilidad"] = humanize.intcomma(application.requested_movilidad)
+    context["application_total_investigacion"] = humanize.intcomma(application.total_investigacion)
+    context["application_requested_investigacion"] = humanize.intcomma(application.requested_investigacion)
+    context["application_total_inscripcion"] = humanize.intcomma(application.total_inscripcion)
+    context["application_requested_inscripcion"] = humanize.intcomma(application.requested_inscripcion)
+    context["application_total_viaticos"] = humanize.intcomma(application.total_viaticos)
+    context["application_requested_viaticos"] = humanize.intcomma(application.requested_viaticos)
+    context["application_total_otros"] = humanize.intcomma(application.total_otros)
+    context["application_requested_otros"] = humanize.intcomma(application.requested_otros)
+
+    context["application_project_name"] = prettify(application.project_name)
+    context["application_objective"] = prettify(application.objective).capitalize()
+    context["application_program_relation_cti"] = prettify(application.program_relation_cti).capitalize()
+    context["application_program_relation_state"] = prettify(application.program_relation_state).capitalize()
+    context["application_description"] = prettify(application.description).capitalize()
+    context["application_impact"] = prettify(application.impact).capitalize()
+    context["application_statement_of_purpose"] = non_null(application.statement_of_purpose)
+    context["application_credits"] = non_null(application.credits)
+    context["application_language"] = non_null(application.language)
+
+    context["application_current_job"] = non_null(application.current_job)
+    context["application_last_academic_grade"] = non_null(application.last_academic_grade)
+    context["application_last_grade"] = non_null(application.last_grade)
+
+    doc.render(context)
+
+    humanize.i18n.deactivate()
+
+    bio = io.BytesIO()
+    doc.save(bio)
+    bio.seek(0)
+    return bio.getvalue()
+
+
+def docx_template_generator_apoyo(data: Dict):
+    humanize.i18n.activate("es_ES")
+
+    path = static("docs/plantilla_solicitud.docx")
+    doc = DocxTemplate(path)
+    context = dict()
+
+    context['curp'] = data["request"].user.username.upper()
+
+    profile = data["profile"]
+    full_name = f"{prettify(profile.lastname_first)} {prettify(profile.lastname_second)} {prettify(profile.name)}"
+    context['full_name'] = full_name.replace("  ", " ")
+    context['birthday'] = humanize.naturaldate(profile.birthday)
+    context['nationality'] = prettify(profile.nationality)
+    context['birth_place'] = prettify(profile.get_birth_place_display())
+    context['age'] = prettify(int((date.today() - profile.birthday).days / 365.2425))
+    context['gender'] = prettify(profile.get_gender_display())
+    context['marital_status'] = prettify(profile.get_marital_status_display())
+    context['passport'] = prettify(profile.passport).upper()
+    context['ine'] = prettify(profile.ine)
+    context['occupation'] = prettify(profile.occupation)
+
+    address = data["address"]
+    context['street'] = prettify(address.street)
+    context['exterior_number'] = prettify(address.exterior_number)
+    context['interior_number'] = prettify(address.interior_number)
+    context['postal_code'] = prettify(address.postal_code)
+    context['municipality'] = prettify(address.municipality)
+    context['locality'] = prettify(address.locality)
+    context['suburb'] = prettify(address.suburb)
+    context['state'] = prettify(address.get_state_display())
+
+    contact = data["contact"]
+    context['phone'] = prettify_phone(contact.phone)
+    context['mobile'] = prettify_phone(contact.mobile)
+    context['email'] = prettify(data["request"].user.email).lower()
+
+    bank = data["bank"]
+    context['bank_name'] = prettify(bank.bank_name)
+    context['account_number'] = prettify(bank.account_number)
+    context['clabe'] = prettify(bank.clabe)
+
+    emergency_contact = data["emergency_contact"]
+    context["emergency_contact_name"] = prettify(emergency_contact.name)
+    context["emergency_contact_relationship"] = prettify(emergency_contact.relationship)
+    context["emergency_contact_phone"] = prettify_phone(emergency_contact.phone)
+    context["emergency_contact_mobile"] = prettify_phone(emergency_contact.mobile)
+    context["emergency_contact_email"] = prettify(emergency_contact.email).lower()
+    context["emergency_contact_country"] = prettify(emergency_contact.country)
+    context["emergency_contact_city"] = prettify(emergency_contact.city)
+
+    doc.render(context)
+
+    humanize.i18n.deactivate()
+
+    bio = io.BytesIO()
+    doc.save(bio)
+    bio.seek(0)
+    return bio.getvalue()

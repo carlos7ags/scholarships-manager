@@ -196,6 +196,21 @@ class ApplicationContentConvocatoria(models.Model):
     program_relation_state = models.TextField(
         "Argumetación sobre la relación del proyecto o programa de estudios con la ciencia, la tecnología y la innovación"
     )
+
+    current_job = models.CharField(
+        "Institución o empresa donde estudia o trabaja actualmente",
+        max_length=400,
+    )
+    last_academic_grade = models.CharField(
+        "Último grado académico o módulo cursado",
+        max_length = 200,
+    )
+    last_grade = models.CharField(
+        "Promedio último obtenido / equivalencia",
+        max_length=50,
+        help_text="Anexar documento oficial institucional si corresponde al extranjero, solo aplica para modalidad de becas por convocatoria."
+    )
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

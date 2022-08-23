@@ -12,3 +12,7 @@ reportlab==3.6.9
 django-encrypted-model-fields==0.6.5
 django-cors-headers==3.11.0
 django-csp==3.7
+django-filter~=21.1
+pdfrw==0.4
+humanize~=4.3.0
+docxtpl~=0.16.4
