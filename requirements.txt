@@ -16,3 +16,4 @@ django-filter~=21.1
 pdfrw==0.4
 humanize~=4.3.0
 docxtpl~=0.16.4
+Babel~=2.10.3

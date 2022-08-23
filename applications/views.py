@@ -1,11 +1,12 @@
 import io
 import time
 from datetime import date
-import humanize
 
+from django.contrib.humanize.templatetags import humanize
 from django.contrib.staticfiles.finders import find
 from django.core.exceptions import ValidationError
 from django.templatetags.static import static
+from babel.dates import format_date
 
 from profile.models import Profile, EmergencyContact, Bank, Address, Contact
 from typing import Dict
@@ -274,9 +275,7 @@ def prettify_phone(text):
 
 
 def docx_template_generator_convocatoria(data: Dict):
-    humanize.i18n.activate("es_ES")
-
-    path = static("docs/plantilla_solicitud.docx")
+    path = find("docs/plantilla_solicitud.docx")
     doc = DocxTemplate(path)
     context = dict()
 
@@ -285,7 +284,7 @@ def docx_template_generator_convocatoria(data: Dict):
     profile = data["profile"]
     full_name = f"{prettify(profile.lastname_first)} {prettify(profile.lastname_second)} {prettify(profile.name)}"
     context['full_name'] = full_name.replace("  ", " ")
-    context['birthday'] = humanize.naturaldate(profile.birthday)
+    context['birthday'] = format_date(profile.birthday, format='long', locale='es')
     context['nationality'] = prettify(profile.nationality)
     context['birth_place'] = prettify(profile.get_birth_place_display())
     context['age'] = prettify(int((date.today() - profile.birthday).days / 365.2425))
@@ -328,9 +327,9 @@ def docx_template_generator_convocatoria(data: Dict):
     application_base = data["application_base"]
     context["application_id"] = prettify(application_base.id)
     context["application_folio"] = prettify(application_base.folio).upper()
-    context["application_updated_at"] = humanize.naturaldate(application.updated_at)
-    context["application_date_start"] = humanize.naturaldate(application.date_start)
-    context["application_date_end"] = humanize.naturaldate(application.date_end)
+    context["application_updated_at"] = format_date(application.updated_at, format='long', locale='es')
+    context["application_date_start"] = format_date(application.date_start, format='long', locale='es')
+    context["application_date_end"] = format_date(application.date_end, format='long', locale='es')
     context["application_program_name"] = prettify(application.program_name)
     context["application_objective"] = prettify(application.objective).capitalize()
     context["application_area"] = prettify(application.area)
@@ -371,8 +370,6 @@ def docx_template_generator_convocatoria(data: Dict):
 
     doc.render(context)
 
-    humanize.i18n.deactivate()
-
     bio = io.BytesIO()
     doc.save(bio)
     bio.seek(0)
@@ -380,9 +377,7 @@ def docx_template_generator_convocatoria(data: Dict):
 
 
 def docx_template_generator_apoyo(data: Dict):
-    humanize.i18n.activate("es_ES")
-
-    path = static("docs/plantilla_solicitud.docx")
+    path = find("docs/plantilla_solicitud.docx")
     doc = DocxTemplate(path)
     context = dict()
 
@@ -391,7 +386,6 @@ def docx_template_generator_apoyo(data: Dict):
     profile = data["profile"]
     full_name = f"{prettify(profile.lastname_first)} {prettify(profile.lastname_second)} {prettify(profile.name)}"
     context['full_name'] = full_name.replace("  ", " ")
-    context['birthday'] = humanize.naturaldate(profile.birthday)
     context['nationality'] = prettify(profile.nationality)
     context['birth_place'] = prettify(profile.get_birth_place_display())
     context['age'] = prettify(int((date.today() - profile.birthday).days / 365.2425))
@@ -432,7 +426,6 @@ def docx_template_generator_apoyo(data: Dict):
 
     doc.render(context)
 
-    humanize.i18n.deactivate()
 
     bio = io.BytesIO()
     doc.save(bio)
