@@ -426,7 +426,6 @@ def docx_template_generator_apoyo(data: Dict):
 
     doc.render(context)
 
-
     bio = io.BytesIO()
     doc.save(bio)
     bio.seek(0)
