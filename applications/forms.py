@@ -211,7 +211,7 @@ class ApplicationConvocatoriaForm(ModelForm):
             ),
             Row(
                 HTML(
-                    "<p>Complete el siguiente texto donde exprese los motivos personales por los cuales usted está solicitando el apoyo del programa de fomento a talentos en la Modalidad de Apoyos Directos y Estímulos correspondiente, considerando los puntos que a continuación se describen dentro de la redacción general.</p>"
+                    "<p>Complete el siguiente texto donde exprese los motivos personales por los cuales usted está solicitando el apoyo del programa de fomento a talentos en la Modalidad de Convocatoria correspondiente, considerando los puntos que a continuación se describen dentro de la redacción general.</p>"
                 ),
             ),
             Row(
