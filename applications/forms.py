@@ -100,7 +100,7 @@ class ApplicationConvocatoriaForm(ModelForm):
             ),
             HTML("<h5>Apoyo solicitado</h5>"),
             HTML(
-                "<p>El monto total del apoyo solicitado no puede exceder $20,000.00 al extranjero y $10,000.00 al interior del país.</p>"
+                "<p>El monto total del apoyo solicitado no puede exceder $22,000.00.</p>"
             ),
             Div(
                 HTML('<table class="table table-sm w-auto"'),

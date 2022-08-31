@@ -169,8 +169,8 @@ class ApplicationContentConvocatoria(models.Model):
     )
     total_inscripcion = models.IntegerField("Costo total - Inscripción", default=0)
     requested_inscripcion = models.IntegerField("Solicitado - Inscripción", default=0)
-    total_viaticos = models.IntegerField("Costo total - Viáticos", default=0)
-    requested_viaticos = models.IntegerField("Solicitado - Viáticos", default=0)
+    total_viaticos = models.IntegerField("Costo total - Colegiatura", default=0)
+    requested_viaticos = models.IntegerField("Solicitado - Colegiatura", default=0)
     total_otros = models.IntegerField("Costo total - Otros", default=0)
     requested_otros = models.IntegerField("Solicitado - Otros", default=0)
 
