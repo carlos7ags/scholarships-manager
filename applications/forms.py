@@ -160,7 +160,7 @@ class ApplicationConvocatoriaForm(ModelForm):
                 HTML("</td>"),
                 HTML("</tr>"),
                 HTML("<tr>"),
-                HTML('<th scope="row">Viáticos</th>'),
+                HTML('<th scope="row">Colegiatura</th>'),
                 HTML("<td>"),
                 PrependedText(
                     "total_viaticos", "$", css_class="form-group text-right col-md-6"
